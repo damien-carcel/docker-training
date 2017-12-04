@@ -108,6 +108,128 @@
             </section>
         </section>
 
+        <section id="container-example">
+            <section>
+                <h2>How to build and use a docker container</h2>
+
+                <img src="images/docker.png" height="450px">
+
+                <aside class="notes">
+                    <p>Tool for defining and running multi-container Docker applications</p>
+                    <p>Based on a YAML file</p>
+                </aside>
+            </section>
+
+
+            <section>
+                <h2>How to build and use a docker container</h2>
+
+                <br><br>
+
+                <ul>
+                    <li class=fragment>What's on my machine</li>
+                    <ul>
+                        <li class="fragment">ArchLinux</li>
+                        <li class="fragment">PHP 7.1</li>
+                        <li class="fragment">Apache + mod_php</li>
+                        <li class="fragment">MariaDB 10</li>
+                    </ul>
+                    <li class=fragment>Let's create (and work with) a MySQL container</li>
+                </ul>
+
+                <aside class="notes">
+                    <!-- -->
+                </aside>
+            </section>
+
+            <section>
+                <h2>How to build and use a docker container</h2>
+
+                <br><br>
+
+                <pre><code class="dockerfile">
+FROM debian:jessie-slim
+MAINTAINER Damien Carcel &lt;damien.carcel@akeneo.com&gt;
+
+ENV DEBIAN_FRONTEND noninteractive
+
+# Install MySQL
+RUN apt-get update && \
+    apt-get --yes --quiet install mysql-server && \
+    apt-get clean && apt-get --yes --quiet autoremove --purge && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN sed -i "s/bind-address.*/#bind-address/" /etc/mysql/my.cnf
+
+EXPOSE 3306
+
+# Run MySQL
+CMD ["mysqld"]
+                </code></pre>
+
+                <aside class="notes">
+                    <!-- -->
+                </aside>
+            </section>
+
+            <section>
+                <h2>How to use a docker container</h2>
+
+                <br><br>
+
+                <pre class="fragment"><code class="bash">
+    $ docker build -t custom/mysql .
+    $ docker images
+                </code></pre>
+
+                <pre class="fragment"><code class="bash">
+    $ docker run -d --name custom-mysql -p 33006:3306 custom/mysql
+    $ docker ps
+                </code></pre>
+
+                <pre class="fragment"><code class="bash">
+    $ docker exec -i -t custom-mysql bash
+    # mysql -u root
+    > GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'; FLUSH PRIVILEGES;
+                </code></pre>
+
+                <pre class="fragment"><code class="bash">
+    $ mysql -h 127.0.0.1 -P 33006 -u root
+                </code></pre>
+
+                <aside class="notes">
+                    <p>Build and present "build" command</p>
+                    <p>Explain how layers and final image are generated</p>
+                    <p>"docker ps" === "docker container ls"</p>
+                </aside>
+            </section>
+
+            <section>
+                <h2>How to build and use a docker container</h2>
+
+                <br><br>
+
+                <pre class="fragment"><code class="yaml">
+# app/config/pim_parameters.yml
+parameters:
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: 33006        # This is what changed
+    database_name: akeneo_pim
+    database_user: akeneo_pim
+    database_password: akeneo_pim
+    locale: en
+    secret: ThisTokenIsNotSoSecretChangeIt
+                </code></pre>
+
+                <aside class="notes">
+                    <p>"docker rm -f -v custom-mysql"</p>
+                    <p>"docker rmi custom/mysql"</p>
+                    <p>"docker system prune --volume"</p>
+                </aside>
+            </section>
+        </section>
+
     </div>
 </div>
 
