@@ -1,0 +1,24 @@
+{
+    "name": "docker-training",
+    "authors": [
+        "Damien Carcel <damien.carcel@akeneo.com>"
+    ],
+    "description": "How to develop Akeneo PIM with Docker and Docker Compose",
+    "main": "index.html",
+    "keywords": [
+        "docker",
+        "compose",
+        "presentation",
+        "training",
+        "akeneo"
+    ],
+    "license": "MIT",
+    "homepage": "",
+    "private": true,
+    "ignore": [
+        "bower_components"
+    ],
+    "dependencies": {
+        "akeneo-revealjs-theme": "git@github.com:akeneo/revealjs-theme.git#v1.0"
+    }
+}

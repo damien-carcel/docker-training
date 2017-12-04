@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>How to develop Akeneo PIM with Docker and Docker Compose</title>
+
+    <meta name="description" content="Akeneo development with Docker">
+    <meta name="author" content="Damien Carcel <damien.carcel@akeneo.com>">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="bower_components/reveal.js/css/reveal.css">
+
+    <link rel="stylesheet" href="bower_components/akeneo-revealjs-theme/css/akeneo.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="bower_components/reveal.js/lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match( /print-pdf/gi ) ? 'bower_components/reveal.js/css/print/pdf.css' : 'bower_components/reveal.js/css/print/paper.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+</head>
+
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <section class="center">
+            <h1>Akeneo development<br>with Docker</h1>
+            <h3>Damien Carcel</h3>
+        </section>
+
+    </div>
+</div>
+
+<script src="bower_components/reveal.js/lib/js/head.min.js"></script>
+<script src="bower_components/reveal.js/js/reveal.js"></script>
+
+<footer class="footer">
+    <ul>
+        <li>
+            <img src="bower_components/akeneo-revealjs-theme/images/logo-svg-black.svg" width="200" style="vertical-align:middle">
+        </li>
+        <li>
+            <span class="name">Damien Carcel</span>
+        </li>
+    </ul>
+</footer>
+
+<script>
+
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: false,
+        progress: true,
+        history: true,
+        center: false,
+        slideNumber: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        parallaxBackgroundImage: 'bower_components/akeneo-revealjs-theme/images/slide-background-white-parallax.png',
+        parallaxBackgroundSize: '2100px 768px',
+
+        // Optional reveal.js plugins
+        dependencies: [
+            { src: 'bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'bower_components/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'bower_components/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'bower_components/reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: 'bower_components/reveal.js/plugin/zoom-js/zoom.js', async: true },
+            { src: 'bower_components/reveal.js/plugin/notes/notes.js', async: true }
+        ]
+    });
+
+</script>
+</body>
+</html>
