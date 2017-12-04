@@ -39,6 +39,75 @@
             <h3>Damien Carcel</h3>
         </section>
 
+        <section id="introduction">
+            <section>
+                <h2>What is (not) Docker</h2>
+
+                <ul>
+                    <li class=fragment>Docker is not (really) a virtual machine (VM)</li>
+                </ul>
+                <br><br>
+
+                <img src="images/virtualization.svg" class="fragment">
+
+                <aside class="notes">
+                    <!-- -->
+                </aside>
+            </section>
+
+            <section>
+                <h2>What is Docker</h2>
+
+                <br><br>
+
+                <img src="images/vms_vs_containers.jpg">
+                <p>Virtual machines vs. containers</p>
+
+                <aside class="notes">
+                    <p>Containers remove the hardware virtualization and the guest system</p>
+                    <p>Except on Mac OS and Windows => will be important for Elasticsearch</p>
+                </aside>
+            </section>
+
+            <section>
+                <h2>How does it works</h2>
+
+                <br><br>
+
+                <ul>
+                    <li>Docker specificity</li>
+                    <ul>
+                        <li class="fragment">Dockerfile → Image → Containers</li>
+                        <li class="fragment">Only one process in the container</li>
+                    </ul>
+                </ul>
+
+                <aside class="notes">
+                    <!-- -->
+                </aside>
+            </section>
+
+            <section>
+                <h2>Your turn</h2>
+
+                <br><br>
+
+                <ul>
+                    <li>Run a container</li>
+                    <ul>
+                        <li class="fragment">Pull the Debian slim image</li>
+                        <li class="fragment">Run it</li>
+                    </ul>
+                </ul>
+
+                <aside class="notes">
+                    <p>"docker pull debian:jessie-slim" explain "pull" and the tag system</p>
+                    <p>"docker images" same thing that "docker image ls"</p>
+                    <p>"docker run -i -t --rm debian:jessie-slim"</p>
+                </aside>
+            </section>
+        </section>
+
     </div>
 </div>
 
