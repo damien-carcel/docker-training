@@ -22,6 +22,8 @@
 
     <!-- Printing and PDF exports -->
     <script>
+        'use strict';
+
         var link = document.createElement( 'link' );
         link.rel = 'stylesheet';
         link.type = 'text/css';
@@ -74,12 +76,10 @@
 
                 <br><br>
 
+                <p>Docker specificity</p>
                 <ul>
-                    <li>Docker specificity</li>
-                    <ul>
-                        <li class="fragment">Dockerfile → Image → Containers</li>
-                        <li class="fragment">Only one process in the container</li>
-                    </ul>
+                    <li class="fragment">Dockerfile → Image → Containers</li>
+                    <li class="fragment">Only one process in the container</li>
                 </ul>
 
                 <aside class="notes">
@@ -92,12 +92,10 @@
 
                 <br><br>
 
+                <h3>Run a container</h3>
                 <ul>
-                    <li>Run a container</li>
-                    <ul>
-                        <li class="fragment">Pull the Debian slim image</li>
-                        <li class="fragment">Run it</li>
-                    </ul>
+                    <li class="fragment">Pull the Debian slim image</li>
+                    <li class="fragment">Run it</li>
                 </ul>
 
                 <aside class="notes">
@@ -112,7 +110,7 @@
             <section>
                 <h2>How to build and use a docker container</h2>
 
-                <img src="images/docker.png" height="450px">
+                <img src="images/docker.png">
 
                 <aside class="notes">
                     <p>Tool for defining and running multi-container Docker applications</p>
@@ -126,16 +124,15 @@
 
                 <br><br>
 
+                <h3>What's on my machine</h3>
                 <ul>
-                    <li class=fragment>What's on my machine</li>
-                    <ul>
-                        <li class="fragment">ArchLinux</li>
-                        <li class="fragment">PHP 7.1</li>
-                        <li class="fragment">Apache + mod_php</li>
-                        <li class="fragment">MariaDB 10</li>
-                    </ul>
-                    <li class=fragment>Let's create (and work with) a MySQL container</li>
+                    <li class="fragment">ArchLinux</li>
+                    <li class="fragment">PHP 7.1</li>
+                    <li class="fragment">Apache + mod_php</li>
+                    <li class="fragment">MariaDB 10</li>
                 </ul>
+
+                <h3 class=fragment>Let's create (and work with) a MySQL container</h3>
 
                 <aside class="notes">
                     <!-- -->
@@ -159,6 +156,7 @@ RUN apt-get update && \
     apt-get clean && apt-get --yes --quiet autoremove --purge && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Configure MySQL so it listens to everything
 RUN sed -i "s/bind-address.*/#bind-address/" /etc/mysql/my.cnf
 
 EXPOSE 3306
@@ -183,7 +181,7 @@ CMD ["mysqld"]
                 </code></pre>
 
                 <pre class="fragment"><code class="bash">
-    $ docker run -d --name custom-mysql -p 33006:3306 custom/mysql
+    $ docker run -d --name custom-mysql --port 33006:3306 custom/mysql
     $ docker ps
                 </code></pre>
 
@@ -228,6 +226,107 @@ parameters:
                     <p>"docker system prune --volume"</p>
                 </aside>
             </section>
+
+            <section>
+                <h2>How to build and use a docker container</h2>
+
+                <br><br>
+
+                <h3>A world of container: <a href="https://hub.docker.com/">Docker Hub</a></h3>
+
+                <aside class="notes">
+                    <p>Present the Hub and our GitHub repository</p>
+                </aside>
+            </section>
+        </section>
+
+        <section id="docker-compose">
+            <section>
+                <h2>Docker compose</h2>
+
+                <img src="images/compose.png">
+
+                <aside class="notes">
+                    <p>Tool for defining and running multi-container Docker applications</p>
+                    <p>Based on a YAML file</p>
+                </aside>
+            </section>
+
+            <section>
+                <h2>Docker compose</h2>
+
+                <br><br>
+
+                <pre><code class="yaml"># docker-compose.yml
+version: '2'
+
+services:
+  akeneo:
+    image: akeneo/php:5.6
+    volumes:
+        - ./:/home/docker/application
+    networks:
+      - akeneo
+
+  mysql:
+    image: mysql:5.5
+    ports:
+        - 33006:3306
+    networks:
+      - akeneo
+
+networks:
+  akeneo: ~
+                </code></pre>
+
+                <aside class="notes">
+                    <!-- -->
+                </aside>
+            </section>
+
+            <section>
+                <h2>Docker compose</h2>
+
+                <br><br>
+
+                <h3>Let's go to the PIM!</h3>
+                <ul>
+                    <li class="fragment">Copy <code>docker-compose.yml.dist</code> as <code>docker-compose.yml</code></li>
+                    <li class="fragment">Let's change a few things in it and configure the PIM</li>
+                </ul>
+
+                <pre class="fragment"><code class="bash">
+    $ docker-compose up -d
+                </code></pre>
+
+                <pre class="fragment"><code class="bash">
+    $ docker-compose ps
+                </code></pre>
+
+                <aside class="notes">
+                    <p>Let's edit the yaml file together</p>
+                    <p>Beware of composer cache and config</p>
+                    <p>Show the scripts before using them</p>
+                </aside>
+            </section>
+
+            <section>
+                <h2>Docker compose</h2>
+
+                <br><br>
+
+                <pre class="fragment"><code class="bash">
+    $ bin/docker/pim-dependencies.sh
+    $ bin/docker/pim-initialize.sh
+                </code></pre>
+
+                <br><br>
+
+                <h3 class="fragment">Access the PIM to <a href="http://localhost:8080/">localhost:8080</a></h3>
+
+                <aside class="notes">
+                </aside>
+            </section>
         </section>
 
     </div>
@@ -248,6 +347,7 @@ parameters:
 </footer>
 
 <script>
+    'use strict';
 
     // Full list of configuration options available at:
     // https://github.com/hakimel/reveal.js#configuration
