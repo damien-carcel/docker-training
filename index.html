@@ -113,6 +113,30 @@
           <!-- -->
         </aside>
       </section>
+
+      <section>
+        <h2>A Dockerfile example</h2>
+
+        <br><br>
+
+        <pre><code class="dockerfile">
+  FROM debian:stretch-slim
+  MAINTAINER Damien Carcel &lt;damien.carcel@akeneo.com&gt;
+
+  RUN apt-get update && \
+      apt-get --no-install-recommends --no-install-suggests --yes --quiet install php && \
+      apt-get clean && apt-get --yes --quiet autoremove --purge && \
+      rm -rf  /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+              /usr/share/doc/* /usr/share/groff/* /usr/share/info/* /usr/share/linda/* \
+  /usr/share/lintian/* /usr/share/locale/* /usr/share/man/*
+
+        </code></pre>
+
+        <aside class="notes">
+          Explain the concept of layers.
+          Details will be explained in the "Advanced" section.
+        </aside>
+      </section>
     </section>
 
     <section id="container-example">
