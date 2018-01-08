@@ -128,7 +128,7 @@
       apt-get clean && apt-get --yes --quiet autoremove --purge && \
       rm -rf  /var/lib/apt/lists/* /tmp/* /var/tmp/* \
               /usr/share/doc/* /usr/share/groff/* /usr/share/info/* /usr/share/linda/* \
-  /usr/share/lintian/* /usr/share/locale/* /usr/share/man/*
+              /usr/share/lintian/* /usr/share/locale/* /usr/share/man/*
 
         </code></pre>
 
@@ -463,6 +463,58 @@ networks:
           <li class="fragment">Xdebug UI</li>
           <li class="fragment">php-meminfo</li>
         </ul>
+
+        <aside class="notes">
+          <!-- -->
+        </aside>
+      </section>
+
+      <section>
+        <h2>Building your own Dockerfile</h2>
+
+        <pre><code class="dockerfile">FROM akeneo/fpm:php-7.1
+
+RUN apt-get update && \
+      apt-get --no-install-recommends --no-install-suggests --yes --quiet install php7.1-dev && \
+      apt-get clean && apt-get --yes --quiet autoremove --purge && \
+      rm -rf  /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+              /usr/share/doc/* /usr/share/groff/* /usr/share/info/* /usr/share/linda/* \
+              /usr/share/lintian/* /usr/share/locale/* /usr/share/man/*
+
+RUN cd /tmp && \
+    git clone https://github.com/BitOne/php-meminfo.git && \
+    cd php-meminfo/extension/php7 && \
+    ./configure --enable-meminfo && \
+    phpize && \
+    make && \
+    make install
+
+COPY meminfo.ini /etc/php/7.1/mods-available/meminfo.ini
+
+RUN phpenmod meminfo
+        </code></pre>
+
+        <aside class="notes">
+          <!-- -->
+        </aside>
+      </section>
+
+      <section>
+        <h2>Building your own Dockerfile</h2>
+
+        <pre><code>extension=meminfo.so</code></pre>
+
+        <pre class="fragment"><code class="yaml">services:
+  fpm:
+    image: akeneo/fpm:php-7.1
+        </code></pre>
+
+        <pre class="fragment"><code class="yaml">services:
+  fpm:
+    build: ./docker/fpm/
+        </code></pre>
+
+        <pre class="fragment"><code class="shell">$ docker-compose up -d --build</code></pre>
 
         <aside class="notes">
           <!-- -->
