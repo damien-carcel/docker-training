@@ -57,7 +57,7 @@
 
         <ul>
           <li>Introduction to Docker</li>
-          <li>Using containers</li>
+          <li>How to run a Docker container</li>
           <li>Running Akeneo with Docker Compose</li>
           <li>Testing and Debugging</li>
         </ul>
@@ -117,7 +117,7 @@
 
     <section id="container-example">
       <section>
-        <h2>How to build a Docker container</h2>
+        <h2>How to run a Docker container</h2>
 
         <img src="images/docker.png">
 
@@ -127,129 +127,159 @@
       </section>
 
       <section>
-        <h2>Your turn</h2>
+        <h2>How to run a Docker container</h2>
 
         <br><br>
 
-        <h3>Run a container</h3>
+        <h3>Run a container in interactive mode</h3>
+
         <ul>
-          <li class="fragment">Pull the Debian slim image</li>
-          <li class="fragment">Run it</li>
+          <li class="fragment">Pull and run the Debian slim image</li>
+        </ul>
+
+        <pre class="fragment"><code class="shell">
+  $ docker pull debian:jessie-slim
+        </code></pre>
+
+        <pre class="fragment"><code class="shell">
+  $ docker images
+        </code></pre>
+
+        <pre class="fragment"><code class="shell">
+  $ docker run -i -t --rm debian:jessie-slim bash
+        </code></pre>
+
+        <aside class="notes">
+          <p>Explain "pull" and the tag system</p>
+          <p>"docker images" same thing that "docker image ls"</p>
+          <p>Before image name: options; after image name: command that will run in the container</p>
+        </aside>
+      </section>
+
+      <section>
+        <h2>How to run a Docker container</h2>
+
+        <br><br>
+
+        <h3>Run a container in detached mode</h3>
+
+        <pre class="fragment"><code class="shell">
+  $ docker run -d nginx
+        </code></pre>
+
+        <pre class="fragment"><code class="shell">
+  $ docker ps
+        </code></pre>
+
+        <pre class="fragment"><code class="shell">
+  $ docker ps -a
+        </code></pre>
+
+        <aside class="notes">
+          <p>"docker ps" same thing that "docker container ls"</p>
+        </aside>
+      </section>
+
+      <section>
+        <h2>How to run a Docker container</h2>
+
+        <br><br>
+
+        <h3>A more usefull example</h3>
+
+        <pre class="fragment"><code class="shell">
+  $ touch /tmp/index.html
+        </code></pre>
+
+        <pre class="fragment"><code class="shell">
+  $ docker run -d --name nginx-container -p 8001:80 -v /tmp/index.html:/usr/share/nginx/html/index.html:ro nginx
+        </code></pre>
+
+        <pre class="fragment"><code class="shell">
+  $ docker ps
+  $ docker exec nginx-container cat /usr/share/nginx/html/index.html
+        </code></pre>
+
+        <ul>
+          <li class="fragment">Access the server through <a href="http://localhost:8000/">localhost:8001</a></li>
         </ul>
 
         <aside class="notes">
-          <p>"docker pull debian:jessie-slim" explain "pull" and the tag system</p>
-          <p>"docker images" same thing that "docker image ls"</p>
-          <p>"docker run -i -t --rm debian:jessie-slim"</p>
         </aside>
       </section>
 
       <section>
-        <h2>How to build a Docker container</h2>
+        <h2>How to run a Docker container</h2>
 
         <br><br>
 
-        <h3 class=fragment>Let's create (and run) a MySQL container</h3>
+        <h3>Let's clean</h3>
+
+        <pre class="fragment"><code class="shell">
+  $ docker rm nginx-container
+        </code></pre>
+
+        <pre class="fragment"><code class="shell">
+  $ docker rmi nginx
+        </code></pre>
 
         <aside class="notes">
-          <!-- -->
         </aside>
       </section>
 
       <section>
-        <h2>How to build a Docker container</h2>
+        <h2>How to run a Docker container</h2>
 
         <br><br>
 
-        <pre><code class="dockerfile">
-FROM debian:jessie-slim
-MAINTAINER Damien Carcel &lt;damien.carcel@akeneo.com&gt;
+        <h3>Summary</h3>
 
-ENV DEBIAN_FRONTEND noninteractive
+        <table style="width: 100%">
+          <tr>
+            <th style="width: 30%; text-align: center;">Command</th>
+            <th style="width: 70%; text-align: center;">Usage</th>
+          </tr>
+          <tr>
+            <td style="width: 40%; text-align: left;">docker pull</td>
+            <td style="width: 60%; text-align: justify;">Pull an image from a repository</td>
+          </tr>
+          <tr>
+            <td style="width: 40%; text-align: left;">docker images</td>
+            <td style="width: 60%; text-align: justify;">List all images on your machine</td>
+          </tr>
+          <tr>
+            <td style="width: 40%; text-align: left;">docker ps [-a]</td>
+            <td style="width: 60%; text-align: justify;">List all containers on you machine</td>
+          </tr>
+          <tr>
+            <td style="width: 40%; text-align: left;">docker run -i -t --rm image command</td>
+            <td style="width: 60%; text-align: justify;">Run a container in interactive mode</td>
+          </tr>
+          <tr>
+            <td style="width: 40%; text-align: left;">docker run -d image</td>
+            <td style="width: 60%; text-align: justify;">Run a container in detached mode</td>
+          </tr>
+          <tr>
+            <td style="width: 40%; text-align: left;">docker exec container_name command</td>
+            <td style="width: 60%; text-align: justify;">Execute a command inside a running container</td>
+          </tr>
+          <tr>
+            <td style="width: 40%; text-align: left;">docker rm [-f -v] container_name|id</td>
+            <td style="width: 60%; text-align: justify;">Delete a container</td>
+          </tr>
+          <tr>
+            <td style="width: 40%; text-align: left;">docker rmi [-f] image_name|id</td>
+            <td style="width: 60%; text-align: justify;">Delete an image</td>
+          </tr>
+          <tr>
+            <td style="width: 40%; text-align: left;">docker system prune --volume</td>
+            <td style="width: 60%; text-align: justify;"> Clean everything</td>
+          </tr>
+        </table>
 
-# Install MySQL
-RUN apt-get update && \
-    apt-get --yes --quiet install mysql-server && \
-    apt-get clean && apt-get --yes --quiet autoremove --purge && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Configure MySQL so it listens to everything
-RUN sed -i "s/bind-address.*/#bind-address/" /etc/mysql/my.cnf
-
-EXPOSE 3306
-
-# Run MySQL
-CMD ["mysqld"]
-                </code></pre>
-
-        <aside class="notes">
-          <!-- -->
-        </aside>
-      </section>
-
-      <section>
-        <h2>How to build a Docker container</h2>
-
-        <br><br>
-
-        <pre class="fragment"><code class="bash">
-    $ docker build -t custom/mysql .
-    $ docker images
-                </code></pre>
-
-        <pre class="fragment"><code class="bash">
-    $ docker run -d --name custom-mysql --port 33006:3306 custom/mysql
-    $ docker ps
-                </code></pre>
-
-        <pre class="fragment"><code class="bash">
-    $ docker exec -i -t custom-mysql bash
-    # mysql -u root
-    > GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'; FLUSH PRIVILEGES;
-                </code></pre>
-
-        <pre class="fragment"><code class="bash">
-    $ mysql -h 127.0.0.1 -P 33006 -u root
-                </code></pre>
-
-        <aside class="notes">
-          <p>Build and present "build" command</p>
-          <p>Explain how layers and final image are generated</p>
-          <p>"docker ps" === "docker container ls"</p>
-        </aside>
-      </section>
-
-      <section>
-        <h2>How to build a Docker container</h2>
-
-        <br><br>
-
-        <pre class="fragment"><code class="yaml">
-# app/config/pim_parameters.yml
-parameters:
-    database_driver: pdo_mysql
-    database_host: 127.0.0.1
-    database_port: 33006        # This is what changed
-    database_name: akeneo_pim
-    database_user: akeneo_pim
-    database_password: akeneo_pim
-    locale: en
-    secret: ThisTokenIsNotSoSecretChangeIt
-                </code></pre>
-
-        <aside class="notes">
-          <p>"docker rm -f -v custom-mysql"</p>
-          <p>"docker rmi custom/mysql"</p>
-          <p>"docker system prune --volume"</p>
-        </aside>
-      </section>
-
-      <section>
-        <h2>How to build a Docker container</h2>
-
-        <br><br>
-
-        <h3>A world of container: <a href="https://hub.docker.com/">Docker Hub</a></h3>
+        <ul>
+          <li class="fragment">A world of container: <a href="https://hub.docker.com/">Docker Hub</a></li>
+        </ul>
 
         <aside class="notes">
           <p>Present the Hub and our GitHub repository</p>
@@ -317,12 +347,12 @@ networks:
           <li class="fragment">Let's change a few things in it and configure the PIM</li>
         </ul>
 
-        <pre class="fragment"><code class="bash">
-    $ docker-compose up -d
+        <pre class="fragment"><code class="shell">
+  $ docker-compose up -d
                 </code></pre>
 
-        <pre class="fragment"><code class="bash">
-    $ docker-compose ps
+        <pre class="fragment"><code class="shell">
+  $ docker-compose ps
                 </code></pre>
 
         <aside class="notes">
@@ -337,9 +367,9 @@ networks:
 
         <br><br>
 
-        <pre class="fragment"><code class="bash">
-    $ bin/docker/pim-dependencies.sh
-    $ bin/docker/pim-initialize.sh
+        <pre class="fragment"><code class="shell">
+  $ bin/docker/pim-dependencies.sh
+  $ bin/docker/pim-initialize.sh
                 </code></pre>
 
         <br><br>
