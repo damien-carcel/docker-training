@@ -1,167 +1,167 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+  <meta charset="utf-8">
 
-    <title>How to develop Akeneo PIM with Docker and Docker Compose</title>
+  <title>How to develop Akeneo PIM with Docker and Docker Compose</title>
 
-    <meta name="description" content="Akeneo development with Docker">
-    <meta name="author" content="Damien Carcel <damien.carcel@akeneo.com>">
+  <meta name="description" content="Akeneo development with Docker">
+  <meta name="author" content="Damien Carcel <damien.carcel@akeneo.com>">
 
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-    <link rel="stylesheet" href="bower_components/reveal.js/css/reveal.css">
+  <link rel="stylesheet" href="bower_components/reveal.js/css/reveal.css">
 
-    <link rel="stylesheet" href="bower_components/akeneo-revealjs-theme/css/akeneo.css" id="theme">
+  <link rel="stylesheet" href="bower_components/akeneo-revealjs-theme/css/akeneo.css" id="theme">
 
-    <!-- Code syntax highlighting -->
-    <link rel="stylesheet" href="bower_components/reveal.js/lib/css/zenburn.css">
+  <!-- Code syntax highlighting -->
+  <link rel="stylesheet" href="bower_components/reveal.js/lib/css/zenburn.css">
 
-    <!-- Printing and PDF exports -->
-    <script>
-        'use strict';
+  <!-- Printing and PDF exports -->
+  <script>
+    'use strict';
 
-        var link = document.createElement( 'link' );
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = window.location.search.match( /print-pdf/gi ) ? 'bower_components/reveal.js/css/print/pdf.css' : 'bower_components/reveal.js/css/print/paper.css';
-        document.getElementsByTagName( 'head' )[0].appendChild( link );
-    </script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'bower_components/reveal.js/css/print/pdf.css' : 'bower_components/reveal.js/css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
 </head>
 
 <body>
 <div class="reveal">
-    <div class="slides">
+  <div class="slides">
 
-        <section class="center">
-            <h1>Akeneo development<br>with Docker</h1>
+    <section class="center">
+      <h1>Akeneo development<br>with Docker</h1>
 
-            <br><br>
+      <br><br>
 
-            <h3>Damien Carcel</h3>
+      <h3>Damien Carcel</h3>
 
-            <br><br><br><br>
+      <br><br><br><br>
 
-            <h4><a href="http://docker-training.carcel.net/">docker-training.carcel.net</a></h4>
-        </section>
+      <h4><a href="http://docker-training.carcel.net/">docker-training.carcel.net</a></h4>
+    </section>
 
-        <section id="plan">
-            <section>
-                <h2>What will we see?</h2>
+    <section id="plan">
+      <section>
+        <h2>What will we see?</h2>
 
-                <br><br>
+        <br><br>
 
-                <ul>
-                    <li>Introduction to Docker</li>
-                    <li>Building and using a container</li>
-                    <li>Running Akeneo with Docker Compose</li>
-                    <li>Testing and Debugging</li>
-                </ul>
+        <ul>
+          <li>Introduction to Docker</li>
+          <li>Using containers</li>
+          <li>Running Akeneo with Docker Compose</li>
+          <li>Testing and Debugging</li>
+        </ul>
 
-                <aside class="notes">
-                    <!-- -->
-                </aside>
-            </section>
-        </section>
+        <aside class="notes">
+          <!-- -->
+        </aside>
+      </section>
+    </section>
 
-        <section id="introduction">
-            <section>
-                <h2>What is (not) Docker</h2>
+    <section id="introduction">
+      <section>
+        <h2>What is (not) Docker</h2>
 
-                <ul>
-                    <li class=fragment>Docker is not (really) a virtual machine (VM)</li>
-                </ul>
-                <br><br>
+        <ul>
+          <li class=fragment>Docker is not (really) a virtual machine (VM)</li>
+        </ul>
+        <br><br>
 
-                <img src="images/virtualization.svg" class="fragment">
+        <img src="images/virtualization.svg" class="fragment">
 
-                <aside class="notes">
-                    <!-- -->
-                </aside>
-            </section>
+        <aside class="notes">
+          <!-- -->
+        </aside>
+      </section>
 
-            <section>
-                <h2>What is Docker</h2>
+      <section>
+        <h2>What is Docker</h2>
 
-                <br><br>
+        <br><br>
 
-                <img src="images/vms_vs_containers.jpg">
-                <p>Virtual machines vs. containers</p>
+        <img src="images/vms_vs_containers.jpg">
+        <p>Virtual machines vs. containers</p>
 
-                <aside class="notes">
-                    <p>Containers remove the hardware virtualization and the guest system</p>
-                    <p>Except on Mac OS and Windows => will be important for Elasticsearch</p>
-                </aside>
-            </section>
+        <aside class="notes">
+          <p>Containers remove the hardware virtualization and the guest system</p>
+          <p>Except on Mac OS and Windows => will be important for Elasticsearch</p>
+        </aside>
+      </section>
 
-            <section>
-                <h2>How does it works</h2>
+      <section>
+        <h2>How does it works</h2>
 
-                <br><br>
+        <br><br>
 
-                <p>Docker specificity</p>
-                <ul>
-                    <li class="fragment">Dockerfile → Image → Containers</li>
-                    <li class="fragment">Only one process in the container</li>
-                </ul>
+        <h3>Docker specificity</h3>
+        <ul>
+          <li class="fragment">Dockerfile → Image → Containers</li>
+          <li class="fragment">Only one process in the container</li>
+        </ul>
 
-                <aside class="notes">
-                    <!-- -->
-                </aside>
-            </section>
+        <aside class="notes">
+          <!-- -->
+        </aside>
+      </section>
+    </section>
 
-            <section>
-                <h2>Your turn</h2>
+    <section id="container-example">
+      <section>
+        <h2>How to build a Docker container</h2>
 
-                <br><br>
+        <img src="images/docker.png">
 
-                <h3>Run a container</h3>
-                <ul>
-                    <li class="fragment">Pull the Debian slim image</li>
-                    <li class="fragment">Run it</li>
-                </ul>
+        <aside class="notes">
+          <!-- -->
+        </aside>
+      </section>
 
-                <aside class="notes">
-                    <p>"docker pull debian:jessie-slim" explain "pull" and the tag system</p>
-                    <p>"docker images" same thing that "docker image ls"</p>
-                    <p>"docker run -i -t --rm debian:jessie-slim"</p>
-                </aside>
-            </section>
-        </section>
+      <section>
+        <h2>Your turn</h2>
 
-        <section id="container-example">
-            <section>
-                <h2>How to build a Docker container</h2>
+        <br><br>
 
-                <img src="images/docker.png">
+        <h3>Run a container</h3>
+        <ul>
+          <li class="fragment">Pull the Debian slim image</li>
+          <li class="fragment">Run it</li>
+        </ul>
 
-                <aside class="notes">
-                    <!-- -->
-                </aside>
-            </section>
+        <aside class="notes">
+          <p>"docker pull debian:jessie-slim" explain "pull" and the tag system</p>
+          <p>"docker images" same thing that "docker image ls"</p>
+          <p>"docker run -i -t --rm debian:jessie-slim"</p>
+        </aside>
+      </section>
 
+      <section>
+        <h2>How to build a Docker container</h2>
 
-            <section>
-                <h2>How to build a Docker container</h2>
+        <br><br>
 
-                <br><br>
+        <h3 class=fragment>Let's create (and run) a MySQL container</h3>
 
-                <h3 class=fragment>Let's create (and run) a MySQL container</h3>
+        <aside class="notes">
+          <!-- -->
+        </aside>
+      </section>
 
-                <aside class="notes">
-                    <!-- -->
-                </aside>
-            </section>
+      <section>
+        <h2>How to build a Docker container</h2>
 
-            <section>
-                <h2>How to build a Docker container</h2>
+        <br><br>
 
-                <br><br>
-
-                <pre><code class="dockerfile">
+        <pre><code class="dockerfile">
 FROM debian:jessie-slim
 MAINTAINER Damien Carcel &lt;damien.carcel@akeneo.com&gt;
 
@@ -182,49 +182,49 @@ EXPOSE 3306
 CMD ["mysqld"]
                 </code></pre>
 
-                <aside class="notes">
-                    <!-- -->
-                </aside>
-            </section>
+        <aside class="notes">
+          <!-- -->
+        </aside>
+      </section>
 
-            <section>
-                <h2>How to build a Docker container</h2>
+      <section>
+        <h2>How to build a Docker container</h2>
 
-                <br><br>
+        <br><br>
 
-                <pre class="fragment"><code class="bash">
+        <pre class="fragment"><code class="bash">
     $ docker build -t custom/mysql .
     $ docker images
                 </code></pre>
 
-                <pre class="fragment"><code class="bash">
+        <pre class="fragment"><code class="bash">
     $ docker run -d --name custom-mysql --port 33006:3306 custom/mysql
     $ docker ps
                 </code></pre>
 
-                <pre class="fragment"><code class="bash">
+        <pre class="fragment"><code class="bash">
     $ docker exec -i -t custom-mysql bash
     # mysql -u root
     > GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'; FLUSH PRIVILEGES;
                 </code></pre>
 
-                <pre class="fragment"><code class="bash">
+        <pre class="fragment"><code class="bash">
     $ mysql -h 127.0.0.1 -P 33006 -u root
                 </code></pre>
 
-                <aside class="notes">
-                    <p>Build and present "build" command</p>
-                    <p>Explain how layers and final image are generated</p>
-                    <p>"docker ps" === "docker container ls"</p>
-                </aside>
-            </section>
+        <aside class="notes">
+          <p>Build and present "build" command</p>
+          <p>Explain how layers and final image are generated</p>
+          <p>"docker ps" === "docker container ls"</p>
+        </aside>
+      </section>
 
-            <section>
-                <h2>How to build a Docker container</h2>
+      <section>
+        <h2>How to build a Docker container</h2>
 
-                <br><br>
+        <br><br>
 
-                <pre class="fragment"><code class="yaml">
+        <pre class="fragment"><code class="yaml">
 # app/config/pim_parameters.yml
 parameters:
     database_driver: pdo_mysql
@@ -237,44 +237,44 @@ parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
                 </code></pre>
 
-                <aside class="notes">
-                    <p>"docker rm -f -v custom-mysql"</p>
-                    <p>"docker rmi custom/mysql"</p>
-                    <p>"docker system prune --volume"</p>
-                </aside>
-            </section>
+        <aside class="notes">
+          <p>"docker rm -f -v custom-mysql"</p>
+          <p>"docker rmi custom/mysql"</p>
+          <p>"docker system prune --volume"</p>
+        </aside>
+      </section>
 
-            <section>
-                <h2>How to build a Docker container</h2>
+      <section>
+        <h2>How to build a Docker container</h2>
 
-                <br><br>
+        <br><br>
 
-                <h3>A world of container: <a href="https://hub.docker.com/">Docker Hub</a></h3>
+        <h3>A world of container: <a href="https://hub.docker.com/">Docker Hub</a></h3>
 
-                <aside class="notes">
-                    <p>Present the Hub and our GitHub repository</p>
-                </aside>
-            </section>
-        </section>
+        <aside class="notes">
+          <p>Present the Hub and our GitHub repository</p>
+        </aside>
+      </section>
+    </section>
 
-        <section id="docker-compose">
-            <section>
-                <h2>Docker compose</h2>
+    <section id="docker-compose">
+      <section>
+        <h2>Docker compose</h2>
 
-                <img src="images/compose.png">
+        <img src="images/compose.png">
 
-                <aside class="notes">
-                    <p>Tool for defining and running multi-container Docker applications</p>
-                    <p>Based on a YAML file</p>
-                </aside>
-            </section>
+        <aside class="notes">
+          <p>Tool for defining and running multi-container Docker applications</p>
+          <p>Based on a YAML file</p>
+        </aside>
+      </section>
 
-            <section>
-                <h2>Docker compose</h2>
+      <section>
+        <h2>Docker compose</h2>
 
-                <br><br>
+        <br><br>
 
-                <pre><code class="yaml"># docker-compose.yml
+        <pre><code class="yaml"># docker-compose.yml
 version: '2'
 
 services:
@@ -296,130 +296,150 @@ networks:
   akeneo: ~
                 </code></pre>
 
-                <aside class="notes">
-                    <!-- -->
-                </aside>
-            </section>
+        <aside class="notes">
+          <!-- -->
+        </aside>
+      </section>
 
-            <section>
-                <h2>Docker compose</h2>
+      <section>
+        <h2>Docker compose</h2>
 
-                <br><br>
+        <br><br>
 
-                <h3>Let's go to the PIM!</h3>
-                <ul>
-                    <li class="fragment">
-                        Your system will (maybe) not work with
-                        <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-cli-run-prod-mode">Elasticsearch!</a>
-                    </li>
-                    <li class="fragment">Copy <code>docker-compose.yml.dist</code> as <code>docker-compose.yml</code></li>
-                    <li class="fragment">Let's change a few things in it and configure the PIM</li>
-                </ul>
+        <h3>Let's go to the PIM!</h3>
+        <ul>
+          <li class="fragment">
+            Your system will (maybe) not work with
+            <a
+              href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-cli-run-prod-mode">Elasticsearch!</a>
+          </li>
+          <li class="fragment">Copy <code>docker-compose.yml.dist</code> as <code>docker-compose.yml</code></li>
+          <li class="fragment">Let's change a few things in it and configure the PIM</li>
+        </ul>
 
-                <pre class="fragment"><code class="bash">
+        <pre class="fragment"><code class="bash">
     $ docker-compose up -d
                 </code></pre>
 
-                <pre class="fragment"><code class="bash">
+        <pre class="fragment"><code class="bash">
     $ docker-compose ps
                 </code></pre>
 
-                <aside class="notes">
-                    <p>Let's edit the yaml file together</p>
-                    <p>Beware of composer cache and config</p>
-                    <p>Show the scripts before using them</p>
-                </aside>
-            </section>
+        <aside class="notes">
+          <p>Let's edit the yaml file together</p>
+          <p>Beware of composer cache and config</p>
+          <p>Show the scripts before using them</p>
+        </aside>
+      </section>
 
-            <section>
-                <h2>Docker compose</h2>
+      <section>
+        <h2>Docker compose</h2>
 
-                <br><br>
+        <br><br>
 
-                <pre class="fragment"><code class="bash">
+        <pre class="fragment"><code class="bash">
     $ bin/docker/pim-dependencies.sh
     $ bin/docker/pim-initialize.sh
                 </code></pre>
 
-                <br><br>
+        <br><br>
 
-                <h3 class="fragment">Access the PIM to <a href="http://localhost:8080/">localhost:8080</a></h3>
+        <h3 class="fragment">Access the PIM to <a href="http://localhost:8080/">localhost:8080</a></h3>
 
-                <aside class="notes">
-                </aside>
-            </section>
-        </section>
+        <aside class="notes">
+        </aside>
+      </section>
+    </section>
 
-        <section id="advanced">
-            <section>
-                <h2>Advanced usage: testing and debugging</h2>
+    <section id="advanced">
+      <section>
+        <h2>Advanced usage: testing and debugging</h2>
 
-                <img src="images/cat.png">
+        <img src="images/cat.png">
 
-                <aside class="notes">
-                    <!-- -->
-                </aside>
-            </section>
+        <aside class="notes">
+          <!-- -->
+        </aside>
+      </section>
 
-            <section>
-                <h2>Advanced usage: testing and debugging</h2>
+      <section>
+        <h2>Advanced usage: testing and debugging</h2>
 
-                <ul>
-                    <li class="fragment">Behat</li>
-                    <li class="fragment">Xdebug CLI</li>
-                    <li class="fragment">Xdebug UI</li>
-                    <li class="fragment">php-meminfo</li>
-                </ul>
+        <ul>
+          <li class="fragment">Behat</li>
+          <li class="fragment">Xdebug CLI</li>
+          <li class="fragment">Xdebug UI</li>
+          <li class="fragment">php-meminfo</li>
+        </ul>
 
-                <aside class="notes">
-                    <!-- -->
-                </aside>
-            </section>
-        </section>
+        <aside class="notes">
+          <!-- -->
+        </aside>
+      </section>
+    </section>
 
-    </div>
+  </div>
 </div>
 
 <script src="bower_components/reveal.js/lib/js/head.min.js"></script>
 <script src="bower_components/reveal.js/js/reveal.js"></script>
 
 <footer class="footer">
-    <ul>
-        <li>
-            <img src="bower_components/akeneo-revealjs-theme/images/logo-svg-black.svg" width="200" style="vertical-align:middle">
-        </li>
-        <li>
-            <span class="name">Damien Carcel</span>
-        </li>
-    </ul>
+  <ul>
+    <li>
+      <img src="bower_components/akeneo-revealjs-theme/images/logo-svg-black.svg" width="200"
+           style="vertical-align:middle">
+    </li>
+    <li>
+      <span class="name">Damien Carcel</span>
+    </li>
+  </ul>
 </footer>
 
 <script>
-    'use strict';
+  'use strict';
 
-    // Full list of configuration options available at:
-    // https://github.com/hakimel/reveal.js#configuration
-    Reveal.initialize({
-        controls: false,
-        progress: true,
-        history: true,
-        center: false,
-        slideNumber: true,
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    controls: false,
+    progress: true,
+    history: true,
+    center: false,
+    slideNumber: true,
 
-        transition: 'slide', // none/fade/slide/convex/concave/zoom
-        parallaxBackgroundImage: 'bower_components/akeneo-revealjs-theme/images/slide-background-white-parallax.png',
-        parallaxBackgroundSize: '2100px 768px',
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+    parallaxBackgroundImage: 'bower_components/akeneo-revealjs-theme/images/slide-background-white-parallax.png',
+    parallaxBackgroundSize: '2100px 768px',
 
-        // Optional reveal.js plugins
-        dependencies: [
-            { src: 'bower_components/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-            { src: 'bower_components/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-            { src: 'bower_components/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-            { src: 'bower_components/reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
-            { src: 'bower_components/reveal.js/plugin/zoom-js/zoom.js', async: true },
-            { src: 'bower_components/reveal.js/plugin/notes/notes.js', async: true }
-        ]
-    });
+    // Optional reveal.js plugins
+    dependencies: [
+      {
+        src: 'bower_components/reveal.js/lib/js/classList.js', condition: function () {
+          return !document.body.classList;
+        }
+      },
+      {
+        src: 'bower_components/reveal.js/plugin/markdown/marked.js', condition: function () {
+          return !!document.querySelector('[data-markdown]');
+        }
+      },
+      {
+        src: 'bower_components/reveal.js/plugin/markdown/markdown.js', condition: function () {
+          return !!document.querySelector('[data-markdown]');
+        }
+      },
+      {
+        src: 'bower_components/reveal.js/plugin/highlight/highlight.js', async: true, condition: function () {
+          return !!document.querySelector('pre code');
+        }, callback: function () {
+          hljs.initHighlightingOnLoad();
+        }
+      },
+      {src: 'bower_components/reveal.js/plugin/zoom-js/zoom.js', async: true},
+      {src: 'bower_components/reveal.js/plugin/notes/notes.js', async: true}
+    ]
+  });
 
 </script>
 </body>
