@@ -94,7 +94,7 @@
 
         <aside class="notes">
           <p>Containers remove the hardware virtualization and the guest system</p>
-          <p>Except on Mac OS and Windows => will be important for Elasticsearch</p>
+          <p>Except on Mac OS and Windows</p>
         </aside>
       </section>
 
@@ -162,20 +162,20 @@
         </ul>
 
         <pre class="fragment"><code class="shell">
-  $ docker pull debian:jessie-slim
+  $ docker image pull debian:jessie-slim
         </code></pre>
 
         <pre class="fragment"><code class="shell">
-  $ docker images
+  $ docker image ls
         </code></pre>
 
         <pre class="fragment"><code class="shell">
-  $ docker run -i -t --rm debian:jessie-slim bash
+  $ docker container run -i -t --rm debian:jessie-slim bash
         </code></pre>
 
         <aside class="notes">
           <p>Explain "pull" and the tag system</p>
-          <p>"docker images" same thing that "docker image ls"</p>
+          <p>"docker image ls" same thing that "docker images"</p>
           <p>Before image name: options; after image name: command that will run in the container</p>
         </aside>
       </section>
@@ -188,19 +188,19 @@
         <h3>Run a container in detached mode</h3>
 
         <pre class="fragment"><code class="shell">
-  $ docker run -d nginx
+  $ docker container run -d nginx
         </code></pre>
 
         <pre class="fragment"><code class="shell">
-  $ docker ps
+  $ docker container ls
         </code></pre>
 
         <pre class="fragment"><code class="shell">
-  $ docker ps -a
+  $ docker container ls -a
         </code></pre>
 
         <aside class="notes">
-          <p>"docker ps" same thing that "docker container ls"</p>
+          <p>"docker container ls" same thing that "docker ps"</p>
         </aside>
       </section>
 
@@ -216,19 +216,22 @@
         </code></pre>
 
         <pre class="fragment"><code class="shell">
-  $ docker run -d --name nginx-container -p 8001:80 -v /tmp/index.html:/usr/share/nginx/html/index.html:ro nginx
+  $ docker container run -d --name nginx-container -p 8000:80
+      -v /tmp/index.html:/usr/share/nginx/html/index.html:ro nginx
         </code></pre>
 
         <pre class="fragment"><code class="shell">
-  $ docker ps
+  $ docker container ls
   $ docker exec nginx-container cat /usr/share/nginx/html/index.html
         </code></pre>
 
         <ul>
-          <li class="fragment">Access the server through <a href="http://localhost:8000/">localhost:8001</a></li>
+          <li class="fragment">Access the server through <a href="http://localhost:8000/">localhost:8000</a></li>
         </ul>
 
         <aside class="notes">
+            <p>"docker container run" => run a command in a new container</p>
+            <p>"docker container exec" => run a command in an existing container</p>
         </aside>
       </section>
 
@@ -240,14 +243,15 @@
         <h3>Let's clean</h3>
 
         <pre class="fragment"><code class="shell">
-  $ docker rm nginx-container
+  $ docker container rm nginx-container
         </code></pre>
 
         <pre class="fragment"><code class="shell">
-  $ docker rmi nginx
+  $ docker image rm nginx
         </code></pre>
 
         <aside class="notes">
+            <p>"docker image rm" same thing that "docker rmi"</p>
         </aside>
       </section>
 
@@ -259,56 +263,105 @@
         <h3>Summary</h3>
 
         <table style="width: 100%">
-          <tr>
-            <th style="width: 30%; text-align: center;">Command</th>
-            <th style="width: 70%; text-align: center;">Usage</th>
-          </tr>
-          <tr>
-            <td style="width: 40%; text-align: left;">docker pull</td>
-            <td style="width: 60%; text-align: justify;">Pull an image from a repository</td>
-          </tr>
-          <tr>
-            <td style="width: 40%; text-align: left;">docker images</td>
-            <td style="width: 60%; text-align: justify;">List all images on your machine</td>
-          </tr>
-          <tr>
-            <td style="width: 40%; text-align: left;">docker ps [-a]</td>
-            <td style="width: 60%; text-align: justify;">List all containers on you machine</td>
-          </tr>
-          <tr>
-            <td style="width: 40%; text-align: left;">docker run -i -t --rm image command</td>
-            <td style="width: 60%; text-align: justify;">Run a container in interactive mode</td>
-          </tr>
-          <tr>
-            <td style="width: 40%; text-align: left;">docker run -d image</td>
-            <td style="width: 60%; text-align: justify;">Run a container in detached mode</td>
-          </tr>
-          <tr>
-            <td style="width: 40%; text-align: left;">docker exec container_name command</td>
-            <td style="width: 60%; text-align: justify;">Execute a command inside a running container</td>
-          </tr>
-          <tr>
-            <td style="width: 40%; text-align: left;">docker rm [-f -v] container_name|id</td>
-            <td style="width: 60%; text-align: justify;">Delete a container</td>
-          </tr>
-          <tr>
-            <td style="width: 40%; text-align: left;">docker rmi [-f] image_name|id</td>
-            <td style="width: 60%; text-align: justify;">Delete an image</td>
-          </tr>
-          <tr>
-            <td style="width: 40%; text-align: left;">docker system prune --volume</td>
-            <td style="width: 60%; text-align: justify;"> Clean everything</td>
-          </tr>
+            <tr>
+                <th style="width: 50%; text-align: center;">Long command</th>
+                <th style="width: 50%; text-align: center;">Shortcut</th>
+            </tr>
+            <tr>
+                <td style="width: 50%; text-align: left;">docker image pull</td>
+                <td style="width: 50%; text-align: justify;">Pull an image from a repository</td>
+            </tr>
+            <tr>
+                <td style="width: 50%; text-align: left;">docker image ls</td>
+                <td style="width: 50%; text-align: justify;">List all images on your machine</td>
+            </tr>
+            <tr>
+                <td style="width: 50%; text-align: left;">docker container ls [-a]</td>
+                <td style="width: 50%; text-align: justify;">List all containers on you machine</td>
+            </tr>
+            <tr>
+                <td style="width: 50%; text-align: left;">docker container run -i -t --rm image command</td>
+                <td style="width: 50%; text-align: justify;">Run a container in interactive mode</td>
+            </tr>
+            <tr>
+                <td style="width: 50%; text-align: left;">docker container run -d image</td>
+                <td style="width: 50%; text-align: justify;">Run a container in detached mode</td>
+            </tr>
+            <tr>
+                <td style="width: 50%; text-align: left;">docker container exec container_name command</td>
+                <td style="width: 50%; text-align: justify;">Execute a command inside a running container</td>
+            </tr>
+            <tr>
+                <td style="width: 50%; text-align: left;">docker container rm [-f -v] container_name|id</td>
+                <td style="width: 50%; text-align: justify;">Delete a container</td>
+            </tr>
+            <tr>
+                <td style="width: 50%; text-align: left;">docker image rm [-f] image_name|id</td>
+                <td style="width: 50%; text-align: justify;">Delete an image</td>
+            </tr>
+            <tr>
+                <td style="width: 50%; text-align: left;">docker system prune --volume</td>
+                <td style="width: 50%; text-align: justify;"> Clean everything</td>
+            </tr>
         </table>
 
-        <ul>
-          <li class="fragment">A world of container: <a href="https://hub.docker.com/">Docker Hub</a></li>
-        </ul>
-
         <aside class="notes">
-          <p>Present the Hub and our GitHub repository</p>
         </aside>
       </section>
+
+        <section>
+            <h2>How to run a Docker container</h2>
+
+            <br><br>
+
+            <h3>Summary</h3>
+
+            <table style="width: 100%">
+                <tr>
+                    <th style="width: 50%; text-align: center;">Command</th>
+                    <th style="width: 50%; text-align: center;">Usage</th>
+                </tr>
+                <tr>
+                    <td style="width: 50%; text-align: center;">docker image pull</td>
+                    <td style="width: 50%; text-align: center;">docker pull</td>
+                </tr>
+                <tr>
+                    <td style="width: 50%; text-align: center;">docker image ls</td>
+                    <td style="width: 50%; text-align: center;">docker images</td>
+                </tr>
+                <tr>
+                    <td style="width: 50%; text-align: center;">docker container ls [-a]</td>
+                    <td style="width: 50%; text-align: center;">docker ps [-a]</td>
+                </tr>
+                <tr>
+                    <td style="width: 50%; text-align: center;">docker container run</td>
+                    <td style="width: 50%; text-align: center;">docker run</td>
+                </tr>
+                <tr>
+                    <td style="width: 50%; text-align: center;">docker container exec</td>
+                    <td style="width: 50%; text-align: center;">docker exec</td>
+                </tr>
+                <tr>
+                    <td style="width: 50%; text-align: center;">docker container rm</td>
+                    <td style="width: 50%; text-align: center;">docker rm</td>
+                </tr>
+                <tr>
+                    <td style="width: 50%; text-align: center;">docker image rm</td>
+                    <td style="width: 50%; text-align: center;">docker rmi</td>
+                </tr>
+            </table>
+
+            <br><br>
+
+            <ul>
+                <li class="fragment">A world of container: <a href="https://hub.docker.com/">Docker Hub</a></li>
+            </ul>
+
+            <aside class="notes">
+                <p>Run just "docker" to see the list of commands available</p>
+                <p>Present the Hub and our GitHub repository</p>
+            </aside>
+        </section>
     </section>
 
     <section id="docker-compose">
@@ -362,11 +415,6 @@ networks:
 
         <h3>Let's go to the PIM!</h3>
         <ul>
-          <li class="fragment">
-            Your system will (maybe) not work with
-            <a
-              href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-cli-run-prod-mode">Elasticsearch!</a>
-          </li>
           <li class="fragment">Copy <code>docker-compose.yml.dist</code> as <code>docker-compose.yml</code></li>
           <li class="fragment">Let's change a few things in it and configure the PIM</li>
         </ul>
@@ -382,7 +430,6 @@ networks:
         <aside class="notes">
           <p>Let's edit the yaml file together</p>
           <p>Beware of composer cache and config</p>
-          <p>Show the scripts before using them</p>
         </aside>
       </section>
 
@@ -401,6 +448,7 @@ networks:
         <h3 class="fragment">Access the PIM to <a href="http://localhost:8080/">localhost:8080</a></h3>
 
         <aside class="notes">
+            <p>Show the scripts before using them</p>
         </aside>
       </section>
 
@@ -422,19 +470,23 @@ networks:
           </tr>
           <tr>
             <td style="width: 40%; text-align: left;">docker-compose up -d</td>
-            <td style="width: 60%; text-align: justify;">Start all the containers of your compose file</td>
+            <td style="width: 60%; text-align: justify;">Create the containers of your compose file</td>
           </tr>
           <tr>
             <td style="width: 40%; text-align: left;">docker-compose ps</td>
-            <td style="width: 60%; text-align: justify;">List all containers of your compose file</td>
+            <td style="width: 60%; text-align: justify;">List all containers of your compose file (running or not)</td>
           </tr>
           <tr>
             <td style="width: 40%; text-align: left;">docker-compose stop</td>
             <td style="width: 60%; text-align: justify;">Stop all containers of your compose file</td>
           </tr>
+            <tr>
+                <td style="width: 40%; text-align: left;">docker-compose start</td>
+                <td style="width: 60%; text-align: justify;">Restart all stopped containers of your compose file</td>
+            </tr>
           <tr>
             <td style="width: 40%; text-align: left;">docker-compose down [-v]</td>
-            <td style="width: 60%; text-align: justify;">Destroy all containers of your compose file</td>
+            <td style="width: 60%; text-align: justify;">Destroy all containers (and volumes) of your compose file</td>
           </tr>
         </table>
 
@@ -475,11 +527,11 @@ networks:
         <pre><code class="dockerfile">FROM akeneo/fpm:php-7.1
 
 RUN apt-get update && \
-      apt-get --no-install-recommends --no-install-suggests --yes --quiet install php7.1-dev && \
-      apt-get clean && apt-get --yes --quiet autoremove --purge && \
-      rm -rf  /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-              /usr/share/doc/* /usr/share/groff/* /usr/share/info/* /usr/share/linda/* \
-              /usr/share/lintian/* /usr/share/locale/* /usr/share/man/*
+    apt-get --yes --quiet install php7.1-dev && \
+    apt-get clean && apt-get --yes --quiet autoremove --purge && \
+    rm -rf  /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+            /usr/share/doc/* /usr/share/groff/* /usr/share/info/* /usr/share/linda/* \
+            /usr/share/lintian/* /usr/share/locale/* /usr/share/man/*
 
 RUN cd /tmp && \
     git clone https://github.com/BitOne/php-meminfo.git && \
