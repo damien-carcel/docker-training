@@ -264,15 +264,15 @@
 
         <table style="width: 100%">
             <tr>
-                <th style="width: 50%; text-align: center;">Long command</th>
-                <th style="width: 50%; text-align: center;">Shortcut</th>
+                <th style="width: 50%; text-align: center;">Command</th>
+                <th style="width: 50%; text-align: center;">Usage</th>
             </tr>
             <tr>
                 <td style="width: 50%; text-align: left;">docker image pull</td>
                 <td style="width: 50%; text-align: justify;">Pull an image from a repository</td>
             </tr>
             <tr>
-                <td style="width: 50%; text-align: left;">docker image ls</td>
+                <td style="width: 50%; text-align: left;">docker image ls [-a]</td>
                 <td style="width: 50%; text-align: justify;">List all images on your machine</td>
             </tr>
             <tr>
@@ -318,16 +318,16 @@
 
             <table style="width: 100%">
                 <tr>
-                    <th style="width: 50%; text-align: center;">Command</th>
-                    <th style="width: 50%; text-align: center;">Usage</th>
+                    <th style="width: 50%; text-align: center;">New commands</th>
+                    <th style="width: 50%; text-align: center;">Old commands</th>
                 </tr>
                 <tr>
                     <td style="width: 50%; text-align: center;">docker image pull</td>
                     <td style="width: 50%; text-align: center;">docker pull</td>
                 </tr>
                 <tr>
-                    <td style="width: 50%; text-align: center;">docker image ls</td>
-                    <td style="width: 50%; text-align: center;">docker images</td>
+                    <td style="width: 50%; text-align: center;">docker image ls [-a]</td>
+                    <td style="width: 50%; text-align: center;">docker images [-a]</td>
                 </tr>
                 <tr>
                     <td style="width: 50%; text-align: center;">docker container ls [-a]</td>
@@ -536,8 +536,8 @@ RUN apt-get update && \
 RUN cd /tmp && \
     git clone https://github.com/BitOne/php-meminfo.git && \
     cd php-meminfo/extension/php7 && \
-    ./configure --enable-meminfo && \
     phpize && \
+    ./configure --enable-meminfo && \
     make && \
     make install
 
