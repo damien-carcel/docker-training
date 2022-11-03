@@ -1,32 +1,27 @@
 {
   "name": "docker-training",
-  "version": "1.0.0",
-  "description": "How to develop Akeneo PIM with Docker and Docker Compose",
-  "keywords": [
-    "docker",
-    "compose",
-    "presentation",
-    "training",
-    "akeneo"
-  ],
+  "version": "2.0.0",
+  "description": "How to use Docker and Docker Compose for PHP development",
+  "main": "index.html",
+  "repository": "git@github.com:damien-carcel/docker-training.git",
   "author": "Damien Carcel <damien.carcel@akeneo.com>",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/damien-carcel/docker-training.git"
-  },
-  "bugs": {
-    "url": "https://github.com/damien-carcel/docker-training/issues"
-  },
-  "homepage": "https://github.com/damien-carcel/docker-training#README.md",
   "license": "MIT",
-  "main": "webpack.config.js",
+  "private": true,
   "scripts": {
-    "assets": "bower install"
+    "prettier:check": "prettier '**/*.{js,html}'",
+    "prettier:fix": "prettier '**/*.{js,html}' --write",
+    "stylelint:check": "stylelint '**/*.{css,html}'",
+    "stylelint:fix": "stylelint '**/*.{css,html}' --fix"
+  },
+  "dependencies": {
+    "reveal.js": "^4.4.0"
   },
   "devDependencies": {
-    "bower": "^1.8.2",
-    "eslint": "^4.12.1",
-    "stylelint": "^8.3.1",
-    "stylelint-config-standard": "^18.0.0"
+    "postcss-html": "^1.5.0",
+    "prettier": "^2.7.1",
+    "stylelint": "^14.14.0",
+    "stylelint-config-html": "^1.1.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^29.0.0"
   }
 }
