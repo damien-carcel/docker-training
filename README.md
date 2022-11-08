@@ -2,10 +2,21 @@
 
 ## How to use the presentation
 
-Run the following commands:
+- Install the dependencies:
+  ```bash
+  $ yarn install
+  ```
 
-```bash
-$ yarn install
-```
+- Build the artifacts:
+  ```bash
+  $ yarn build
+  ```
 
-Then open the file `index.html` in your favorite web browser.
+- Serve the presentation:
+  ```bash
+  $ yarn preview
+  ```
+
+## License
+
+This repository is under the MIT license. You can see the complete license in the [LICENSE](./LICENSE) file.
