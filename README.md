@@ -4,7 +4,7 @@
 
 - Install the dependencies:
   ```bash
-  $ yarn install
+  $ yarn install --frozen-lockfile --check-files
   ```
 
 - Build the artifacts:
