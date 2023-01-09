@@ -4,17 +4,18 @@
 
 - Install the dependencies:
   ```bash
-  $ yarn install --frozen-lockfile --check-files
+  $ docker compose run --rm node yarn install --frozen-lockfile --check-files
   ```
 
-- Build the artifacts:
+- Use the development server to serve the presentation and have hot-reloading while coding:
   ```bash
-  $ yarn build
+  $ docker compose run --rm node yarn dev --host
   ```
 
-- Serve the presentation:
+- or build the artifacts, then serve the presentation in a production-like mode:
   ```bash
-  $ yarn preview
+  $ docker compose run --rm node yarn build
+  $ docker compose run --rm node yarn preview --host
   ```
 
 ## License
