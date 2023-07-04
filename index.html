@@ -25,16 +25,14 @@
   <body>
     <div class="reveal">
       <div class="slides">
-        <section class="center">
-          <h1>How to develop in PHP<br />with Docker and Docker Compose</h1>
+        <section>
+          <h2>How to develop in PHP<br />with Docker and Docker Compose</h2>
 
           <br />
           <br />
 
           <h3>Damien Carcel</h3>
 
-          <br />
-          <br />
           <br />
           <br />
 
@@ -47,13 +45,13 @@
           <section>
             <h2>What will we see?</h2>
 
-            <br /><br />
+            <br />
 
             <ul>
               <li>Introduction to Docker</li>
               <li>How to run a Docker container</li>
-              <li>Running Akeneo with Docker Compose</li>
-              <li>Testing and Debugging</li>
+              <li>Running a Symfony app with Docker Compose</li>
+              <li>Debugging and profiling</li>
             </ul>
 
             <aside class="notes">
@@ -69,7 +67,8 @@
             <ul>
               <li class="fragment">Docker is not (really) a virtual machine (VM)</li>
             </ul>
-            <br /><br />
+
+            <br />
 
             <img src="images/virtualization.svg" class="fragment" />
 
@@ -81,7 +80,7 @@
           <section>
             <h2>What is Docker</h2>
 
-            <br /><br />
+            <br />
 
             <img src="images/vms_vs_containers.jpg" />
             <p>Virtual machines vs. containers</p>
@@ -95,7 +94,7 @@
           <section>
             <h2>How does it works</h2>
 
-            <br /><br />
+            <br />
 
             <h3>Docker specificity</h3>
             <ul>
@@ -111,18 +110,22 @@
           <section>
             <h2>A Dockerfile example</h2>
 
-            <br /><br />
+            <br />
 
             <pre><code class="dockerfile">
   FROM debian:stretch-slim
-  MAINTAINER Damien Carcel &lt;damien.carcel@akeneo.com&gt;
+
+  ARG DEBIAN_FRONTEND=noninteractive
 
   RUN apt-get update && \
-      apt-get --no-install-recommends --no-install-suggests --yes --quiet install php && \
-      apt-get clean && apt-get --yes --quiet autoremove --purge && \
-      rm -rf  /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-              /usr/share/doc/* /usr/share/groff/* /usr/share/info/* /usr/share/linda/* \
-              /usr/share/lintian/* /usr/share/locale/* /usr/share/man/*
+      apt-get --no-install-recommends --no-install-suggests install php && \
+      apt-get clean && \
+      apt-get autoremove --purge && \
+      rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+             /usr/share/doc/* /usr/share/groff/* \
+             /usr/share/info/* /usr/share/linda/* \
+             /usr/share/lintian/* /usr/share/locale/* \
+             /usr/share/man/*
 
         </code></pre>
 
@@ -146,7 +149,7 @@
           <section>
             <h2>How to run a Docker container</h2>
 
-            <br /><br />
+            <br />
 
             <h3>Run a container in interactive mode</h3>
 
@@ -176,7 +179,7 @@
           <section>
             <h2>How to run a Docker container</h2>
 
-            <br /><br />
+            <br />
 
             <h3>Run a container in detached mode</h3>
 
@@ -199,8 +202,6 @@
 
           <section>
             <h2>How to run a Docker container</h2>
-
-            <br /><br />
 
             <h3>A more usefull example</h3>
 
@@ -234,7 +235,7 @@
           <section>
             <h2>How to run a Docker container</h2>
 
-            <br /><br />
+            <br />
 
             <h3>Let's clean</h3>
 
@@ -254,7 +255,7 @@
           <section>
             <h2>How to run a Docker container</h2>
 
-            <br /><br />
+            <br />
 
             <h3>Summary</h3>
 
@@ -307,7 +308,7 @@
           <section>
             <h2>How to run a Docker container</h2>
 
-            <br /><br />
+            <br />
 
             <h3>Summary</h3>
 
@@ -346,7 +347,7 @@
               </tr>
             </table>
 
-            <br /><br />
+            <br />
 
             <ul>
               <li class="fragment">
@@ -377,28 +378,19 @@
           <section>
             <h2>Docker compose</h2>
 
-            <br /><br />
+            <br />
 
             <pre><code class="yaml"># docker-compose.yml
-version: '2'
-
 services:
   akeneo:
-    image: akeneo/php:5.6
+    image: php:8.2
     volumes:
         - ./:/home/docker/application
-    networks:
-      - akeneo
 
   mysql:
     image: mysql:5.5
     ports:
         - 33006:3306
-    networks:
-      - akeneo
-
-networks:
-  akeneo: ~
                 </code></pre>
 
             <aside class="notes">
@@ -409,7 +401,7 @@ networks:
           <section>
             <h2>Docker compose</h2>
 
-            <br /><br />
+            <br />
 
             <h3>Let's go to the PIM!</h3>
             <ul>
@@ -437,14 +429,14 @@ networks:
           <section>
             <h2>Docker compose</h2>
 
-            <br /><br />
+            <br />
 
             <pre class="fragment"><code class="shell">
   $ bin/docker/pim-dependencies.sh
   $ bin/docker/pim-initialize.sh
                 </code></pre>
 
-            <br /><br />
+            <br />
 
             <h3 class="fragment">
               Access the PIM to
@@ -459,7 +451,7 @@ networks:
           <section>
             <h2>Docker compose</h2>
 
-            <br /><br />
+            <br />
 
             <h3>Summary</h3>
 
@@ -582,23 +574,6 @@ RUN phpenmod meminfo
         </section>
       </div>
     </div>
-
-    <footer class="footer">
-      <ul>
-        <li>
-          <img
-            src="./node_modules/akeneo-revealjs-theme/images/logo-svg-black.svg"
-            width="200"
-            style="vertical-align: middle"
-            alt="logo"
-          />
-        </li>
-        <li>
-          <span class="name">Damien Carcel</span>
-        </li>
-      </ul>
-    </footer>
-
     <script type="module" src="/main.js"></script>
   </body>
 </html>
