@@ -32,13 +32,6 @@
           <br />
 
           <h3>Damien Carcel</h3>
-
-          <br />
-          <br />
-
-          <h4>
-            <a href="http://docker-training.carcel.dev/">docker-training.carcel.dev</a>
-          </h4>
         </section>
 
         <section id="plan">
@@ -62,18 +55,18 @@
 
         <section id="introduction">
           <section>
-            <h2>What is (not) Docker</h2>
+            <h2>What is (not) Docker?</h2>
 
             <ul>
-              <li class="fragment">Docker is not (really) a virtual machine (VM)</li>
+              <li class="fragment">Docker is not a virtual machine (VM)</li>
             </ul>
 
             <br />
 
-            <img src="images/virtualization.svg" class="fragment" />
+            <img alt="virtualization.svg" src="images/virtualization.svg" class="fragment" />
 
             <aside class="notes">
-              <!-- -->
+              A VM runs a full operating system on virtualized hardware.
             </aside>
           </section>
 
@@ -82,12 +75,31 @@
 
             <br />
 
-            <img src="images/vms_vs_containers.jpg" />
+            <img alt="vms_vs_containers.jpg" src="images/vms_vs_containers.jpg" />
             <p>Virtual machines vs. containers</p>
 
             <aside class="notes">
-              <p>Containers remove the hardware virtualization and the guest system</p>
-              <p>Except on Mac OS and Windows</p>
+              <p>Containers remove the hardware virtualization and the guest OS.</p>
+              <p>The Docker engine has access to the real hardware and uses the host Linux kernel.</p>
+              <p>Except on macOS and Windows, as Docker runs in a VM providing a GNU/Linux OS.</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>How does it works</h2>
+
+            <br />
+
+            <img alt="docker_components.png" src="images/docker_components.png" />
+            <p>Docker components</p>
+
+            <aside class="notes">
+              <p>The docker command is only a client talking to the engine.</p>
+              <p>The Docker engine is a high level abstraction talking with containerd.</p>
+              <p>containerd contains all the services to manage images, volumes, snapshots, etc…, including a client for shim</p>
+              <p>shim can be seen as an API to talk the runtime.</p>
+              <p>runc is the container runtime, and can in fact be called directly, but it is very cumbersome to do so.</p>
+              <p>Other engines and/or other runtimes can be used.</p>
             </aside>
           </section>
 
@@ -103,7 +115,7 @@
             </ul>
 
             <aside class="notes">
-              <!-- -->
+              <p>Images built from the Dockerfile follow the <a href="https://opencontainers.org/">Open Container Initiative</a> specifications.</p>
             </aside>
           </section>
 
@@ -113,7 +125,7 @@
             <br />
 
             <pre><code class="dockerfile">
-  FROM debian:stretch-slim
+  FROM debian:bookworm-slim
 
   ARG DEBIAN_FRONTEND=noninteractive
 
@@ -367,7 +379,7 @@
           <section>
             <h2>Docker compose</h2>
 
-            <img src="images/compose.png" />
+            <img alt="compose.png" src="images/compose.png" />
 
             <aside class="notes">
               <p>Tool for defining and running multi-container Docker applications</p>
@@ -498,7 +510,7 @@ services:
           <section>
             <h2>Advanced usage: testing and debugging</h2>
 
-            <img src="images/cat.png" />
+            <img alt="cat.png" src="images/cat.png" />
 
             <aside class="notes">
               <!-- -->
