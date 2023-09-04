@@ -2,7 +2,7 @@ services:
   node:
     environment:
       YARN_CACHE_FOLDER: '/home/yarn-cache'
-    image: node:lts-slim
+    image: node:18
     user: '${HOST_USER_IDS:-1000:1000}'
     volumes:
       - '.:/srv/app'
