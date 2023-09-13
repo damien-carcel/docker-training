@@ -17,6 +17,7 @@
   },
   "initializeCommand": "./.devcontainer/setup.sh",
   "name": "Docker Training",
+  "postCreateCommand": "task dependencies:install",
   "runServices": ["dev", "prod"],
   "remoteUser": "node",
   "service": "devcontainer",

@@ -1,7 +1,7 @@
 services:
   devcontainer:
-    build: ./.devcontainer
-    command: /bin/sh -c "while sleep 3600; do :; done"
+    build: ./build/docker/
+    command: sleep infinity
     environment:
       YARN_CACHE_FOLDER: /home/yarn-cache
     user: ${HOST_USER_IDS:-1000:1000}

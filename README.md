@@ -1,23 +1,20 @@
 # How to use Docker and Docker Compose for PHP development
 
+## Pre-requisites
+
+- Docker 24.0 or more recent
+- Docker Compose 2.21 or more recent
+- Up-to-date VS Code with [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension installed
+
 ## How to use the presentation
 
-- Install the dependencies:
+Open the project in VS Code, and accept to reopen the project in Dev Containers when VS Code proposed it.
 
-  ```bash
-  $ docker compose run --rm dev yarn install --frozen-lockfile --check-files
-  ```
+This will up the right Docker Compose services after installing the dependencies.
 
-- Use the development server to serve the presentation and have hot-reloading while coding:
-
-  ```bash
-  $ docker compose up -d dev
-  ```
-
-- or build the artifacts, then serve the presentation in a production-like mode:
-  ```bash
-  $ docker compose up -d prod
-  ```
+The application can be accessed at:
+- http://localhost:5173 for the development server with hot reload
+- http://localhost:4173 for a "production-like" server
 
 ## License
 
@@ -25,7 +22,4 @@ This repository is under the MIT license. You can see the complete license in th
 
 ## TODO
 
-- Try to remove "dev" and "prod" services and launch them instead in background in the dev container to forward the ports
-- Test Docker in Docker instead if it doesn't work
-- Update this readme for the "how to use part" to include VS Code Dev Containers (or replace it by it depending on the success of the 2 points above)
 - Add a CI (GitHub actions or CircleCi?)
