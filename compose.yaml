@@ -1,12 +1,24 @@
+x-common: &common
+  image: node:18
+  restart: always
+  user: ${HOST_USER_IDS:-1000:1000}
+  volumes:
+    - .:/srv/app
+  working_dir: /srv/app
+
 services:
-  node:
-    environment:
-      YARN_CACHE_FOLDER: '/home/yarn-cache'
-    image: node:18
-    user: '${HOST_USER_IDS:-1000:1000}'
-    volumes:
-      - '.:/srv/app'
-      - '${HOST_YARN_CACHE_FOLDER:-~/.cache/yarn}:/home/yarn-cache'
-      - '${HOST_YARN_CONFIG_FOLDER:-~/.yarn}:/.yarn'
-      - '${HOST_YARN_CONFIG_FILE:-~/.yarnrc}:/.yarnrc'
-    working_dir: '/srv/app'
+  dev:
+    <<: *common
+    command: yarn dev --host
+    expose:
+      - 5173
+    ports:
+      - 5173:5173
+
+  prod:
+    <<: *common
+    command: sh -c "yarn build && yarn preview --host"
+    expose:
+      - 4173
+    ports:
+      - 4173:4173

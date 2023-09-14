@@ -1,0 +1,25 @@
+{
+  "dockerComposeFile": ["../compose.yaml", "./compose.yaml"],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "CircleCI.circleci",
+        "dbaeumer.vscode-eslint",
+        "eamodio.gitlens",
+        "esbenp.prettier-vscode",
+        "github.vscode-github-actions",
+        "ms-azuretools.vscode-docker",
+        "redhat.vscode-yaml",
+        "task.vscode-task",
+        "yzhang.markdown-all-in-one"
+      ]
+    }
+  },
+  "initializeCommand": "./.devcontainer/setup.sh",
+  "name": "Docker Training",
+  "postCreateCommand": "task dependencies:install",
+  "runServices": ["dev", "prod"],
+  "remoteUser": "node",
+  "service": "devcontainer",
+  "workspaceFolder": "/srv/app"
+}

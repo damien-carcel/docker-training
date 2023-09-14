@@ -1,0 +1,66 @@
+version: '3'
+
+tasks:
+  prettier:check:
+    desc: Check the code style.
+    cmds:
+      - yarn prettier --check
+    aliases: [p:c]
+
+  prettier:fix:
+    desc: Fix the code style.
+    cmds:
+      - yarn prettier --write
+    aliases: [p:f]
+
+  stylelint:check:
+    desc: Lint the CSS code.
+    cmds:
+      - yarn stylelint
+    aliases: [s:c]
+
+  stylelint:fix:
+    desc: Fix the CSS code style.
+    cmds:
+      - yarn stylelint --fix
+    aliases: [s:f]
+
+  eslint:check:
+    desc: Lint the JavaScript code.
+    cmds:
+      - yarn eslint
+    aliases: [l:c]
+
+  eslint:fix:
+    desc: Fix the JavaScript code issues.
+    cmds:
+      - yarn eslint --fix
+    aliases: [l:f]
+
+  all:
+    desc: Execute all the tests.
+    cmds:
+      - echo ""
+      - echo "|----------------------|"
+      - echo "| Check the code style |"
+      - echo "|----------------------|"
+      - echo ""
+      - task: prettier:check
+      - echo ""
+      - echo "|----------------------|"
+      - echo "| Lint the stylesheets |"
+      - echo "|----------------------|"
+      - echo ""
+      - task: stylelint:check
+      - echo ""
+      - echo "|----------------------|"
+      - echo "|   Lint the JS code   |"
+      - echo "|----------------------|"
+      - echo ""
+      - task: eslint:check
+      - echo ""
+      - echo "|----------------------|"
+      - echo "| All tests successful |"
+      - echo "|----------------------|"
+      - echo ""
+    aliases: [a]

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
   <head>
     <meta charset="utf-8" />
@@ -65,9 +65,7 @@
 
             <img alt="virtualization.svg" src="images/virtualization.svg" class="fragment" />
 
-            <aside class="notes">
-              A VM runs a full operating system on virtualized hardware.
-            </aside>
+            <aside class="notes">A VM runs a full operating system on virtualized hardware.</aside>
           </section>
 
           <section>
@@ -96,9 +94,14 @@
             <aside class="notes">
               <p>The docker command is only a client talking to the engine.</p>
               <p>The Docker engine is a high level abstraction talking with containerd.</p>
-              <p>containerd contains all the services to manage images, volumes, snapshots, etc…, including a client for shim</p>
+              <p>
+                containerd contains all the services to manage images, volumes, snapshots, etc…, including a client for
+                shim
+              </p>
               <p>shim can be seen as an API to talk the runtime.</p>
-              <p>runc is the container runtime, and can in fact be called directly, but it is very cumbersome to do so.</p>
+              <p>
+                runc is the container runtime, and can in fact be called directly, but it is very cumbersome to do so.
+              </p>
               <p>Other engines and/or other runtimes can be used.</p>
             </aside>
           </section>
@@ -115,7 +118,10 @@
             </ul>
 
             <aside class="notes">
-              <p>Images built from the Dockerfile follow the <a href="https://opencontainers.org/">Open Container Initiative</a> specifications.</p>
+              <p>
+                Images built from the Dockerfile follow the
+                <a href="https://opencontainers.org/">Open Container Initiative</a> specifications.
+              </p>
             </aside>
           </section>
 

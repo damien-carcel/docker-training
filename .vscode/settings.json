@@ -1,0 +1,9 @@
+{
+  "editor.rulers": [120],
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "yaml.schemas": {
+    "https://taskfile.dev/schema.json": ["taskfiles/dependencies.yaml", "taskfiles/tests.yaml"]
+  }
+}
