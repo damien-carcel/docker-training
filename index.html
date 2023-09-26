@@ -25,8 +25,8 @@
   <body>
     <div class="reveal">
       <div class="slides">
-        <section>
-          <h2>How to develop in PHP<br />with Docker and Docker Compose</h2>
+        <section id="presentation-title">
+          <h2>Developing in PHP<br />with Docker and Docker Compose</h2>
 
           <br />
           <br />
@@ -42,13 +42,14 @@
 
             <ul>
               <li>Introduction to Docker</li>
-              <li>How to run a Docker container</li>
-              <li>Running a Symfony app with Docker Compose</li>
-              <li>Debugging and profiling</li>
+              <li>How to use Docker</li>
+              <li>Docker Compose</li>
+              <li>Running and Debugging with PHPStorm</li>
             </ul>
 
             <aside class="notes">
-              <!-- -->
+              We will not use the Symfony CLI tool and its built-in server, only pure PHP, as I want to keep things
+              simple.
             </aside>
           </section>
         </section>
@@ -102,7 +103,7 @@
               <p>
                 runc is the container runtime, and can in fact be called directly, but it is very cumbersome to do so.
               </p>
-              <p>Other engines and/or other runtimes can be used.</p>
+              <p>Other engines and/or other runtime can be used.</p>
             </aside>
           </section>
 
@@ -133,8 +134,6 @@
             <pre><code class="dockerfile">
   FROM debian:bookworm-slim
 
-  ARG DEBIAN_FRONTEND=noninteractive
-
   RUN apt-get update && \
       apt-get --no-install-recommends --no-install-suggests install php && \
       apt-get clean && \
@@ -153,9 +152,9 @@
           </section>
         </section>
 
-        <section id="container-example">
+        <section id="using-docker">
           <section>
-            <h2>How to run a Docker container</h2>
+            <h2>How to use Docker</h2>
 
             <img src="images/docker.png" />
 
@@ -221,7 +220,7 @@
           <section>
             <h2>How to run a Docker container</h2>
 
-            <h3>A more usefull example</h3>
+            <h3>A more useful example</h3>
 
             <pre class="fragment"><code class="shell">
   $ touch /tmp/index.html
@@ -512,9 +511,9 @@ services:
           </section>
         </section>
 
-        <section id="advanced">
+        <section id="phpstorm">
           <section>
-            <h2>Advanced usage: testing and debugging</h2>
+            <h2>Running and Debugging with PHPStorm</h2>
 
             <img alt="cat.png" src="images/cat.png" />
 

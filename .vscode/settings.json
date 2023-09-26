@@ -5,5 +5,11 @@
   "files.trimTrailingWhitespace": true,
   "yaml.schemas": {
     "https://taskfile.dev/schema.json": ["taskfiles/dependencies.yaml", "taskfiles/tests.yaml"]
-  }
+  },
+  "prettier.configPath": ".prettierrc.json",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "cSpell.words": ["runc"]
 }
