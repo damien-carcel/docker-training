@@ -168,11 +168,7 @@
 
             <br />
 
-            <h3>Docker!</h3>
-
-            <ul>
-              <li class="fragment">Invoke the Docker CLI</li>
-            </ul>
+            <h3>Invoke the Docker CLI</h3>
 
             <pre class="fragment"><code class="shell">
   $ docker
@@ -239,37 +235,50 @@
             </aside>
           </section>
 
-          <!-- OLD VERSION -->
-
           <section>
-            <h2>How to run a Docker container</h2>
+            <h2>Using Docker - The Very Basics</h2>
 
             <br />
 
-            <h3>Run a container in interactive mode</h3>
+            <h3>Run a container</h3>
 
             <ul>
-              <li class="fragment">Pull and run the Debian slim image</li>
+              <li class="fragment">Basic run example</li>
             </ul>
 
             <pre class="fragment"><code class="shell">
-  $ docker image pull debian:jessie-slim
-        </code></pre>
-
-            <pre class="fragment"><code class="shell">
-  $ docker image ls
-        </code></pre>
-
-            <pre class="fragment"><code class="shell">
-  $ docker container run -i -t --rm debian:jessie-slim bash
-        </code></pre>
+  $ docker run debian:stable-slim
+            </code></pre>
 
             <aside class="notes">
-              <p>Explain "pull" and the tag system</p>
-              <p>"docker image ls" same thing that "docker images"</p>
+              <p>Not mandatory to run</p>
               <p>Before image name: options; after image name: command that will run in the container</p>
             </aside>
           </section>
+
+          <section>
+            <h2>Using Docker - The Very Basics</h2>
+
+            <br />
+
+            <h3>Run a container - Solution</h3>
+
+            <ul>
+              <li>Complete run example</li>
+            </ul>
+
+            <pre><code class="shell">
+  $ docker run -i -t --rm debian:stable-slim bash
+            </code></pre>
+
+            <aside class="notes">
+              <p>Not mandatory to run</p>
+              <p>Before image name: options; after image name: command that will run in the container</p>
+              <p>`--rm` is a must-use</p>
+            </aside>
+          </section>
+
+          <!-- OLD VERSION -->
 
           <section>
             <h2>How to run a Docker container</h2>

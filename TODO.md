@@ -18,10 +18,9 @@
       - debian:12-slim
     - introduce the notion of layers
       - show that the layers are the same, no double space
-  - [ ] run an container from this image
+  - [x] run an container from this image
     - you could run it directly, it would pull it for you if you need. But you need to explicitly pull for update.
     - goal: be in the containers and having access to bash (interactive mode needed)
-  - [ ] clean the mess
     - introduce `--rm` option of `docker run`
 - Going further - environment variables, volumes and users
   - [ ] env variables
