@@ -164,6 +164,84 @@
           </section>
 
           <section>
+            <h2>Using Docker - The Very Basics</h2>
+
+            <br />
+
+            <h3>Docker!</h3>
+
+            <ul>
+              <li class="fragment">Invoke the Docker CLI</li>
+            </ul>
+
+            <pre class="fragment"><code class="shell">
+  $ docker
+            </code></pre>
+
+            <aside class="notes">
+              <p>Present briefly the various Docker available commands</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - The Very Basics</h2>
+
+            <br />
+
+            <h3>Pulling an image</h3>
+
+            <ul>
+              <li class="fragment" data-fragment-index="1">Pull the latest Debian &ldquo;slim&rdquo; image</li>
+              <li class="fragment" data-fragment-index="4">List the pulled images</li>
+            </ul>
+
+            <pre class="fragment" data-fragment-index="2"><code class="shell">
+  $ docker image pull debian:bookworm-slim
+            </code></pre>
+            <pre class="fragment" data-fragment-index="3"><code class="shell">
+  $ docker image pull debian:12-slim
+            </code></pre>
+
+            <pre class="fragment" data-fragment-index="5"><code class="shell">
+  $ docker image ls
+        </code></pre>
+
+            <aside class="notes">
+              <p>Explain "pull" and the tag system</p>
+              <p>Explain the layers</p>
+              <p>"docker image ls" same thing that "docker images"</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - The Very Basics</h2>
+
+            <br />
+
+            <h3>Going a bit further with Images</h3>
+
+            <ul>
+              <li class="fragment" data-fragment-index="1">Inspect an image</li>
+              <li class="fragment" data-fragment-index="3">Display the history</li>
+            </ul>
+
+            <pre class="fragment" data-fragment-index="2"><code class="shell">
+  $ docker image inspect debian:bookworm-slim
+  $ docker image inspect debian:12-slim
+            </code></pre>
+
+            <pre class="fragment" data-fragment-index="4"><code class="shell">
+  $ docker image history debian:bookworm-slim
+        </code></pre>
+
+            <aside class="notes">
+              <p>Two tags but same layers, so stored only once → no disk space wasted</p>
+            </aside>
+          </section>
+
+          <!-- OLD VERSION -->
+
+          <section>
             <h2>How to run a Docker container</h2>
 
             <br />
