@@ -72,7 +72,7 @@
           </section>
 
           <section>
-            <h2>What is Docker</h2>
+            <h2>A Container Orchestrator</h2>
 
             <div class="centered-slide-content">
               <img alt="vms_vs_containers.jpg" src="images/vms_vs_containers.jpg" />
@@ -168,11 +168,19 @@ RUN apt-get update && \
           </section>
 
           <section>
-            <h2>Using Docker - The Very Basics</h2>
+            <h2>Using Docker</h2>
 
             <div class="centered-slide-content">
-              <h3>Invoke the Docker CLI</h3>
+              <h3>The Very Basics</h3>
+            </div>
 
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Invoking the Docker CLI</h2>
+
+            <div class="centered-slide-content">
               <pre class="fragment"><code class="shell">
 $ docker
               </code></pre>
@@ -184,11 +192,9 @@ $ docker
           </section>
 
           <section>
-            <h2>Using Docker - The Very Basics</h2>
+            <h2>Using Docker - Pulling an image</h2>
 
             <div class="centered-slide-content">
-              <h3>Pulling an image</h3>
-
               <ul>
                 <li class="fragment" data-fragment-index="1">Pull the latest Debian &ldquo;slim&rdquo; image</li>
                 <li class="fragment" data-fragment-index="4">List the pulled images</li>
@@ -214,11 +220,9 @@ $ docker image ls
           </section>
 
           <section>
-            <h2>Using Docker - The Very Basics</h2>
+            <h2>Using Docker - Going a bit further with Images</h2>
 
             <div class="centered-slide-content">
-              <h3>Going a bit further with Images</h3>
-
               <ul>
                 <li class="fragment" data-fragment-index="1">Inspect an image</li>
                 <li class="fragment" data-fragment-index="3">Display the history</li>
@@ -240,46 +244,126 @@ $ docker image history debian:bookworm-slim
           </section>
 
           <section>
-            <h2>Using Docker - The Very Basics</h2>
+            <h2>Using Docker - Running a container</h2>
 
             <div class="centered-slide-content">
-              <h3>Run a container</h3>
-
               <ul>
-                <li class="fragment">Basic run example</li>
+                <li class="fragment gear" data-fragment-index="1">Use bash in a container</li>
               </ul>
 
-              <pre class="fragment"><code class="shell">
+              <br />
+              <br />
+
+              <div class="fragment" data-fragment-index="2">
+                You need to be able to fully interact with the console inside your container
+              </div>
+
+              <br />
+              <br />
+
+              <pre class="fragment" data-fragment-index="3"><code class="shell">
 $ docker run debian:stable-slim
               </code></pre>
+              <legend class="fragment" data-fragment-index="3">Basic run example</legend>
             </div>
 
             <aside class="notes">
-              <p>Not mandatory to run</p>
+              <p>Not mandatory to run, but funny</p>
               <p>Before image name: options; after image name: command that will run in the container</p>
             </aside>
           </section>
 
           <section>
-            <h2>Using Docker - The Very Basics</h2>
+            <h2>Using Docker - Running a container</h2>
 
             <div class="centered-slide-content">
-              <h3>Run a container - Solution</h3>
+              <h3>Solution</h3>
 
-              <ul>
-                <li>Complete run example</li>
-              </ul>
-
-              <pre><code class="shell">
+              <pre class="fragment"><code class="shell">
 $ docker run -i -t --rm debian:stable-slim bash
               </code></pre>
             </div>
 
             <aside class="notes">
-              <p>Not mandatory to run</p>
-              <p>Before image name: options; after image name: command that will run in the container</p>
               <p>`--rm` is a must-use</p>
             </aside>
+          </section>
+
+          <section>
+            <h2>Using Docker</h2>
+
+            <div class="centered-slide-content">
+              <h3>Going Further</h3>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Environment variables</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment">
+                  <code class="shell inline-code">docker run --env</code> can create variables inside the container
+                </li>
+                <li class="fragment">It will override the value if the variable already exist</li>
+              </ul>
+
+              <pre class="fragment"><code class="dockerfile">
+FROM scratch
+
+ARG VAR_1="I exist only during the build phase"
+ENV VAR_2="I will be there at runtime"
+              </code></pre>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Environment variables</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="gear">Export an environment variable in your terminal</li>
+                <li class="fragment gear" data-fragment-index="1">
+                  Display its value from a container through <code class="shell inline-code">docker run</code>
+                </li>
+              </ul>
+
+              <br />
+              <br />
+
+              <pre class="fragment" data-fragment-index="2"><code class="shell">
+$ docker run -e VARIABLE_NAME="value" debian:stable-slim
+              </code></pre>
+              <legend class="fragment" data-fragment-index="2">Create the environment variable "VARIABLE_NAME"</legend>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Environment variables</h2>
+
+            <div class="centered-slide-content">
+              <h3>Solutions</h3>
+
+              <pre><code class="shell">
+$ export HOST_VAR="Hello\!"
+$ docker run -e CONTAINER_VAR=$HOST_VAR debian:stable-slim sh -c 'echo $CONTAINER_VAR'
+              </code></pre>
+
+              <div class="fragment" data-fragment-index="1">or</div>
+
+              <pre class="fragment" data-fragment-index="1"><code class="shell">
+$ export MY_VAR="Hello\!"
+$ docker run -e MY_VAR debian:stable-slim sh -c 'echo $MY_VAR'
+              </code></pre>
+            </div>
+
+            <aside class="notes"></aside>
           </section>
 
           <!-- OLD VERSION -->

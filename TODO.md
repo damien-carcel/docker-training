@@ -7,13 +7,11 @@
   <h2>Title</h2>
 
   <div class="centered-slide-content">
-    <h3>Subtitle</h3>
-
     <ul>
-      <li>A point</li>
+      <li class="fragment">A point</li>
     </ul>
 
-    <pre><code class="shell">
+    <pre class="fragment"><code class="shell">
 $ command associated to above point
     </code></pre>
   </div>
@@ -47,15 +45,14 @@ $ command associated to above point
     - goal: be in the containers and having access to bash (interactive mode needed)
     - introduce `--rm` option of `docker run`
 - Going further - environment variables, volumes and users
-  - [ ] env variables
-    - Try to echo a variable through `docker run -e TATA="test" debian:bookworm-slim sh -c 'echo $TATA'`
-    - First, export TATA on host, run without `-e` → nothing, run with `-e TATA` → display host value.
-    - Careful: '', not "".
+  - [x] env variables
+        s - Try to echo a variable through `docker run -e MY_VAR="test" debian:stable-slim sh -c 'echo $MY_VAR'` - First, export MY_VAR on host, run without `-e` → nothing, run with `-e MY_VAR` → display host value. - Careful: '', not "".
   - [ ] volumes:
     - Simply try to mount local folder
     - create a file with touch → oops, root!
   - [ ] user: fix the above issue
   - [ ] all of that together: use composer to create a symfony project with `docker run`
+    - Customize the paths for Composer cache and config through volumes and environment variables
 - Run the Symfony project with PHP internal server
   - [ ] introduce "detached" mode
   - [ ] introduce `docker logs`
