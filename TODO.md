@@ -1,5 +1,29 @@
 # Training Plan
 
+## Slide Template
+
+```html
+<section>
+  <h2>Title</h2>
+
+  <div class="centered-slide-content">
+    <h3>Subtitle</h3>
+
+    <ul>
+      <li>A point</li>
+    </ul>
+
+    <pre><code class="shell">
+$ command associated to above point
+    </code></pre>
+  </div>
+
+  <aside class="notes">
+    <p>Some comments</p>
+  </aside>
+</section>
+```
+
 ## Introduction to Docker
 
 - [x] What is and is not Docker?

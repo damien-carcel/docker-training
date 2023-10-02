@@ -38,14 +38,14 @@
           <section>
             <h2>What will we see?</h2>
 
-            <br />
-
-            <ul>
-              <li>Introduction to Docker</li>
-              <li>How to use Docker</li>
-              <li>Docker Compose</li>
-              <li>Running and Debugging with PHPStorm</li>
-            </ul>
+            <div class="centered-slide-content">
+              <ul>
+                <li>Introduction to Docker</li>
+                <li>How to use Docker</li>
+                <li>Docker Compose</li>
+                <li>Running and Debugging with PHPStorm</li>
+              </ul>
+            </div>
 
             <aside class="notes">
               We will not use the Symfony CLI tool and its built-in server, only pure PHP, as I want to keep things
@@ -58,13 +58,15 @@
           <section>
             <h2>What is (not) Docker?</h2>
 
-            <ul>
-              <li class="fragment">Docker is not a virtual machine (VM)</li>
-            </ul>
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment">Docker is not a virtual machine (VM)</li>
+              </ul>
 
-            <br />
+              <br />
 
-            <img alt="virtualization.svg" src="images/virtualization.svg" class="fragment" />
+              <img alt="virtualization.svg" src="images/virtualization.svg" class="fragment" />
+            </div>
 
             <aside class="notes">A VM runs a full operating system on virtualized hardware.</aside>
           </section>
@@ -72,10 +74,10 @@
           <section>
             <h2>What is Docker</h2>
 
-            <br />
-
-            <img alt="vms_vs_containers.jpg" src="images/vms_vs_containers.jpg" />
-            <p>Virtual machines vs. containers</p>
+            <div class="centered-slide-content">
+              <img alt="vms_vs_containers.jpg" src="images/vms_vs_containers.jpg" />
+              <p>Virtual machines vs. containers</p>
+            </div>
 
             <aside class="notes">
               <p>Containers remove the hardware virtualization and the guest OS.</p>
@@ -87,10 +89,10 @@
           <section>
             <h2>How does it works</h2>
 
-            <br />
-
-            <img alt="docker_components.png" src="images/docker_components.png" />
-            <p>Docker components</p>
+            <div class="centered-slide-content">
+              <img alt="docker_components.png" src="images/docker_components.png" />
+              <p>Docker components</p>
+            </div>
 
             <aside class="notes">
               <p>The docker command is only a client talking to the engine.</p>
@@ -110,13 +112,13 @@
           <section>
             <h2>How does it works</h2>
 
-            <br />
-
-            <h3>Docker specificity</h3>
-            <ul>
-              <li class="fragment">Dockerfile → Image → Containers</li>
-              <li class="fragment">Only one process in the container</li>
-            </ul>
+            <div class="centered-slide-content">
+              <h3>Docker specificity</h3>
+              <ul>
+                <li class="fragment">Dockerfile → Image → Containers</li>
+                <li class="fragment">Only one process in the container</li>
+              </ul>
+            </div>
 
             <aside class="notes">
               <p>
@@ -129,22 +131,22 @@
           <section>
             <h2>A Dockerfile example</h2>
 
-            <br />
+            <div class="centered-slide-content">
+              <pre><code class="dockerfile">
+FROM debian:bookworm-slim
 
-            <pre><code class="dockerfile">
-  FROM debian:bookworm-slim
+RUN apt-get update && \
+    apt-get --no-install-recommends --no-install-suggests install php && \
+    apt-get clean && \
+    apt-get autoremove --purge && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+            /usr/share/doc/* /usr/share/groff/* \
+            /usr/share/info/* /usr/share/linda/* \
+            /usr/share/lintian/* /usr/share/locale/* \
+            /usr/share/man/*
 
-  RUN apt-get update && \
-      apt-get --no-install-recommends --no-install-suggests install php && \
-      apt-get clean && \
-      apt-get autoremove --purge && \
-      rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-             /usr/share/doc/* /usr/share/groff/* \
-             /usr/share/info/* /usr/share/linda/* \
-             /usr/share/lintian/* /usr/share/locale/* \
-             /usr/share/man/*
-
-        </code></pre>
+              </code></pre>
+            </div>
 
             <aside class="notes">
               Explain the concept of layers. Details will be explained in the "Advanced" section.
@@ -156,7 +158,9 @@
           <section>
             <h2>How to use Docker</h2>
 
-            <img src="images/docker.png" />
+            <div class="centered-slide-content">
+              <img src="images/docker.png" />
+            </div>
 
             <aside class="notes">
               <!-- -->
@@ -166,13 +170,13 @@
           <section>
             <h2>Using Docker - The Very Basics</h2>
 
-            <br />
+            <div class="centered-slide-content">
+              <h3>Invoke the Docker CLI</h3>
 
-            <h3>Invoke the Docker CLI</h3>
-
-            <pre class="fragment"><code class="shell">
-  $ docker
-            </code></pre>
+              <pre class="fragment"><code class="shell">
+$ docker
+              </code></pre>
+            </div>
 
             <aside class="notes">
               <p>Present briefly the various Docker available commands</p>
@@ -182,25 +186,25 @@
           <section>
             <h2>Using Docker - The Very Basics</h2>
 
-            <br />
+            <div class="centered-slide-content">
+              <h3>Pulling an image</h3>
 
-            <h3>Pulling an image</h3>
+              <ul>
+                <li class="fragment" data-fragment-index="1">Pull the latest Debian &ldquo;slim&rdquo; image</li>
+                <li class="fragment" data-fragment-index="4">List the pulled images</li>
+              </ul>
 
-            <ul>
-              <li class="fragment" data-fragment-index="1">Pull the latest Debian &ldquo;slim&rdquo; image</li>
-              <li class="fragment" data-fragment-index="4">List the pulled images</li>
-            </ul>
+              <pre class="fragment" data-fragment-index="2"><code class="shell">
+$ docker image pull debian:bookworm-slim
+              </code></pre>
+              <pre class="fragment" data-fragment-index="3"><code class="shell">
+$ docker image pull debian:12-slim
+              </code></pre>
 
-            <pre class="fragment" data-fragment-index="2"><code class="shell">
-  $ docker image pull debian:bookworm-slim
+              <pre class="fragment" data-fragment-index="5"><code class="shell">
+$ docker image ls
             </code></pre>
-            <pre class="fragment" data-fragment-index="3"><code class="shell">
-  $ docker image pull debian:12-slim
-            </code></pre>
-
-            <pre class="fragment" data-fragment-index="5"><code class="shell">
-  $ docker image ls
-        </code></pre>
+            </div>
 
             <aside class="notes">
               <p>Explain "pull" and the tag system</p>
@@ -212,23 +216,23 @@
           <section>
             <h2>Using Docker - The Very Basics</h2>
 
-            <br />
+            <div class="centered-slide-content">
+              <h3>Going a bit further with Images</h3>
 
-            <h3>Going a bit further with Images</h3>
+              <ul>
+                <li class="fragment" data-fragment-index="1">Inspect an image</li>
+                <li class="fragment" data-fragment-index="3">Display the history</li>
+              </ul>
 
-            <ul>
-              <li class="fragment" data-fragment-index="1">Inspect an image</li>
-              <li class="fragment" data-fragment-index="3">Display the history</li>
-            </ul>
+              <pre class="fragment" data-fragment-index="2"><code class="shell">
+$ docker image inspect debian:bookworm-slim
+$ docker image inspect debian:12-slim
+              </code></pre>
 
-            <pre class="fragment" data-fragment-index="2"><code class="shell">
-  $ docker image inspect debian:bookworm-slim
-  $ docker image inspect debian:12-slim
-            </code></pre>
-
-            <pre class="fragment" data-fragment-index="4"><code class="shell">
-  $ docker image history debian:bookworm-slim
-        </code></pre>
+              <pre class="fragment" data-fragment-index="4"><code class="shell">
+$ docker image history debian:bookworm-slim
+             </code></pre>
+            </div>
 
             <aside class="notes">
               <p>Two tags but same layers, so stored only once → no disk space wasted</p>
@@ -238,17 +242,17 @@
           <section>
             <h2>Using Docker - The Very Basics</h2>
 
-            <br />
+            <div class="centered-slide-content">
+              <h3>Run a container</h3>
 
-            <h3>Run a container</h3>
+              <ul>
+                <li class="fragment">Basic run example</li>
+              </ul>
 
-            <ul>
-              <li class="fragment">Basic run example</li>
-            </ul>
-
-            <pre class="fragment"><code class="shell">
-  $ docker run debian:stable-slim
-            </code></pre>
+              <pre class="fragment"><code class="shell">
+$ docker run debian:stable-slim
+              </code></pre>
+            </div>
 
             <aside class="notes">
               <p>Not mandatory to run</p>
@@ -259,17 +263,17 @@
           <section>
             <h2>Using Docker - The Very Basics</h2>
 
-            <br />
+            <div class="centered-slide-content">
+              <h3>Run a container - Solution</h3>
 
-            <h3>Run a container - Solution</h3>
+              <ul>
+                <li>Complete run example</li>
+              </ul>
 
-            <ul>
-              <li>Complete run example</li>
-            </ul>
-
-            <pre><code class="shell">
-  $ docker run -i -t --rm debian:stable-slim bash
-            </code></pre>
+              <pre><code class="shell">
+$ docker run -i -t --rm debian:stable-slim bash
+              </code></pre>
+            </div>
 
             <aside class="notes">
               <p>Not mandatory to run</p>

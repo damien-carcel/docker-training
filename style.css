@@ -1,1 +1,13 @@
-/* no-empty-source */
+.centered-slide-content {
+  margin: auto;
+  position: absolute;
+  top: 58%;
+  left: 0;
+  right: 0;
+  transform: translate(0%, -50%);
+}
+
+.slides > section > section {
+  width: 100%;
+  height: 100%;
+}
