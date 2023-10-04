@@ -54,7 +54,7 @@ $ command associated to above point
       - Bind-mount it, create a file in the container
       - Stop the container (ensure to have use `--rm`) and check the files are still here
       - Delete the volume
-    - [ ] Bind-mount host data
+    - [x] Bind-mount host data
       - Bind-mount local folder
       - Try to create a file with touch → oops, root!
   - [ ] user: fix the above issue
