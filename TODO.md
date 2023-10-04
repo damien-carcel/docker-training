@@ -43,19 +43,27 @@ $ command associated to above point
   - [x] run an container from this image
     - you could run it directly, it would pull it for you if you need. But you need to explicitly pull for update.
     - goal: be in the containers and having access to bash (interactive mode needed)
-    - introduce `--rm` option of `docker run`
+    - introduce `--rm` option of `docker container run`
 - Going further - environment variables, volumes and users
   - [x] env variables
-        s - Try to echo a variable through `docker run -e MY_VAR="test" debian:stable-slim sh -c 'echo $MY_VAR'` - First, export MY_VAR on host, run without `-e` → nothing, run with `-e MY_VAR` → display host value. - Careful: '', not "".
-  - [ ] volumes:
-    - Simply try to mount local folder
-    - create a file with touch → oops, root!
+    - Try to echo a variable through `docker container run -e MY_VAR="test" debian:stable-slim sh -c 'echo $MY_VAR'`
+    - First, export MY_VAR on host, run without `-e` → nothing, run with `-e MY_VAR` → display host value. - Careful: '', not "".
+  - volumes:
+    - [x] Real volumes
+      - Create a named volume
+      - Bind-mount it, create a file in the container
+      - Stop the container (ensure to have use `--rm`) and check the files are still here
+      - Delete the volume
+    - [ ] Bind-mount host data
+      - Bind-mount local folder
+      - Try to create a file with touch → oops, root!
   - [ ] user: fix the above issue
-  - [ ] all of that together: use composer to create a symfony project with `docker run`
+    - Beware of binding directories that do not exist yet on the host
+  - [ ] all of that together: use composer to create a symfony project with `docker container run`
     - Customize the paths for Composer cache and config through volumes and environment variables
 - Run the Symfony project with PHP internal server
   - [ ] introduce "detached" mode
-  - [ ] introduce `docker logs`
+  - [ ] introduce `docker container logs`
 - Networks
   - [ ] Let's try to run the app twice, same internal port
     - shouldn't work because of port conflict
@@ -65,8 +73,9 @@ $ command associated to above point
     - OK to create many for tests to gain time
     - Clean-up must be performed in the same layer that wasted space, or no effect
   - [ ] launch the server from the image in production mode with right user
-    - should only need `docker run -d image`
-    - introduce `docker exec`
+    - should only need `docker container run -d image`
+    - introduce `docker container exec`
+    - introduce `docker container stop` and `rm`
   - [ ] put logs in a file thanks to monolog and expose them through a volume
     - shows that volumes are not only for bind mount
     - access the volume from another container

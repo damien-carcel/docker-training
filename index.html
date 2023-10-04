@@ -262,7 +262,7 @@ $ docker image history debian:bookworm-slim
               <br />
 
               <pre class="fragment" data-fragment-index="3"><code class="shell">
-$ docker run debian:stable-slim
+$ docker container run debian:stable-slim
               </code></pre>
               <legend class="fragment" data-fragment-index="3">Basic run example</legend>
             </div>
@@ -280,11 +280,12 @@ $ docker run debian:stable-slim
               <h3>Solution</h3>
 
               <pre class="fragment"><code class="shell">
-$ docker run -i -t --rm debian:stable-slim bash
+$ docker container run -i -t --rm debian:stable-slim bash
               </code></pre>
             </div>
 
             <aside class="notes">
+              <p>docker container ls -a shows stopped containers</p>
               <p>`--rm` is a must-use</p>
             </aside>
           </section>
@@ -305,7 +306,8 @@ $ docker run -i -t --rm debian:stable-slim bash
             <div class="centered-slide-content">
               <ul>
                 <li class="fragment">
-                  <code class="shell inline-code">docker run --env</code> can create variables inside the container
+                  <code class="shell inline-code">docker container run --env</code> can create variables inside the
+                  container
                 </li>
                 <li class="fragment">It will override the value if the variable already exist</li>
               </ul>
@@ -328,7 +330,7 @@ ENV VAR_2="I will be there at runtime"
               <ul>
                 <li class="gear">Export an environment variable in your terminal</li>
                 <li class="fragment gear" data-fragment-index="1">
-                  Display its value from a container through <code class="shell inline-code">docker run</code>
+                  Display its value from a container through <code class="shell inline-code">docker container run</code>
                 </li>
               </ul>
 
@@ -336,7 +338,7 @@ ENV VAR_2="I will be there at runtime"
               <br />
 
               <pre class="fragment" data-fragment-index="2"><code class="shell">
-$ docker run -e VARIABLE_NAME="value" debian:stable-slim
+$ docker container run -e VARIABLE_NAME="value" debian:stable-slim
               </code></pre>
               <legend class="fragment" data-fragment-index="2">Create the environment variable "VARIABLE_NAME"</legend>
             </div>
@@ -352,14 +354,121 @@ $ docker run -e VARIABLE_NAME="value" debian:stable-slim
 
               <pre><code class="shell">
 $ export HOST_VAR="Hello\!"
-$ docker run -e CONTAINER_VAR=$HOST_VAR debian:stable-slim sh -c 'echo $CONTAINER_VAR'
+$ docker container run -e CONTAINER_VAR=$HOST_VAR debian:stable-slim sh -c 'echo $CONTAINER_VAR'
               </code></pre>
 
               <div class="fragment" data-fragment-index="1">or</div>
 
               <pre class="fragment" data-fragment-index="1"><code class="shell">
 $ export MY_VAR="Hello\!"
-$ docker run -e MY_VAR debian:stable-slim sh -c 'echo $MY_VAR'
+$ docker container run -e MY_VAR debian:stable-slim sh -c 'echo $MY_VAR'
+              </code></pre>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Volumes</h2>
+
+            <div class="centered-slide-content">
+              <div class="fragment">Two usages</div>
+
+              <br />
+              <br />
+
+              <ul>
+                <li class="fragment">Volumes allow to persist data outside the container</li>
+                <li class="fragment">Bind-mount allow sharing data between the host and the container</li>
+              </ul>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Volumes</h2>
+
+            <div class="centered-slide-content">
+              <pre><code class="dockerfile">
+FROM scratch
+
+VOLUME /data
+              </code></pre>
+              <legend>Expose <span class="inline-code">/data</span> as a volume</legend>
+
+              <br />
+              <br />
+
+              <pre class="fragment" data-fragment-index="1"><code class="shell">
+$ docker container run -v /path-on-host:/path-in-container debian:stable-slim
+              </code></pre>
+              <legend class="fragment" data-fragment-index="1">
+                Bind mount a volume or a folder/file from your host inside the container
+              </legend>
+            </div>
+
+            <aside class="notes">
+              <p>Show an example by running a MySQL container and inspect the volume to find its path</p>
+              <p>Bind mount: always host path first, then container path</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Volumes</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment gear" data-fragment-index="1">Create a named volume</li>
+                <li class="fragment gear" data-fragment-index="2">
+                  Run a container while bind-mounting the volume into <code class="inline-code">/data</code>
+                </li>
+                <li class="fragment gear" data-fragment-index="3">
+                  Create a file in <code class="inline-code">/data</code>
+                </li>
+                <li class="fragment gear" data-fragment-index="4">Stop the container and ensure it is removed</li>
+                <li class="fragment gear" data-fragment-index="5">
+                  Find on your host the file you just created in the container
+                </li>
+              </ul>
+
+              <br />
+              <br />
+
+              <div class="fragment" data-fragment-index="6">Tips</div>
+              <ul class="fragment" data-fragment-index="6">
+                <li>Look at what the <code class="inline-code">docker volume</code> management command propose</li>
+                <li>
+                  Bind mount through <code class="inline-code">docker container run -v host-data:container-data</code>
+                </li>
+              </ul>
+            </div>
+
+            <aside class="notes">
+              <p>Most of the major management commands propose `inspect`</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Volumes</h2>
+
+            <div class="centered-slide-content">
+              <h3>Solution</h3>
+
+              <pre><code class="shell">
+$ docker volume create keep-my-data
+$ docker container run -i -t --rm -v keep-my-data:/data debian:stable-slim bash
+
+### Now I am in the container ###
+
+$ echo "This is a test" > /data/test.txt
+
+### CTRL+D to exit ###
+
+$ docker volume inspect keep-my-data
+$ sudo cat /the/path/to/the/data/shown/by/the/inspection/of/the/volume/test.txt
+
+### Should display "This is a test" ###
               </code></pre>
             </div>
 
@@ -369,89 +478,9 @@ $ docker run -e MY_VAR debian:stable-slim sh -c 'echo $MY_VAR'
           <!-- OLD VERSION -->
 
           <section>
-            <h2>How to run a Docker container</h2>
+            <h2>Using Docker - Summary</h2>
 
-            <br />
-
-            <h3>Run a container in detached mode</h3>
-
-            <pre class="fragment"><code class="shell">
-  $ docker container run -d nginx
-        </code></pre>
-
-            <pre class="fragment"><code class="shell">
-  $ docker container ls
-        </code></pre>
-
-            <pre class="fragment"><code class="shell">
-  $ docker container ls -a
-        </code></pre>
-
-            <aside class="notes">
-              <p>"docker container ls" same thing that "docker ps"</p>
-            </aside>
-          </section>
-
-          <section>
-            <h2>How to run a Docker container</h2>
-
-            <h3>A more useful example</h3>
-
-            <pre class="fragment"><code class="shell">
-  $ touch /tmp/index.html
-        </code></pre>
-
-            <pre class="fragment"><code class="shell">
-  $ docker container run -d --name nginx-container -p 8000:80
-      -v /tmp/index.html:/usr/share/nginx/html/index.html:ro nginx
-        </code></pre>
-
-            <pre class="fragment"><code class="shell">
-  $ docker container ls
-  $ docker exec nginx-container cat /usr/share/nginx/html/index.html
-        </code></pre>
-
-            <ul>
-              <li class="fragment">
-                Access the server through
-                <a href="http://localhost:8000/">localhost:8000</a>
-              </li>
-            </ul>
-
-            <aside class="notes">
-              <p>"docker container run" => run a command in a new container</p>
-              <p>"docker container exec" => run a command in an existing container</p>
-            </aside>
-          </section>
-
-          <section>
-            <h2>How to run a Docker container</h2>
-
-            <br />
-
-            <h3>Let's clean</h3>
-
-            <pre class="fragment"><code class="shell">
-  $ docker container rm nginx-container
-        </code></pre>
-
-            <pre class="fragment"><code class="shell">
-  $ docker image rm nginx
-        </code></pre>
-
-            <aside class="notes">
-              <p>"docker image rm" same thing that "docker rmi"</p>
-            </aside>
-          </section>
-
-          <section>
-            <h2>How to run a Docker container</h2>
-
-            <br />
-
-            <h3>Summary</h3>
-
-            <table style="width: 100%">
+            <table class="centered-slide-content" style="width: 100%">
               <tr>
                 <th style="width: 50%; text-align: center">Command</th>
                 <th style="width: 50%; text-align: center">Usage</th>
@@ -498,11 +527,7 @@ $ docker run -e MY_VAR debian:stable-slim sh -c 'echo $MY_VAR'
           </section>
 
           <section>
-            <h2>How to run a Docker container</h2>
-
-            <br />
-
-            <h3>Summary</h3>
+            <h2>Using Docker - Summary</h2>
 
             <table style="width: 100%">
               <tr>
@@ -538,20 +563,7 @@ $ docker run -e MY_VAR debian:stable-slim sh -c 'echo $MY_VAR'
                 <td style="width: 50%; text-align: center">docker rmi</td>
               </tr>
             </table>
-
-            <br />
-
-            <ul>
-              <li class="fragment">
-                A world of container:
-                <a href="https://hub.docker.com/">Docker Hub</a>
-              </li>
-            </ul>
-
-            <aside class="notes">
-              <p>Run just "docker" to see the list of commands available</p>
-              <p>Present the Hub and our GitHub repository</p>
-            </aside>
+            <aside class="notes"></aside>
           </section>
         </section>
 
