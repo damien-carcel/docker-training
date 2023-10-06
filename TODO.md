@@ -60,7 +60,7 @@ $ command associated to above point
       - Try to create a file with touch → oops, root!
   - [x] user: fix the above issue
 - Run the Symfony project with PHP internal server
-  - [ ] use composer to create a symfony project with `docker container run`
+  - [x] use composer to create a symfony project with `docker container run`
     - Combine everything we saw until now
     - Customize the paths for Composer cache and config through volumes and environment variables
   - [ ] introduce "detached" mode

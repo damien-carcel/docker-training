@@ -354,7 +354,8 @@ $ docker container run -e VARIABLE_NAME="value" debian:stable-slim
 
               <pre><code class="shell">
 $ export HOST_VAR="Hello\!"
-$ docker container run -e CONTAINER_VAR=$HOST_VAR debian:stable-slim sh -c 'echo $CONTAINER_VAR'
+$ docker container run -e CONTAINER_VAR=$HOST_VAR debian:stable-slim \
+    sh -c 'echo $CONTAINER_VAR'
               </code></pre>
 
               <div class="fragment" data-fragment-index="1">or</div>
@@ -439,7 +440,8 @@ $ docker container run -v /path-on-host:/path-in-container debian:stable-slim
               <ul class="fragment" data-fragment-index="6">
                 <li>Look at what the <code class="inline-code">docker volume</code> management command propose</li>
                 <li>
-                  Bind mount through <code class="inline-code">docker container run -v host-data:container-data</code>
+                  Bind mount through<br />
+                  <code class="inline-code">docker container run -v host-data:container-data</code>
                 </li>
               </ul>
             </div>
@@ -503,7 +505,8 @@ $ sudo cat /the/path/to/the/data/shown/by/the/inspection/of/the/volume/test.txt
               <h3>Solution</h3>
 
               <pre><code class="shell">
-$ docker container run -i -t --rm -v /home/&lt;your login&gt;/Downloads:/data debian:stable-slim bash
+$ docker container run -i -t --rm \
+    -v /home/&lt;your login&gt;/Downloads:/data debian:stable-slim bash
 
 ### Now I am in the container ###
 
@@ -513,7 +516,8 @@ $ echo "This is a test" > /data/test.txt
 
 $ vim /home/&lt;your login&gt;/Downloads/test.txt
 
-### Will fail because of a permission problem, because we were "root" in the container ###
+### Will fail because of a permission problem, ###
+### because we were "root" in the container ###
               </code></pre>
             </div>
 
@@ -576,22 +580,21 @@ USER michel
             <h2>Using Docker - User</h2>
 
             <div class="centered-slide-content">
-              <h3>Solutions</h3>
+              <h3>Solution</h3>
 
-              <pre><code class="shell">
-$ docker container run -i -t --rm -u &lt;your login&gt; -v /home/&lt;your login&gt;/Downloads:/data debian:stable-slim bash
-              </code></pre>
-
-              <div class="fragment" data-fragment-index="1">or</div>
-
-              <pre class="fragment" data-fragment-index="1"><code class="shell">
-$ docker container run -i -t --rm -u $(id -u):$(id -g) -v /home/&lt;your login&gt;/Downloads:/data debian:stable-slim bash
+              <pre class="fragment"><code class="shell">
+$ docker container run -i -t --rm \
+    -u $(id -u):$(id -g) \
+    -v /home/&lt;your login&gt;/Downloads:/data debian:stable-slim bash
               </code></pre>
             </div>
 
             <aside class="notes">
-              You could also extend the image in a Dockerfile, create a user, and use this user as default or through
-              `--user`
+              <p>
+                You could also extend the image in a Dockerfile, create a user, and use this user as default or through
+                `--user`
+              </p>
+              <p>IMPORTANT: `-u user` → "user" is the user in the container, not on your host</p>
             </aside>
           </section>
 
@@ -601,7 +604,9 @@ $ docker container run -i -t --rm -u $(id -u):$(id -g) -v /home/&lt;your login&g
             <div class="centered-slide-content">
               <div class="fragment gear" data-fragment-index="1">Try to run the following:</div>
               <pre class="fragment" data-fragment-index="1"><code class="shell">
-$ docker container run -i -t --rm -u &lt;your login&gt; -v /home/&lt;your login&gt;/Downloads/test:/data debian:stable-slim bash
+$ docker container run -i -t --rm \
+    -u $(id -u):$(id -g) \
+    -v /home/&lt;your login&gt;/Downloads/test:/data debian:stable-slim bash
               </code></pre>
 
               <br />
@@ -614,6 +619,79 @@ $ docker container run -i -t --rm -u &lt;your login&gt; -v /home/&lt;your login&
               You could also extend the image in a Dockerfile, create a user, and use this user as default or through
               `--user`
             </aside>
+          </section>
+
+          <section>
+            <h2>Using Docker</h2>
+
+            <div class="centered-slide-content">
+              <h3>Let's create and serve a Symfony app</h3>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Symfony app</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment gear" data-fragment-index="1">
+                  Use the <code class="inline-code">composer:latest</code> Docker image to create a Symfony app
+                </li>
+                <li class="fragment gear" data-fragment-index="2">
+                  <code class="inline-code">/home/&lt;your login&gt;/training/composer/config</code> on your host
+                </li>
+                <li class="fragment gear" data-fragment-index="2">
+                  <code class="inline-code">/tmp/composer/config</code> inside the container
+                </li>
+                <li class="fragment gear" data-fragment-index="3">
+                  <code class="inline-code">/home/&lt;your login&gt;/training/composer/cache</code> on your host
+                </li>
+                <li class="fragment gear" data-fragment-index="3">
+                  <code class="inline-code">/tmp/composer/cache</code> inside the container
+                </li>
+              </ul>
+
+              <br />
+              <br />
+
+              <div class="fragment" data-fragment-index="6">Tips</div>
+              <ul class="fragment" data-fragment-index="6">
+                <li><code class="inline-code">composer create-project symfony/skeleton my-app</code></li>
+                <li><code class="inline-code">COMPOSER_HOME="/path/to/config"</code></li>
+                <li><code class="inline-code">COMPOSER_CACHE_DIR="/path/to/cache"</code></li>
+                <li>You need to specify the "working directory" where to create the app</li>
+              </ul>
+            </div>
+
+            <aside class="notes">
+              <p>We didn't see the working directory notion yet</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Using Docker</h2>
+
+            <div class="centered-slide-content">
+              <h3>Solution</h3>
+
+              <pre class="fragment"><code class="shell">
+$ mkdir -p training/composer/config training/composer/cache training/workspace
+
+$ docker container run -i -t --rm \
+    -u $(id -u):$(id -g) \
+    -e COMPOSER_HOME="/tmp/composer/config" \
+    -v /home/&lt;your login&gt;/training/composer/config:/tmp/composer/config \
+    -e COMPOSER_CACHE_DIR="/tmp/composer/cache" \
+    -v /home/&lt;your login&gt;/training/composer/cache:/tmp/composer/cache \
+    -w /data \
+    -v /home/&lt;your login&gt;/training/workspace:/data \
+    composer:latest composer create-project symfony/skeleton my-app
+              </code></pre>
+            </div>
+
+            <aside class="notes"></aside>
           </section>
 
           <!-- OLD VERSION -->
