@@ -68,8 +68,7 @@ $ command associated to above point
     - introduce "detached" mode and port mapping
     - introduce `docker container logs`
 - Networks
-  - [ ] Let's try to run the app twice, same internal port
-    - shouldn't work because of port conflict
+  - [x] Can we access the app from another container?
 - Let's build our own image - practice the Dockerfile
   - [ ] debian slim as a base, install PHP and needed extensions
     - back to layers, important to not create too many of them once we're OK with the image

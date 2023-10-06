@@ -779,6 +779,51 @@ $ docker container stop
           </section>
 
           <section>
+            <h2>Using Docker - Container isolation</h2>
+
+            <div class="centered-slide-content">
+              <pre class="fragment"><code class="shell">
+$ docker container run --rm -u 1000:1000 -d --name my-app-container \
+    -w /data -v /home/damien/training/workspace/my-app:/data \
+    composer:latest php -S 0.0.0.0:8000 -t public
+              </code></pre>
+
+              <ul>
+                <li class="fragment">Could we access this app from another container?</li>
+              </ul>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Container isolation</h2>
+
+            <div class="centered-slide-content">
+              <h3>Yes, you can</h3>
+
+              <pre class="fragment"><code class="shell">
+$ docker container inspect
+### Retrieve the IP address ###
+              </code></pre>
+
+              <pre class="fragment"><code class="shell">
+$ docker container run -i -t --rm curlimages/curl curl &lt;IP address&gt;:8000
+### Will display Symfony dev page ###
+              </code></pre>
+
+              <pre class="fragment"><code class="shell">
+$ docker network create my-network
+$ docker container run -i -t --rm --network my-network \
+    curlimages/curl curl 172.17.0.2:8000
+### There, you cannot ###
+              </code></pre>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
             <h2>Using Docker - Command glossary</h2>
 
             <table class="centered-slide-content" style="width: 100%">
