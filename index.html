@@ -480,16 +480,14 @@ $ sudo cat /the/path/to/the/data/shown/by/the/inspection/of/the/volume/test.txt
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment gear" data-fragment-index="2">
-                  Run a container while bind-mounting
+                <li class="gear">
+                  Run a container while bind-mounting<br />
                   <code class="inline-code">/home/&lt;your login&gt;/Downloads/test</code> into
                   <code class="inline-code">/data</code>
                 </li>
-                <li class="fragment gear" data-fragment-index="3">
-                  Create a file in <code class="inline-code">/data</code>
-                </li>
-                <li class="fragment gear" data-fragment-index="4">Stop the container and ensure it is removed</li>
-                <li class="fragment gear" data-fragment-index="5">
+                <li class="fragment gear">Create a file in <code class="inline-code">/data</code></li>
+                <li class="fragment gear">Stop the container and ensure it is removed</li>
+                <li class="fragment gear">
                   Try to edit the file you just created in the container with your favorite text editor
                 </li>
               </ul>
@@ -505,7 +503,7 @@ $ sudo cat /the/path/to/the/data/shown/by/the/inspection/of/the/volume/test.txt
               <h3>Solution</h3>
 
               <pre><code class="shell">
-$ docker container run -i -t --rm -v /home/&lt;your login&gt;:/data debian:stable-slim bash
+$ docker container run -i -t --rm -v /home/&lt;your login&gt;/Downloads:/data debian:stable-slim bash
 
 ### Now I am in the container ###
 
@@ -513,13 +511,109 @@ $ echo "This is a test" > /data/test.txt
 
 ### CTRL+D to exit ###
 
-$ vim /home/&lt;your login&gt;/test.txt
+$ vim /home/&lt;your login&gt;/Downloads/test.txt
 
 ### Will fail because of a permission problem, because we were "root" in the container ###
               </code></pre>
             </div>
 
             <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - User</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment" data-fragment-index="1">
+                  <code class="shell inline-code">docker container run --user</code> allows to specify a user inside the
+                  container
+                </li>
+                <li class="fragment" data-fragment-index="2">
+                  It will override any user already specified as default in the Dockerfile
+                </li>
+              </ul>
+
+              <pre class="fragment" data-fragment-index="3"><code class="dockerfile">
+FROM an-image-with-user:michel
+
+USER root
+
+RUN apt install something
+
+USER michel
+              </code></pre>
+              <legend class="fragment" data-fragment-index="3">Define a current user directly in the container</legend>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - User</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment gear" data-fragment-index="2">
+                  Again, run a container while bind-mounting, but this time specify a user
+                  <code class="inline-code">/home/&lt;your login&gt;/Downloads/test</code> into
+                  <code class="inline-code">/data</code>
+                </li>
+                <li class="fragment gear" data-fragment-index="3">
+                  Create a file in <code class="inline-code">/data</code>
+                </li>
+                <li class="fragment gear" data-fragment-index="4">Stop the container and ensure it is removed</li>
+                <li class="fragment gear" data-fragment-index="5">
+                  Goal: editing the file you just created in the container should work
+                </li>
+              </ul>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - User</h2>
+
+            <div class="centered-slide-content">
+              <h3>Solutions</h3>
+
+              <pre><code class="shell">
+$ docker container run -i -t --rm -u &lt;your login&gt; -v /home/&lt;your login&gt;/Downloads:/data debian:stable-slim bash
+              </code></pre>
+
+              <div class="fragment" data-fragment-index="1">or</div>
+
+              <pre class="fragment" data-fragment-index="1"><code class="shell">
+$ docker container run -i -t --rm -u $(id -u):$(id -g) -v /home/&lt;your login&gt;/Downloads:/data debian:stable-slim bash
+              </code></pre>
+            </div>
+
+            <aside class="notes">
+              You could also extend the image in a Dockerfile, create a user, and use this user as default or through
+              `--user`
+            </aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - One last thing</h2>
+
+            <div class="centered-slide-content">
+              <div class="fragment gear" data-fragment-index="1">Try to run the following:</div>
+              <pre class="fragment" data-fragment-index="1"><code class="shell">
+$ docker container run -i -t --rm -u &lt;your login&gt; -v /home/&lt;your login&gt;/Downloads/test:/data debian:stable-slim bash
+              </code></pre>
+
+              <br />
+              <br />
+
+              <div class="fragment gear" data-fragment-index="2">Look on your host. Can you say what is wrong?</div>
+            </div>
+
+            <aside class="notes">
+              You could also extend the image in a Dockerfile, create a user, and use this user as default or through
+              `--user`
+            </aside>
           </section>
 
           <!-- OLD VERSION -->

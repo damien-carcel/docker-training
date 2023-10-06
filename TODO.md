@@ -56,12 +56,13 @@ $ command associated to above point
       - Delete the volume
     - [x] Bind-mount host data
       - Bind-mount local folder
+      - Beware of binding directories that do not exist yet on the host
       - Try to create a file with touch → oops, root!
-  - [ ] user: fix the above issue
-    - Beware of binding directories that do not exist yet on the host
-  - [ ] all of that together: use composer to create a symfony project with `docker container run`
-    - Customize the paths for Composer cache and config through volumes and environment variables
+  - [x] user: fix the above issue
 - Run the Symfony project with PHP internal server
+  - [ ] use composer to create a symfony project with `docker container run`
+    - Combine everything we saw until now
+    - Customize the paths for Composer cache and config through volumes and environment variables
   - [ ] introduce "detached" mode
   - [ ] introduce `docker container logs`
 - Networks
