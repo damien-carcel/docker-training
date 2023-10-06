@@ -632,7 +632,7 @@ $ docker container run -i -t --rm \
           </section>
 
           <section>
-            <h2>Using Docker - Symfony app</h2>
+            <h2>Using Docker - Create a Symfony app</h2>
 
             <div class="centered-slide-content">
               <ul>
@@ -671,7 +671,7 @@ $ docker container run -i -t --rm \
           </section>
 
           <section>
-            <h2>Using Docker</h2>
+            <h2>Using Docker - Create a Symfony app</h2>
 
             <div class="centered-slide-content">
               <h3>Solution</h3>
@@ -694,10 +694,92 @@ $ docker container run -i -t --rm \
             <aside class="notes"></aside>
           </section>
 
-          <!-- OLD VERSION -->
+          <section>
+            <h2>Using Docker - Serve a Symfony app</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment gear" data-fragment-index="1">
+                  Serve and expose the app on port <code class="inline-code">8080</code>
+                </li>
+              </ul>
+
+              <br />
+              <br />
+
+              <div class="fragment" data-fragment-index="2">Tips</div>
+              <ul class="fragment" data-fragment-index="2">
+                <li><code class="inline-code">php -S 0.0.0.0:8000 -t public</code></li>
+                <li>
+                  Look at the "publish" <code class="inline-code">-p</code> option of
+                  <code class="inline-code">docker container run</code>
+                </li>
+              </ul>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
 
           <section>
-            <h2>Using Docker - Summary</h2>
+            <h2>Using Docker - Serve a Symfony app</h2>
+
+            <div class="centered-slide-content">
+              <h3>Solutions</h3>
+
+              <pre class="fragment"><code class="shell">
+$ docker container run --rm -u 1000:1000 \
+    -p 8080:8000 \
+    -w /data -v /home/damien/training/workspace/my-app:/data \
+    composer:latest php -S 0.0.0.0:8000 -t public
+              </code></pre>
+
+              <pre class="fragment"><code class="shell">
+$ docker container run --rm -u 1000:1000 -d \
+    -p 8080:8000 \
+    -w /data -v /home/damien/training/workspace/my-app:/data \
+    composer:latest php -S 0.0.0.0:8000 -t public
+              </code></pre>
+            </div>
+
+            <aside class="notes">
+              <p>Like for the volumes, the first port is on the host, the second in the container</p>
+              <p>"Detached" mode gives you the terminal back right away</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Display logs</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment">Run the app in "detached" mode</li>
+              </ul>
+
+              <pre class="fragment"><code class="shell">
+$ docker container run --rm -u 1000:1000 -d --name my-app-container \
+    -p 8080:8000 \
+    -w /data -v /home/damien/training/workspace/my-app:/data \
+    composer:latest php -S 0.0.0.0:8000 -t public
+              </code></pre>
+
+              <pre class="fragment"><code class="shell">
+$ docker container logs my-app-container
+              </code></pre>
+
+              <pre class="fragment"><code class="shell">
+$ docker container logs -f --tail 1 my-app-container
+              </code></pre>
+
+              <pre class="fragment"><code class="shell">
+$ docker container stop
+              </code></pre>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Command glossary</h2>
 
             <table class="centered-slide-content" style="width: 100%">
               <tr>
@@ -746,7 +828,7 @@ $ docker container run -i -t --rm \
           </section>
 
           <section>
-            <h2>Using Docker - Summary</h2>
+            <h2>Using Docker - Command glossary</h2>
 
             <table style="width: 100%">
               <tr>
