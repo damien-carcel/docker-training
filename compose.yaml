@@ -7,19 +7,6 @@ x-common: &common
   working_dir: /srv/app
 
 services:
-  devcontainer:
-    build: ./build/docker/devcontainer
-    command: sleep infinity
-    environment:
-      YARN_CACHE_FOLDER: /home/yarn-cache
-    user: ${HOST_USER_IDS:-1000:1000}
-    volumes:
-      - .:/srv/app
-      - ${HOST_YARN_CACHE_FOLDER:-~/.cache/yarn}:/home/yarn-cache
-      - ${HOST_YARN_CONFIG_FOLDER:-~/.config/yarn}:/.yarn
-      - ${HOST_YARN_CONFIG_FILE:-~/.yarnrc}:/.yarnrc
-    working_dir: /srv/app
-
   dev:
     <<: *common
     command: yarn dev --host

@@ -63,7 +63,7 @@ $ command associated to above point
   - [x] use composer to create a symfony project with `docker container run`
     - Combine everything we saw until now
     - Customize the paths for Composer cache and config through volumes and environment variables
-  - [ ] serve the app
+  - [x] serve the app
     - first with `docker container run --rm` direclty
     - introduce "detached" mode and port mapping
     - introduce `docker container logs`
@@ -72,7 +72,7 @@ $ command associated to above point
 - Networks
   - [x] Can we access the app from another container?
 - Let's build our own image - practice the Dockerfile
-  - [ ] debian slim as a base, install PHP and needed extensions
+  - [x] debian slim as a base, install PHP and needed extensions
     - back to layers, important to not create too many of them once we're OK with the image
     - OK to create many for tests to gain time
     - Clean-up must be performed in the same layer that wasted space, or no effect

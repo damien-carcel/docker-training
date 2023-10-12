@@ -768,9 +768,21 @@ $ docker container logs my-app-container
               <pre class="fragment"><code class="shell">
 $ docker container logs -f --tail 1 my-app-container
               </code></pre>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Manimpulate a detached container</h2>
+
+            <div class="centered-slide-content">
+              <pre class="fragment"><code class="shell">
+$ docker container exec -i -t my-app-container bash
+              </code></pre>
 
               <pre class="fragment"><code class="shell">
-$ docker container stop
+$ docker container stop my-app-container
               </code></pre>
             </div>
 
