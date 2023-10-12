@@ -315,8 +315,7 @@ $ docker container run -i -t --rm debian:stable-slim bash
               <pre class="fragment"><code class="dockerfile">
 FROM scratch
 
-ARG VAR_1="I exist only during the build phase"
-ENV VAR_2="I will be there at runtime"
+ENV MY_VAR="A value"
               </code></pre>
             </div>
 
@@ -490,7 +489,7 @@ $ sudo cat /the/path/to/the/data/shown/by/the/inspection/of/the/volume/test.txt
                 <li class="fragment gear">Create a file in <code class="inline-code">/data</code></li>
                 <li class="fragment gear">Stop the container and ensure it is removed</li>
                 <li class="fragment gear">
-                  Try to edit the file you just created in the container with your favorite text editor
+                  Try to edit on your host the file you just created in the container with your favorite text editor
                 </li>
               </ul>
             </div>
@@ -824,92 +823,221 @@ $ docker container run -i -t --rm --network my-network \
           </section>
 
           <section>
-            <h2>Using Docker - Command glossary</h2>
+            <h2>Using Docker</h2>
 
-            <table class="centered-slide-content" style="width: 100%">
-              <tr>
-                <th style="width: 50%; text-align: center">Command</th>
-                <th style="width: 50%; text-align: center">Usage</th>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: left">docker image pull</td>
-                <td style="width: 50%; text-align: justify">Pull an image from a repository</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: left">docker image ls [-a]</td>
-                <td style="width: 50%; text-align: justify">List all images on your machine</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: left">docker container ls [-a]</td>
-                <td style="width: 50%; text-align: justify">List all containers on you machine</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: left">docker container run -i -t --rm image command</td>
-                <td style="width: 50%; text-align: justify">Run a container in interactive mode</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: left">docker container run -d image</td>
-                <td style="width: 50%; text-align: justify">Run a container in detached mode</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: left">docker container exec container_name command</td>
-                <td style="width: 50%; text-align: justify">Execute a command inside a running container</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: left">docker container rm [-f -v] container_name|id</td>
-                <td style="width: 50%; text-align: justify">Delete a container</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: left">docker image rm [-f] image_name|id</td>
-                <td style="width: 50%; text-align: justify">Delete an image</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: left">docker system prune --volume</td>
-                <td style="width: 50%; text-align: justify">Clean everything</td>
-              </tr>
-            </table>
+            <div class="centered-slide-content">
+              <h3>Building custom images</h3>
+              <div class="fragment">Now you can use your IDE 💻</div>
+            </div>
 
             <aside class="notes"></aside>
           </section>
 
           <section>
-            <h2>Using Docker - Command glossary</h2>
+            <h2>Using Docker - Building an image</h2>
 
-            <table style="width: 100%">
-              <tr>
-                <th style="width: 50%; text-align: center">New commands</th>
-                <th style="width: 50%; text-align: center">Old commands</th>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: center">docker image pull</td>
-                <td style="width: 50%; text-align: center">docker pull</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: center">docker image ls [-a]</td>
-                <td style="width: 50%; text-align: center">docker images [-a]</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: center">docker container ls [-a]</td>
-                <td style="width: 50%; text-align: center">docker ps [-a]</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: center">docker container run</td>
-                <td style="width: 50%; text-align: center">docker run</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: center">docker container exec</td>
-                <td style="width: 50%; text-align: center">docker exec</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: center">docker container rm</td>
-                <td style="width: 50%; text-align: center">docker rm</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: center">docker image rm</td>
-                <td style="width: 50%; text-align: center">docker rmi</td>
-              </tr>
-            </table>
+            <div class="centered-slide-content">
+              <pre class="fragment" data-fragment-index="1"><code class="dockerfile">
+FROM some-image:image-tag
+              </code></pre>
+              <legend class="fragment" data-fragment-index="1">The most basic Dockerfile you can write</legend>
+
+              <pre class="fragment" data-fragment-index="2"><code class="shell">
+$ docker image build --tag my-image:my-tag .
+              </code></pre>
+            </div>
+
+            <aside class="notes">
+              <p>Present "builder" management command and "buildx" plugin.</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Building an image</h2>
+
+            <div class="centered-slide-content" data-line-numbers="3">
+              <pre><code class="dockerfile" data-line-numbers="3|3-5|3-6">
+
+FROM some-image:image-tag
+
+ARG MY_ARG = "A environment variable only available at build time"
+ENV MY_VAR = "A environment variable that will stay at runtime"
+              </code></pre>
+              <legend>Environment variables and arguments</legend>
+
+              <pre class="fragment"><code class="shell">
+$ docker image build --build-arg MY_ARG="An overridding value" --tag my-image:my-tag .
+              </code></pre>
+            </div>
+
             <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Building an image</h2>
+
+            <div class="centered-slide-content" data-line-numbers="3">
+              <pre><code class="dockerfile" data-trim data-line-numbers="1-3">
+ARG IMAGE_TAG
+
+FROM some-image:${IMAGE_TAG}
+
+ARG MY_ARG="A environment variable only available at build time"
+ENV MY_VAR="A environment variable that will stay at runtime"
+              </code></pre>
+              <legend>Environment variables and arguments</legend>
+
+              <pre class="fragment"><code class="shell">
+$ docker image build --build-arg IMAGE_TAG="image-tag" --tag my-image:my-tag .
+              </code></pre>
+            </div>
+
+            <aside class="notes">
+              <p>ARG is the only instruction allowed before FROM</p>
+              <p>Not mandatory to put a value to an ARG in the Docker file => mandatory build parameter.</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Building an image</h2>
+
+            <div class="centered-slide-content">
+              <pre><code class="dockerfile" data-trim data-line-numbers="1,5|1-8">
+FROM some-image:tag
+
+ARG BUILD_OPTION="-vvv"
+
+RUN /usr/bin/some-command
+
+RUN /usr/bin/some-other-command ${BUILD_OPTION} && \
+    /usr/bin/whatever
+              </code></pre>
+              <legend>Install and configure the image through RUN</legend>
+            </div>
+
+            <aside class="notes">
+              <p>basically, run contains anything you can run in a terminal</p>
+              <p>Explain the concept of layers, present pros and cons of one layer vs multiple</p>
+              <ul>
+                <li>One layer → allows cleaning and keep image size under control</li>
+                <li>
+                  Multi layer → allows for more efficient cache, very usefull to test when creating the Dockerfile
+                </li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Building an image</h2>
+
+            <div class="centered-slide-content">
+              <pre><code class="dockerfile" data-trim data-line-numbers="1|1-3|1-5|1-7|1-9|1-11">
+FROM some-image:tag
+
+COPY ./docker/some-config.ini /etc/some-config/default.ini
+
+EXPOSE 8080
+
+VOLUME /data
+
+WORKDIR /tmp
+
+USER root
+              </code></pre>
+              <legend>Add, share and expose data</legend>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Building an image</h2>
+
+            <div class="centered-slide-content">
+              <pre><code class="dockerfile" data-trim>
+FROM some-image:tag
+
+ENV MY_VAR = "Hello!"
+
+CMD ["/bin/sh", "-c", "echo ${MY_VAR}"]
+              </code></pre>
+              <legend>Running a default command - exec form (prefered one)</legend>
+
+              <pre class="fragment" data-fragment-index="1"><code class="dockerfile" data-trim>
+FROM some-image:tag
+
+ENV MY_VAR = "Hello!"
+
+CMD echo "${MY_VAR}"
+              </code></pre>
+              <legend class="fragment" data-fragment-index="1">Running a default command - shell form</legend>
+
+              <pre class="fragment" data-fragment-index="2"><code class="shell">
+$ docker container --rm run my-image:my-tag ps aux
+              </code></pre>
+              <legend class="fragment" data-fragment-index="2">Running a default command - override the command</legend>
+            </div>
+
+            <aside class="notes">
+              <p>exec form prevents shell execution, it is more secure.</p>
+              <p>shell form is like wrapping the cmd in `/bin/sh -c "cmd content"`</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Building an image</h2>
+
+            <div class="centered-slide-content">
+              <pre><code class="dockerfile" data-trim>
+FROM some-image:tag
+
+ENTRYPOINT ["top", "-b"]
+              </code></pre>
+              <legend>Using the entrypoint - exec form (prefered)</legend>
+
+              <pre class="fragment" data-fragment-index="1"><code class="dockerfile" data-trim>
+FROM some-image:tag
+
+ENTRYPOINT exec top -b
+              </code></pre>
+              <legend class="fragment" data-fragment-index="1">Using the entrypoint - shell form</legend>
+
+              <pre class="fragment" data-fragment-index="2"><code class="shell">
+$ docker container --rm run --entrypoint="exec ps aux" my-image:my-tag
+              </code></pre>
+              <legend class="fragment" data-fragment-index="2">
+                Running a default command - override the entrypoint
+              </legend>
+            </div>
+
+            <aside class="notes">
+              <p>Basically, entrypoint and cmd are concatenated</p>
+              <p>exec in shell form to prevent docker stop to be blocked on long processes</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Building an image</h2>
+
+            <div class="centered-slide-content">
+              <pre><code class="dockerfile" data-trim>
+FROM some-image:tag
+
+ENTRYPOINT ["echo", "-e"]
+
+CMD ["Hello!"]
+              </code></pre>
+
+              <pre class="fragment"><code class="shell">
+$ docker container --rm run my-image:my-tag Coucou
+              </code></pre>
+
+              <legend>Combining command and entrypoint</legend>
+            </div>
+
+            <aside class="notes">
+              <p>https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact</p>
+            </aside>
           </section>
         </section>
 
@@ -1120,6 +1248,97 @@ RUN phpenmod meminfo
             <aside class="notes">
               <!-- -->
             </aside>
+          </section>
+        </section>
+
+        <section id="glossary">
+          <section>
+            <h2>Using Docker - Command glossary</h2>
+
+            <table class="centered-slide-content" style="width: 100%">
+              <tr>
+                <th style="width: 50%; text-align: center">Command</th>
+                <th style="width: 50%; text-align: center">Usage</th>
+              </tr>
+              <tr>
+                <td style="width: 50%; text-align: left">docker image pull</td>
+                <td style="width: 50%; text-align: justify">Pull an image from a repository</td>
+              </tr>
+              <tr>
+                <td style="width: 50%; text-align: left">docker image ls [-a]</td>
+                <td style="width: 50%; text-align: justify">List all images on your machine</td>
+              </tr>
+              <tr>
+                <td style="width: 50%; text-align: left">docker container ls [-a]</td>
+                <td style="width: 50%; text-align: justify">List all containers on you machine</td>
+              </tr>
+              <tr>
+                <td style="width: 50%; text-align: left">docker container run -i -t --rm image command</td>
+                <td style="width: 50%; text-align: justify">Run a container in interactive mode</td>
+              </tr>
+              <tr>
+                <td style="width: 50%; text-align: left">docker container run -d image</td>
+                <td style="width: 50%; text-align: justify">Run a container in detached mode</td>
+              </tr>
+              <tr>
+                <td style="width: 50%; text-align: left">docker container exec container_name command</td>
+                <td style="width: 50%; text-align: justify">Execute a command inside a running container</td>
+              </tr>
+              <tr>
+                <td style="width: 50%; text-align: left">docker container rm [-f -v] container_name|id</td>
+                <td style="width: 50%; text-align: justify">Delete a container</td>
+              </tr>
+              <tr>
+                <td style="width: 50%; text-align: left">docker image rm [-f] image_name|id</td>
+                <td style="width: 50%; text-align: justify">Delete an image</td>
+              </tr>
+              <tr>
+                <td style="width: 50%; text-align: left">docker system prune --volume</td>
+                <td style="width: 50%; text-align: justify">Clean everything</td>
+              </tr>
+            </table>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Command glossary</h2>
+
+            <table style="width: 100%">
+              <tr>
+                <th style="width: 50%; text-align: center">New commands</th>
+                <th style="width: 50%; text-align: center">Old commands</th>
+              </tr>
+              <tr>
+                <td style="width: 50%; text-align: center">docker image pull</td>
+                <td style="width: 50%; text-align: center">docker pull</td>
+              </tr>
+              <tr>
+                <td style="width: 50%; text-align: center">docker image ls [-a]</td>
+                <td style="width: 50%; text-align: center">docker images [-a]</td>
+              </tr>
+              <tr>
+                <td style="width: 50%; text-align: center">docker container ls [-a]</td>
+                <td style="width: 50%; text-align: center">docker ps [-a]</td>
+              </tr>
+              <tr>
+                <td style="width: 50%; text-align: center">docker container run</td>
+                <td style="width: 50%; text-align: center">docker run</td>
+              </tr>
+              <tr>
+                <td style="width: 50%; text-align: center">docker container exec</td>
+                <td style="width: 50%; text-align: center">docker exec</td>
+              </tr>
+              <tr>
+                <td style="width: 50%; text-align: center">docker container rm</td>
+                <td style="width: 50%; text-align: center">docker rm</td>
+              </tr>
+              <tr>
+                <td style="width: 50%; text-align: center">docker image rm</td>
+                <td style="width: 50%; text-align: center">docker rmi</td>
+              </tr>
+            </table>
+            <aside class="notes"></aside>
           </section>
         </section>
       </div>

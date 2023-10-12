@@ -63,10 +63,12 @@ $ command associated to above point
   - [x] use composer to create a symfony project with `docker container run`
     - Combine everything we saw until now
     - Customize the paths for Composer cache and config through volumes and environment variables
-  - [x] serve the app
+  - [ ] serve the app
     - first with `docker container run --rm` direclty
     - introduce "detached" mode and port mapping
     - introduce `docker container logs`
+    - introduce `docker container exec`
+    - introduce `docker container stop`
 - Networks
   - [x] Can we access the app from another container?
 - Let's build our own image - practice the Dockerfile
@@ -74,11 +76,15 @@ $ command associated to above point
     - back to layers, important to not create too many of them once we're OK with the image
     - OK to create many for tests to gain time
     - Clean-up must be performed in the same layer that wasted space, or no effect
-  - [ ] launch the server from the image in production mode with right user
-    - should only need `docker container run -d image`
-    - introduce `docker container exec`
-    - introduce `docker container stop`
-- [ ] Glossary of commands
+    - COPY, ENV, ARG, etc...
+  - [ ] Exercise:
+    - Build an image running the PHP internal Server with the Symfony app inside the image
+    - launch the server from the image in production mode with right user
+      - should only need `docker container run -d image`
+  - [ ] Multistage building
+    - Separate the image in base, build and prod
+    - Add a dev stage
+    - Build both prod and dev stages
 
 ## Docker Compose
 
@@ -97,3 +103,5 @@ $ command associated to above point
 
 - [ ] A PHP setup with no PHP installation on the host
 - [ ] XDebug
+
+## Glossary of commands
