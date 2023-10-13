@@ -1094,6 +1094,72 @@ $ docker container --rm run my-image:my-tag Coucou
               <p>Discuss what is wrong with this solution → useless elements (like Composer) in the resulting image</p>
             </aside>
           </section>
+
+          <section>
+            <h2>Using Docker - Multistage building</h2>
+
+            <div class="centered-slide-content">
+              <pre class="fragment"><code class="dockerfile" data-trim data-line-numbers="1|1-3|5-11|13-19">
+FROM some-image:tag as base
+
+RUN apt install something-needed-for-production
+
+FROM base as builder
+
+RUN apt install something-needed-for-building-your-app
+
+COPY . .
+
+RUN dependency-installation
+
+FROM base as prod
+
+COPY --from=builder /path/in/builder /path/for/prod
+
+WORKDIR /path/for/prod
+
+CMD ["your-app", "--an-option"]
+              </code></pre>
+
+              <pre class="fragment"><code class="shell">
+$ docker image build --target=prod --tag my-image:my-tag .
+              </code></pre>
+            </div>
+
+            <aside class="notes">
+              <p>With a compiled language, your prod image will be from "scratch", because you only need the binary</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Building an image</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment practice-time">Upgrade the previous Dockerfile with multistage building</li>
+                <li class="fragment practice-constraint">
+                  Separate between <code class="inline-code">base</code>, <code class="inline-code">builder</code>, and
+                  <code class="inline-code">prod</code> stages
+                </li>
+                <li class="fragment practice-success">
+                  <code class="inline-code">docker container run -p 8000:8000 -d built-image</code> must still be enough
+                  to serve the app
+                </li>
+              </ul>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Building an image</h2>
+
+            <div class="centered-slide-content">
+              <h3><a target="”_blank”" href="./practice/build-an-image/Dockerfile.multistage.html">Solution</a></h3>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
         </section>
 
         <section id="docker-compose">

@@ -81,9 +81,8 @@ $ command associated to above point
     - Build an image running the PHP internal Server with the Symfony app inside the image
     - launch the server from the image in production mode with right user
       - should only need `docker container run -p 8000:8000 -d image`
-  - [ ] Multistage building
+  - [x] Multistage building
     - Separate the image in base, build and prod
-    - Add a dev stage
     - Build both prod and dev stages
 
 ## Docker Compose
@@ -94,9 +93,9 @@ $ command associated to above point
   - no build for now, use the existing image build with Docker
 - [ ] Build the image directly with compose
 - [ ] Run the app through nginx and FPM
-  - separate the 2 in different networks
+  - Add a dev stage for CLI operations
   - use volumes to share data between both (read-only for nginx and only what it needs: public directory)
-  - Run and stop them separately, then together
+  - Run only nginx (use require on FPM)
   - Clean the volumes and orphans (rename a service) when stopping
 
 ## Running and Debugging with PHPStorm
