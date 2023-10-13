@@ -248,7 +248,7 @@ $ docker image history debian:bookworm-slim
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment gear" data-fragment-index="1">Use bash in a container</li>
+                <li class="fragment practice-time" data-fragment-index="1">Use bash in a container</li>
               </ul>
 
               <br />
@@ -327,8 +327,8 @@ ENV MY_VAR="A value"
 
             <div class="centered-slide-content">
               <ul>
-                <li class="gear">Export an environment variable in your terminal</li>
-                <li class="fragment gear" data-fragment-index="1">
+                <li class="practice-time">Export an environment variable in your terminal</li>
+                <li class="fragment practice-time" data-fragment-index="1">
                   Display its value from a container through <code class="shell inline-code">docker container run</code>
                 </li>
               </ul>
@@ -419,15 +419,17 @@ $ docker container run -v /path-on-host:/path-in-container debian:stable-slim
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment gear" data-fragment-index="1">Create a named volume</li>
-                <li class="fragment gear" data-fragment-index="2">
+                <li class="fragment practice-time" data-fragment-index="1">Create a named volume</li>
+                <li class="fragment practice-time" data-fragment-index="2">
                   Run a container while bind-mounting the volume into <code class="inline-code">/data</code>
                 </li>
-                <li class="fragment gear" data-fragment-index="3">
+                <li class="fragment practice-time" data-fragment-index="3">
                   Create a file in <code class="inline-code">/data</code>
                 </li>
-                <li class="fragment gear" data-fragment-index="4">Stop the container and ensure it is removed</li>
-                <li class="fragment gear" data-fragment-index="5">
+                <li class="fragment practice-time" data-fragment-index="4">
+                  Stop the container and ensure it is removed
+                </li>
+                <li class="fragment practice-time" data-fragment-index="5">
                   Find on your host the file you just created in the container
                 </li>
               </ul>
@@ -481,14 +483,14 @@ $ sudo cat /the/path/to/the/data/shown/by/the/inspection/of/the/volume/test.txt
 
             <div class="centered-slide-content">
               <ul>
-                <li class="gear">
+                <li class="practice-time">
                   Run a container while bind-mounting<br />
                   <code class="inline-code">/home/&lt;your login&gt;/Downloads/test</code> into
                   <code class="inline-code">/data</code>
                 </li>
-                <li class="fragment gear">Create a file in <code class="inline-code">/data</code></li>
-                <li class="fragment gear">Stop the container and ensure it is removed</li>
-                <li class="fragment gear">
+                <li class="fragment practice-time">Create a file in <code class="inline-code">/data</code></li>
+                <li class="fragment practice-time">Stop the container and ensure it is removed</li>
+                <li class="fragment practice-time">
                   Try to edit on your host the file you just created in the container with your favorite text editor
                 </li>
               </ul>
@@ -557,16 +559,18 @@ USER michel
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment gear" data-fragment-index="2">
+                <li class="fragment practice-time" data-fragment-index="2">
                   Again, run a container while bind-mounting, but this time specify a user
                   <code class="inline-code">/home/&lt;your login&gt;/Downloads/test</code> into
                   <code class="inline-code">/data</code>
                 </li>
-                <li class="fragment gear" data-fragment-index="3">
+                <li class="fragment practice-time" data-fragment-index="3">
                   Create a file in <code class="inline-code">/data</code>
                 </li>
-                <li class="fragment gear" data-fragment-index="4">Stop the container and ensure it is removed</li>
-                <li class="fragment gear" data-fragment-index="5">
+                <li class="fragment practice-time" data-fragment-index="4">
+                  Stop the container and ensure it is removed
+                </li>
+                <li class="fragment practice-time" data-fragment-index="5">
                   Goal: editing the file you just created in the container should work
                 </li>
               </ul>
@@ -601,7 +605,7 @@ $ docker container run -i -t --rm \
             <h2>Using Docker - One last thing</h2>
 
             <div class="centered-slide-content">
-              <div class="fragment gear" data-fragment-index="1">Try to run the following:</div>
+              <div class="fragment practice-time" data-fragment-index="1">Try to run the following:</div>
               <pre class="fragment" data-fragment-index="1"><code class="shell">
 $ docker container run -i -t --rm \
     -u $(id -u):$(id -g) \
@@ -611,7 +615,9 @@ $ docker container run -i -t --rm \
               <br />
               <br />
 
-              <div class="fragment gear" data-fragment-index="2">Look on your host. Can you say what is wrong?</div>
+              <div class="fragment practice-time" data-fragment-index="2">
+                Look on your host. Can you say what is wrong?
+              </div>
             </div>
 
             <aside class="notes">
@@ -635,19 +641,19 @@ $ docker container run -i -t --rm \
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment gear" data-fragment-index="1">
+                <li class="fragment practice-time" data-fragment-index="1">
                   Use the <code class="inline-code">composer:latest</code> Docker image to create a Symfony app
                 </li>
-                <li class="fragment gear" data-fragment-index="2">
+                <li class="fragment practice-time" data-fragment-index="2">
                   <code class="inline-code">/home/&lt;your login&gt;/training/composer/config</code> on your host
                 </li>
-                <li class="fragment gear" data-fragment-index="2">
+                <li class="fragment practice-time" data-fragment-index="2">
                   <code class="inline-code">/tmp/composer/config</code> inside the container
                 </li>
-                <li class="fragment gear" data-fragment-index="3">
+                <li class="fragment practice-time" data-fragment-index="3">
                   <code class="inline-code">/home/&lt;your login&gt;/training/composer/cache</code> on your host
                 </li>
-                <li class="fragment gear" data-fragment-index="3">
+                <li class="fragment practice-time" data-fragment-index="3">
                   <code class="inline-code">/tmp/composer/cache</code> inside the container
                 </li>
               </ul>
@@ -698,7 +704,7 @@ $ docker container run -i -t --rm \
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment gear" data-fragment-index="1">
+                <li class="fragment practice-time" data-fragment-index="1">
                   Serve and expose the app on port <code class="inline-code">8080</code>
                 </li>
               </ul>
@@ -959,7 +965,9 @@ USER root
               <legend>Add, share and expose data</legend>
             </div>
 
-            <aside class="notes"></aside>
+            <aside class="notes">
+              <p>COPY can also be used to copy from another Docker image</p>
+            </aside>
           </section>
 
           <section>
@@ -1051,6 +1059,41 @@ $ docker container --rm run my-image:my-tag Coucou
               <p>https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact</p>
             </aside>
           </section>
+
+          <section>
+            <h2>Using Docker - Building an image</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment practice-time">Build an image that serves the Symfony skeleton</li>
+                <li class="fragment practice-constraint">
+                  User <code class="inline-code">debian:stable-slim</code> as base
+                </li>
+                <li class="fragment practice-constraint">Copy the Symfony code in the image</li>
+                <li class="fragment practice-constraint">Use PHP internal server to serve the app</li>
+                <li class="fragment practice-success">
+                  <code class="inline-code">docker container run -p 8000:8000 -d built-image</code> must be enough to
+                  serve the app
+                </li>
+              </ul>
+            </div>
+
+            <aside class="notes">
+              <p>Try to minimize the size of the image</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Building an image</h2>
+
+            <div class="centered-slide-content">
+              <h3><a target="”_blank”" href="./practice/build-an-image/Dockerfile.base.html">Solution</a></h3>
+            </div>
+
+            <aside class="notes">
+              <p>Discuss what is wrong with this solution → useless elements (like Composer) in the resulting image</p>
+            </aside>
+          </section>
         </section>
 
         <section id="docker-compose">
@@ -1136,51 +1179,6 @@ services:
             <aside class="notes">
               <p>Show the scripts before using them</p>
             </aside>
-          </section>
-
-          <section>
-            <h2>Docker compose</h2>
-
-            <br />
-
-            <h3>Summary</h3>
-
-            <table style="width: 100%">
-              <tr>
-                <th style="width: 30%; text-align: center">Command</th>
-                <th style="width: 70%; text-align: center">Usage</th>
-              </tr>
-              <tr>
-                <td style="width: 40%; text-align: left">docker-compose pull</td>
-                <td style="width: 60%; text-align: justify">Pull all the images of your compose file</td>
-              </tr>
-              <tr>
-                <td style="width: 40%; text-align: left">docker-compose up -d</td>
-                <td style="width: 60%; text-align: justify">Create the containers of your compose file</td>
-              </tr>
-              <tr>
-                <td style="width: 40%; text-align: left">docker-compose ps</td>
-                <td style="width: 60%; text-align: justify">
-                  List all containers of your compose file (running or not)
-                </td>
-              </tr>
-              <tr>
-                <td style="width: 40%; text-align: left">docker-compose stop</td>
-                <td style="width: 60%; text-align: justify">Stop all containers of your compose file</td>
-              </tr>
-              <tr>
-                <td style="width: 40%; text-align: left">docker-compose start</td>
-                <td style="width: 60%; text-align: justify">Restart all stopped containers of your compose file</td>
-              </tr>
-              <tr>
-                <td style="width: 40%; text-align: left">docker-compose down [-v]</td>
-                <td style="width: 60%; text-align: justify">
-                  Destroy all containers (and volumes) of your compose file
-                </td>
-              </tr>
-            </table>
-
-            <aside class="notes"></aside>
           </section>
         </section>
 
@@ -1350,6 +1348,47 @@ RUN phpenmod meminfo
                 <td style="width: 50%; text-align: center">docker rmi</td>
               </tr>
             </table>
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Command glossary</h2>
+
+            <table style="width: 100%">
+              <tr>
+                <th style="width: 30%; text-align: center">Command</th>
+                <th style="width: 70%; text-align: center">Usage</th>
+              </tr>
+              <tr>
+                <td style="width: 40%; text-align: left">docker-compose pull</td>
+                <td style="width: 60%; text-align: justify">Pull all the images of your compose file</td>
+              </tr>
+              <tr>
+                <td style="width: 40%; text-align: left">docker-compose up -d</td>
+                <td style="width: 60%; text-align: justify">Create the containers of your compose file</td>
+              </tr>
+              <tr>
+                <td style="width: 40%; text-align: left">docker-compose ps</td>
+                <td style="width: 60%; text-align: justify">
+                  List all containers of your compose file (running or not)
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 40%; text-align: left">docker-compose stop</td>
+                <td style="width: 60%; text-align: justify">Stop all containers of your compose file</td>
+              </tr>
+              <tr>
+                <td style="width: 40%; text-align: left">docker-compose start</td>
+                <td style="width: 60%; text-align: justify">Restart all stopped containers of your compose file</td>
+              </tr>
+              <tr>
+                <td style="width: 40%; text-align: left">docker-compose down [-v]</td>
+                <td style="width: 60%; text-align: justify">
+                  Destroy all containers (and volumes) of your compose file
+                </td>
+              </tr>
+            </table>
+
             <aside class="notes"></aside>
           </section>
         </section>

@@ -22,7 +22,17 @@ legend {
   font-style: italic;
 }
 
-li.gear {
-  list-style-type: '⚙️';
+li.practice-time {
+  list-style-type: '🛠️';
+  padding-inline-start: 1ch;
+}
+
+li.practice-constraint {
+  list-style-type: '🔐';
+  padding-inline-start: 1ch;
+}
+
+li.practice-success {
+  list-style-type: '🎉';
   padding-inline-start: 1ch;
 }

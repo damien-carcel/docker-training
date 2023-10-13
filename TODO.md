@@ -77,10 +77,10 @@ $ command associated to above point
     - OK to create many for tests to gain time
     - Clean-up must be performed in the same layer that wasted space, or no effect
     - COPY, ENV, ARG, etc...
-  - [ ] Exercise:
+  - [x] Exercise:
     - Build an image running the PHP internal Server with the Symfony app inside the image
     - launch the server from the image in production mode with right user
-      - should only need `docker container run -d image`
+      - should only need `docker container run -p 8000:8000 -d image`
   - [ ] Multistage building
     - Separate the image in base, build and prod
     - Add a dev stage
