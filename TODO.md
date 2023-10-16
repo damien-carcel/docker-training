@@ -97,7 +97,7 @@ $ command associated to above point
   - Clean the orphans (rename the service) when stopping
   - Run does not do port mapping by default, need an option
 - [x] Build the image directly with compose
-- [ ] Run the app through nginx and FPM
+- [x] Run the app through nginx and FPM
   - Bind-mount the code to use the built-in server for dev
   - Add a dev stage for CLI operations
   - Reuse parts of yaml through merge key
@@ -112,5 +112,6 @@ $ command associated to above point
 
 ## TODO
 
-- Harmonize exercises with "practice", "constraints", "goal"
+- Harmonize exercises with "practice", "constraints", "goal", with a new line between each
 - Put a glossary at the end of the Docker and Docker Compose sections
+- Ensure external links to HTML solutions are OK from the main website

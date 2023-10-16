@@ -8,9 +8,9 @@
     <pre
       style="display: grid; grid-template-rows: auto 1fr auto; margin: 0 auto; min-height: 100%"
     ><code class="language-dockerfile">
-FROM debian:stable-slim
-
 ARG DEBIAN_FRONTEND=noninteractive
+
+FROM debian:stable-slim as base
 
 RUN echo 'APT::Install-Recommends "0" ; APT::Install-Suggests "0" ;' > /etc/apt/apt.conf.d/01-no-recommended && \
     echo 'path-exclude=/usr/share/doc/*' > /etc/dpkg/dpkg.cfg.d/path_exclusions && \
@@ -34,12 +34,15 @@ RUN echo 'APT::Install-Recommends "0" ; APT::Install-Suggests "0" ;' > /etc/apt/
         php8.2-mbstring \
         php8.2-opcache \
         php8.2-zip \
+        # To move in the dev stage later
         unzip && \
     apt-get clean && \
     apt-get --yes autoremove --purge && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY docker/php/skeleton.ini /etc/php/8.1/cli/conf.d/99-skeleton.ini
+COPY docker/php/skeleton.ini /etc/php/8.2/cli/conf.d/99-skeleton.ini
+
+FROM base as builder
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 RUN chmod +x /usr/local/bin/composer
@@ -49,8 +52,15 @@ ARG COMPOSER_CACHE_DIR=/tmp/composer/cache
 WORKDIR /var/www/html
 
 COPY . .
+
 RUN mkdir -p /tmp/composer/cache && \
     composer install --optimize-autoloader --no-interaction --no-scripts --prefer-dist --no-dev
+
+FROM base as prod
+
+COPY --from=builder /var/www/html /var/www/html
+
+WORKDIR /var/www/html
 
 RUN bin/console ca:c
 

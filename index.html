@@ -1085,7 +1085,7 @@ $ docker container --rm run my-image:my-tag Coucou
             <h2>Using Docker - Building an image</h2>
 
             <div class="centered-slide-content">
-              <h3><a target="”_blank”" href="./practice/build-an-image/Dockerfile.base.html">Solution</a></h3>
+              <h3><a target="_blank" href="./practice/build-an-image/dockerfile.base.html">Solution</a></h3>
             </div>
 
             <aside class="notes">
@@ -1153,7 +1153,7 @@ $ docker image build --target=prod --tag my-image:my-tag .
             <h2>Using Docker - Building an image</h2>
 
             <div class="centered-slide-content">
-              <h3><a target="”_blank”" href="./practice/build-an-image/Dockerfile.multistage.html">Solution</a></h3>
+              <h3><a target="_blank" href="./practice/build-an-image/dockerfile.multistage.html">Solution</a></h3>
             </div>
 
             <aside class="notes"></aside>
@@ -1289,7 +1289,7 @@ services:
       - 8080:8000
     user: 1000:1000
     volumes:
-      - ~/.config/cache:/tmp/composer/cache
+      - ~/.cache/composer:/tmp/composer/cache
       - ~/.config/composer:/tmp/composer/config
               </code></pre>
             </div>
@@ -1451,12 +1451,127 @@ services:
       - 8080:8000
     user: 1000:1000
     volumes:
-      - ~/.config/cache:/tmp/composer/cache
+      - ~/.cache/composer:/tmp/composer/cache
       - ~/.config/composer:/tmp/composer/config
               </code></pre>
             </div>
 
             <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Let's raise the bar</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment practice-time">Introduce a new "dev" target for Composer usage</li>
+
+                <br />
+
+                <li class="fragment practice-constraint">
+                  Composer cache and config only in <code class="inline-code">php-cli</code> service
+                </li>
+                <li class="fragment practice-constraint">
+                  Have a dedicated service <code class="inline-code">built-in-server</code> to serve the app
+                </li>
+                <li class="fragment practice-constraint">This service bind-mounts the code</li>
+                <li class="fragment practice-constraint">Do not touch "builder" and "prod" targets for now</li>
+
+                <br />
+
+                <li class="fragment practice-success">
+                  The app run with <code class="inline-code">docker compose up -d built-in-server</code>
+                </li>
+                <li class="fragment practice-success">
+                  Run <code class="inline-code">docker compose run --rm php-cli composer update</code> without errors
+                </li>
+              </ul>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Building an image</h2>
+
+            <div class="centered-slide-content">
+              <h3><a target="_blank" href="./practice/compose/compose-file.dev.html">Compose file solution</a></h3>
+
+              <br />
+
+              <h3><a target="_blank" href="./practice/compose/dockerfile.dev.html">Dockerfile solution</a></h3>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Let's raise the bar</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment">
+                  <code class="inline-code">docker compose run --rm php-cli composer req maker</code>
+                </li>
+                <li class="fragment">
+                  <code class="inline-code">docker compose run --rm php-cli bin/console make:controller</code>
+                </li>
+              </ul>
+
+              <br />
+              <br />
+
+              <div class="fragment">
+                <a target="_blank" href="http://localhost:8000/test">http://localhost:8000/test</a>
+              </div>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Let's raise the bar</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment practice-time">Run the app with NGINX and PHP FPM</li>
+
+                <br />
+
+                <li class="fragment practice-constraint">NGINX and FPM communicates through HTTP</li>
+                <li class="fragment practice-constraint">NGINX and FPM are each in their own service</li>
+                <li class="fragment practice-constraint">
+                  The app run in prod env in the service named <code class="inline-code">php-fpm</code>
+                </li>
+                <li class="fragment practice-constraint">Nginx/FPM are isolated from the built-in server</li>
+
+                <br />
+
+                <li class="fragment practice-success">
+                  The app run with <code class="inline-code">docker compose up -d nginx php-fpm</code>
+                </li>
+              </ul>
+            </div>
+
+            <aside class="notes">
+              <p>FPM to be run with "php-fpm -F"</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Building an image</h2>
+
+            <div class="centered-slide-content">
+              <h3><a target="_blank" href="./practice/compose/compose-file.complete.html">Compose file solution</a></h3>
+
+              <br />
+
+              <h3><a target="_blank" href="./practice/compose/dockerfile.complete.html">Dockerfile solution</a></h3>
+            </div>
+
+            <aside class="notes">
+              <p>"docker compose down -v" to remove the volume</p>
+            </aside>
           </section>
         </section>
 
