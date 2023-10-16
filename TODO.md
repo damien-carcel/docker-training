@@ -96,11 +96,11 @@ $ command associated to above point
   - present deploy.replicas and port ranges (show how exec and logs behave)
   - Clean the orphans (rename the service) when stopping
   - Run does not do port mapping by default, need an option
-- [ ] Build the image directly with compose
-  - Restart the app with the new image → show that docker compose up -d detects what did change
+- [x] Build the image directly with compose
 - [ ] Run the app through nginx and FPM
   - Bind-mount the code to use the built-in server for dev
   - Add a dev stage for CLI operations
+  - Reuse parts of yaml through merge key
   - use volumes to share data between both (read-only for nginx and only what it needs: public directory)
   - Run only nginx (use require on FPM)
   - Clean the volumes at down

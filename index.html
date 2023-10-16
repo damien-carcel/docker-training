@@ -1315,10 +1315,10 @@ services:
               <br />
 
               <div class="fragment" data-fragment-index="2">Rename the service and try to stop the services:</div>
-              <pre class="fragment" data-fragment-index="2"><code class="shell" data-trim>
+              <pre class="fragment" data-fragment-index="2"><code class="shell">
 $ docker compose down
               </code></pre>
-              <pre class="fragment" data-fragment-index="3"><code class="shell" data-trim>
+              <pre class="fragment" data-fragment-index="3"><code class="shell">
 $ docker compose down --remove-orphans
               </code></pre>
             </div>
@@ -1335,19 +1335,19 @@ $ docker compose down --remove-orphans
             <h2>Docker compose - Additional tricks</h2>
 
             <div class="centered-slide-content">
-              <pre><code class="shell" data-trim>
+              <pre><code class="shell">
 $ docker compose run --rm app bash
               </code></pre>
               <legend>Override the command</legend>
               <br />
 
-              <pre class="fragment" data-fragment-index="2"><code class="shell" data-trim>
+              <pre class="fragment" data-fragment-index="2"><code class="shell">
 $ docker compose run -d --rm app
               </code></pre>
               <legend class="fragment" data-fragment-index="2">Detached mode</legend>
               <br />
 
-              <pre class="fragment" data-fragment-index="3"><code class="shell" data-trim>
+              <pre class="fragment" data-fragment-index="3"><code class="shell">
 $ docker compose run -d --rm --service-ports app
               </code></pre>
               <legend class="fragment" data-fragment-index="3">Binding port does not work by default</legend>
@@ -1358,6 +1358,105 @@ $ docker compose run -d --rm --service-ports app
               <p>compose run alone will not bind the ports</p>
               <p>No need for "-i -t" with compose, it is the default. You have -T deactivating it.</p>
             </aside>
+          </section>
+
+          <section>
+            <h2>Docker compose - Building an image</h2>
+
+            <div class="centered-slide-content">
+              <pre class="fragment" data-fragment-index="1"><code class="yaml" data-trim data-line-numbers>
+services:
+  app:
+    build: .
+              </code></pre>
+              <legend class="fragment" data-fragment-index="1">Basic build declaration</legend>
+
+              <pre
+                class="fragment"
+                data-fragment-index="2"
+              ><code class="yaml" data-trim data-line-numbers="1-3,6|1-3,6-7|1-7|1-8">
+services:
+  app:
+    build:
+      args:
+        MY_ARG: value
+      context: .
+      dockerfile: Dockerfile
+      target: prod
+              </code></pre>
+              <legend class="fragment" data-fragment-index="2">Advanced build declaration</legend>
+            </div>
+
+            <aside class="notes">
+              <p>Replace "image" with "build"</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Docker compose - Building an image</h2>
+
+            <div class="centered-slide-content">
+              <pre class="fragment" data-fragment-index="1"><code class="shell" data-trim>
+$ docker compose build
+              </code></pre>
+              <legend class="fragment" data-fragment-index="1">Build an image with Docker Compose</legend>
+
+              <br />
+
+              <pre class="fragment" data-fragment-index="2"><code class="shell" data-trim>
+$ docker compose build &lt;service name&gt;
+              </code></pre>
+              <legend class="fragment" data-fragment-index="2">Build an image for a specific service</legend>
+
+              <br />
+
+              <pre class="fragment" data-fragment-index="3"><code class="shell" data-trim>
+$ docker compose up --build
+$ docker compose up --build &lt;service name&gt;
+              </code></pre>
+              <legend class="fragment" data-fragment-index="3">Build and up at once</legend>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Docker compose - Building an image</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="practice-time">Build the Symfony app image with Docker Compose</li>
+              </ul>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Docker compose - Building an image</h2>
+
+            <div class="centered-slide-content">
+              <h3>Solution</h3>
+
+              <pre class="fragment"><code class="yaml" data-trim>
+services:
+  app:
+    build:
+      context: .
+      target: prod
+    environment:
+      COMPOSER_CACHE_DIR: /tmp/composer/cache
+      COMPOSER_HOME: /tmp/composer/config
+    ports:
+      - 8080:8000
+    user: 1000:1000
+    volumes:
+      - ~/.config/cache:/tmp/composer/cache
+      - ~/.config/composer:/tmp/composer/config
+              </code></pre>
+            </div>
+
+            <aside class="notes"></aside>
           </section>
         </section>
 
