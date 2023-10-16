@@ -80,27 +80,37 @@ $ command associated to above point
   - [x] Exercise:
     - Build an image running the PHP internal Server with the Symfony app inside the image
     - launch the server from the image in production mode with right user
-      - should only need `docker container run -p 8000:8000 -d image`
+      - should only need `docker container run -P -d image`
   - [x] Multistage building
     - Separate the image in base, build and prod
     - Build both prod and dev stages
 
 ## Docker Compose
 
-- [ ] Compose → Use YAML instead of commands with lot of options
+- [x] Compose → Use YAML instead of commands with lot of options
   - present compose v2
-- [ ] Put as a compose file what was done previously
+  - encourage use of v2 vs v1 (no buildx and efficient cache without config, abandoned since July)
+  - Show an example of the specification, with every concepts presented in the previous section
+- [x] Put as a compose file what was done previously
   - no build for now, use the existing image build with Docker
+  - present deploy.replicas and port ranges (show how exec and logs behave)
+  - Clean the orphans (rename the service) when stopping
+  - Run does not do port mapping by default, need an option
 - [ ] Build the image directly with compose
+  - Restart the app with the new image → show that docker compose up -d detects what did change
 - [ ] Run the app through nginx and FPM
+  - Bind-mount the code to use the built-in server for dev
   - Add a dev stage for CLI operations
   - use volumes to share data between both (read-only for nginx and only what it needs: public directory)
   - Run only nginx (use require on FPM)
-  - Clean the volumes and orphans (rename a service) when stopping
+  - Clean the volumes at down
 
 ## Running and Debugging with PHPStorm
 
 - [ ] A PHP setup with no PHP installation on the host
 - [ ] XDebug
 
-## Glossary of commands
+## TODO
+
+- Harmonize exercises with "practice", "constraints", "goal"
+- Put a glossary at the end of the Docker and Docker Compose sections

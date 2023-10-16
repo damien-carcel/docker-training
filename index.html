@@ -40,7 +40,7 @@
 
             <div class="centered-slide-content">
               <ul>
-                <li>Introduction to Docker</li>
+                <li>Presentation of Docker</li>
                 <li>How to use Docker</li>
                 <li>Docker Compose</li>
                 <li>Running and Debugging with PHPStorm</li>
@@ -54,7 +54,7 @@
           </section>
         </section>
 
-        <section id="introduction">
+        <section id="presentation">
           <section>
             <h2>What is (not) Docker?</h2>
 
@@ -780,7 +780,7 @@ $ docker container logs -f --tail 1 my-app-container
           </section>
 
           <section>
-            <h2>Using Docker - Manimpulate a detached container</h2>
+            <h2>Using Docker - Manipulate a detached container</h2>
 
             <div class="centered-slide-content">
               <pre class="fragment"><code class="shell">
@@ -884,7 +884,7 @@ ENV MY_VAR = "A environment variable that will stay at runtime"
               <legend>Environment variables and arguments</legend>
 
               <pre class="fragment"><code class="shell">
-$ docker image build --build-arg MY_ARG="An overridding value" --tag my-image:my-tag .
+$ docker image build --build-arg MY_ARG="An overriding value" --tag my-image:my-tag .
               </code></pre>
             </div>
 
@@ -938,9 +938,7 @@ RUN /usr/bin/some-other-command ${BUILD_OPTION} && \
               <p>Explain the concept of layers, present pros and cons of one layer vs multiple</p>
               <ul>
                 <li>One layer → allows cleaning and keep image size under control</li>
-                <li>
-                  Multi layer → allows for more efficient cache, very usefull to test when creating the Dockerfile
-                </li>
+                <li>Multi layer → allows for more efficient cache, very useful to test when creating the Dockerfile</li>
               </ul>
             </aside>
           </section>
@@ -981,7 +979,7 @@ ENV MY_VAR = "Hello!"
 
 CMD ["/bin/sh", "-c", "echo ${MY_VAR}"]
               </code></pre>
-              <legend>Running a default command - exec form (prefered one)</legend>
+              <legend>Running a default command - exec form (preferred one)</legend>
 
               <pre class="fragment" data-fragment-index="1"><code class="dockerfile" data-trim>
 FROM some-image:tag
@@ -1013,7 +1011,7 @@ FROM some-image:tag
 
 ENTRYPOINT ["top", "-b"]
               </code></pre>
-              <legend>Using the entrypoint - exec form (prefered)</legend>
+              <legend>Using the entrypoint - exec form (preferred)</legend>
 
               <pre class="fragment" data-fragment-index="1"><code class="dockerfile" data-trim>
 FROM some-image:tag
@@ -1072,8 +1070,8 @@ $ docker container --rm run my-image:my-tag Coucou
                 <li class="fragment practice-constraint">Copy the Symfony code in the image</li>
                 <li class="fragment practice-constraint">Use PHP internal server to serve the app</li>
                 <li class="fragment practice-success">
-                  <code class="inline-code">docker container run -p 8000:8000 -d built-image</code> must be enough to
-                  serve the app
+                  <code class="inline-code">docker container run -P -d built-image</code> must be enough to serve the
+                  app
                 </li>
               </ul>
             </div>
@@ -1142,8 +1140,8 @@ $ docker image build --target=prod --tag my-image:my-tag .
                   <code class="inline-code">prod</code> stages
                 </li>
                 <li class="fragment practice-success">
-                  <code class="inline-code">docker container run -p 8000:8000 -d built-image</code> must still be enough
-                  to serve the app
+                  <code class="inline-code">docker container run -P -d built-image</code> must still be enough to serve
+                  the app
                 </li>
               </ul>
             </div>
@@ -1168,82 +1166,197 @@ $ docker image build --target=prod --tag my-image:my-tag .
 
             <img alt="compose.png" src="images/compose.png" />
 
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Docker compose - What is it?</h2>
+
+            <div class="centered-slide-content">
+              <div class="fragment">A tool for defining and running multi-container Docker applications</div>
+
+              <br />
+
+              <div class="fragment">
+                Based on the Compose file (YAML format) and the corresponding compose specification
+              </div>
+
+              <br />
+
+              <div class="fragment">Two major versions:</div>
+              <ul>
+                <li class="fragment">v1: <code class="inline-code">docker-compose</code> ⚠️ abandoned ⚠️</li>
+                <li class="fragment">v2: <code class="inline-code">docker compose</code></li>
+              </ul>
+            </div>
+
             <aside class="notes">
-              <p>Tool for defining and running multi-container Docker applications</p>
-              <p>Based on a YAML file</p>
+              <p>
+                Docker Compose v1 was a Python script, independent. Deprecated for more than 2 years and officially
+                abandoned since July 2023
+              </p>
+              <p>Docker Compose v2 is a Docker plugin</p>
             </aside>
           </section>
 
           <section>
-            <h2>Docker compose</h2>
+            <h2>Docker compose - The Compose file</h2>
 
-            <br />
-
-            <pre><code class="yaml"># docker-compose.yml
+            <div class="centered-slide-content">
+              <pre><code class="yaml" data-trim data-line-numbers="1|2-3|4|7-9|12-14|16-18,23-24|15|10-11,20-21|5-6">
+# compose.yaml|compose.yml|docker-compose.y[a]ml
 services:
-  akeneo:
-    image: php:8.2
-    volumes:
-        - ./:/home/docker/application
-
-  mysql:
-    image: mysql:5.5
+  my-app:
+    image: my-app-image:latest
+    command: ["executable", "arg"]
+    entrypoint: ["executable", "arg"]
+    environment:
+      MY_VAR: "my value"
+      ANOTHER_VAR: "${A_HOST_VAR:-default value}"
+    networks:
+      - my-app
     ports:
-        - 33006:3306
-                </code></pre>
+      - 3000:3000
+      - 5000:5000
+    user: root
+    volumes:
+      - ./:/app
+      - data-volume:/data
+
+networks:
+  my-app:
+
+volumes:
+  data-volume:
+              </code></pre>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Docker compose - Run the Symfony app</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment practice-time" data-fragment-index="1">
+                  Write a compose file allowing to run a Symfony app
+                </li>
+                <li class="fragment practice-constraint" data-fragment-index="2">
+                  Use the custom image we built previously
+                </li>
+                <li class="fragment practice-constraint" data-fragment-index="3">
+                  Share composer config and cache between host and container
+                </li>
+                <li class="fragment practice-success" data-fragment-index="4">
+                  You can access the app through localhost:8080
+                </li>
+              </ul>
+
+              <br />
+              <br />
+
+              <div class="fragment" data-fragment-index="5">Commands to use</div>
+              <ul class="fragment" data-fragment-index="5">
+                <li><code class="inline-code">docker compose up -d</code> to start the app</li>
+                <li>
+                  <code class="inline-code">docker compose exec &lt;service name&gt;</code> to go in the container
+                </li>
+                <li><code class="inline-code">docker compose logs &lt;service name&gt;</code> to check the logs</li>
+              </ul>
+            </div>
 
             <aside class="notes">
-              <!-- -->
+              <p>exec will lend you in the first container.</p>
             </aside>
           </section>
 
           <section>
-            <h2>Docker compose</h2>
+            <h2>Docker compose - Run the Symfony app</h2>
 
-            <br />
+            <div class="centered-slide-content">
+              <h3>Solution</h3>
 
-            <h3>Let's go to the PIM!</h3>
-            <ul>
-              <li class="fragment">
-                Copy <code>docker-compose.yml.dist</code> as
-                <code>docker-compose.yml</code>
-              </li>
-              <li class="fragment">Let's change a few things in it and configure the PIM</li>
-            </ul>
+              <pre><code class="yaml" data-trim>
+services:
+  app:
+    image: local/symfony:latest
+    # command: ["php", "-S", "0.0.0.0:8000", "-t", "public"]
+    environment:
+      COMPOSER_CACHE_DIR: /tmp/composer/cache
+      COMPOSER_HOME: /tmp/composer/config
+    ports:
+      - 8080:8000
+    user: 1000:1000
+    volumes:
+      - ~/.config/cache:/tmp/composer/cache
+      - ~/.config/composer:/tmp/composer/config
+              </code></pre>
+            </div>
 
-            <pre class="fragment"><code class="shell">
-  $ docker-compose up -d
-                </code></pre>
+            <aside class="notes"></aside>
+          </section>
 
-            <pre class="fragment"><code class="shell">
-  $ docker-compose ps
-                </code></pre>
+          <section>
+            <h2>Docker compose - Additional tricks</h2>
+
+            <div class="centered-slide-content">
+              <pre class="fragment" data-fragment-index="1"><code class="yaml" data-trim>
+services:
+  app:
+    image: local/symfony:latest
+    deploy:
+      replicas: 10
+    ports:
+      - 8080-8089:8000
+              </code></pre>
+              <legend class="fragment" data-fragment-index="1">Create 10 replicas of the same service</legend>
+
+              <br />
+
+              <div class="fragment" data-fragment-index="2">Rename the service and try to stop the services:</div>
+              <pre class="fragment" data-fragment-index="2"><code class="shell" data-trim>
+$ docker compose down
+              </code></pre>
+              <pre class="fragment" data-fragment-index="3"><code class="shell" data-trim>
+$ docker compose down --remove-orphans
+              </code></pre>
+            </div>
 
             <aside class="notes">
-              <p>Let's edit the yaml file together</p>
-              <p>Beware of composer cache and config</p>
+              <p>
+                "docker compose up -d" will detect any change and only up the services that changed. Try to run it
+                several times.
+              </p>
             </aside>
           </section>
 
           <section>
-            <h2>Docker compose</h2>
+            <h2>Docker compose - Additional tricks</h2>
 
-            <br />
+            <div class="centered-slide-content">
+              <pre><code class="shell" data-trim>
+$ docker compose run --rm app bash
+              </code></pre>
+              <legend>Override the command</legend>
+              <br />
 
-            <pre class="fragment"><code class="shell">
-  $ bin/docker/pim-dependencies.sh
-  $ bin/docker/pim-initialize.sh
-                </code></pre>
+              <pre class="fragment" data-fragment-index="2"><code class="shell" data-trim>
+$ docker compose run -d --rm app
+              </code></pre>
+              <legend class="fragment" data-fragment-index="2">Detached mode</legend>
+              <br />
 
-            <br />
-
-            <h3 class="fragment">
-              Access the PIM to
-              <a href="http://localhost:8080/">localhost:8080</a>
-            </h3>
+              <pre class="fragment" data-fragment-index="3"><code class="shell" data-trim>
+$ docker compose run -d --rm --service-ports app
+              </code></pre>
+              <legend class="fragment" data-fragment-index="3">Binding port does not work by default</legend>
+              <br />
+            </div>
 
             <aside class="notes">
-              <p>Show the scripts before using them</p>
+              <p>compose run alone will not bind the ports</p>
+              <p>No need for "-i -t" with compose, it is the default. You have -T deactivating it.</p>
             </aside>
           </section>
         </section>
