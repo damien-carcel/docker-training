@@ -42,8 +42,8 @@
               <ul>
                 <li>Presentation of Docker</li>
                 <li>How to use Docker</li>
-                <li>Docker Compose</li>
-                <li>Running and Debugging with PHPStorm</li>
+                <li>How to use Docker Compose</li>
+                <li>Running and Debugging in an IDE</li>
               </ul>
             </div>
 
@@ -1162,7 +1162,7 @@ $ docker image build --target=prod --tag my-image:my-tag .
 
         <section id="docker-compose">
           <section>
-            <h2>Docker compose</h2>
+            <h2>How to use Docker Compose</h2>
 
             <img alt="compose.png" src="images/compose.png" />
 
@@ -1571,85 +1571,138 @@ services:
 
             <aside class="notes">
               <p>"docker compose down -v" to remove the volume</p>
+              <p>Can be interesting to keep the volume, for instance if it contains the database</p>
             </aside>
           </section>
         </section>
 
         <section id="phpstorm">
           <section>
-            <h2>Running and Debugging with PHPStorm</h2>
+            <h2>Running and Debugging in an IDE</h2>
 
             <img alt="cat.png" src="images/cat.png" />
 
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>PHPStorm without any PHP local installation</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment">
+                  Configure Docker in<br />
+                  <code class="inline-code">Settings > Build, Execution, Deployment > Docker</code>
+                </li>
+                <li class="fragment">
+                  Create a PHP "CLI interpreter" in <code class="inline-code">Settings > PHP</code>
+                </li>
+                <li class="fragment">
+                  Configure Composer in <code class="inline-code">Settings > PHP > Composer</code>
+                </li>
+
+                <br />
+
+                <li class="fragment">[Optional] Configure Test Frameworks, Quality Tools and Symfony</li>
+              </ul>
+            </div>
+
             <aside class="notes">
-              <!-- -->
+              <p>Same thing can be done with JavaScript</p>
+              <p>Restart the project for Symfony conf to take full effect?</p>
+              <p>Let's try to run bin/console</p>
+              <p>Some stuff like configuration can be shared</p>
             </aside>
           </section>
 
           <section>
-            <h2>Advanced usage: testing and debugging</h2>
+            <h2>VS Code without any PHP local installation</h2>
 
-            <ul>
-              <li class="fragment">Behat</li>
-              <li class="fragment">Xdebug CLI</li>
-              <li class="fragment">Xdebug UI</li>
-              <li class="fragment">php-meminfo</li>
-            </ul>
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment">
+                  Configure DevContainers to use the <code class="inline-code">php-cli</code> service
+                </li>
+                <br />
+                <li class="fragment">That's it!</li>
+              </ul>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>VS Code without any PHP local installation</h2>
+
+            <div class="centered-slide-content">
+              <pre><code class="dockerfile">
+RUN useradd php-user --shell /bin/bash --create-home \
+  && usermod --append --groups sudo php-user \
+  && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers \
+  && echo 'php-user:secret' | chpasswd
+              </code></pre>
+              <legend>
+                Add a <code class="inline-code">php-user</code> user in the <code class="inline-code">dev</code> stage
+              </legend>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>VS Code without any PHP local installation</h2>
+
+            <div class="centered-slide-content">
+              <pre><code class="yaml" data-trim data-line-numbers="1-2,6,13">
+services:
+  php-cli:
+    build:
+      context: .
+      target: dev
+    command: ["sleep", "infinity"]
+    environment:
+      COMPOSER_CACHE_DIR: /tmp/composer/cache
+      COMPOSER_HOME: /tmp/composer/config
+    networks:
+      - dev
+      - prod
+    user: php-user
+    volumes:
+      - .:/app
+      - ~/.cache/composer:/tmp/composer/cache
+      - ~/.config/composer:/tmp/composer/config
+    working_dir: /app
+              </code></pre>
+              <legend>Adapt the compose file</legend>
+            </div>
 
             <aside class="notes">
-              <!-- -->
+              <p>Provide an present the DevContainers file</p>
             </aside>
           </section>
 
           <section>
-            <h2>Building your own Dockerfile</h2>
+            <h2>Run tests without any PHP local installation</h2>
 
-            <pre><code class="dockerfile">FROM akeneo/fpm:php-7.1
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment practice-time" data-fragment-index="1">Add PHPUnit to the app</li>
+                <li class="fragment practice-constraint" data-fragment-index="2">No local PHP, only Docker Compose</li>
+                <li class="fragment practice-success" data-fragment-index="3">Configure PHPUnit in your IDE</li>
+                <li class="fragment practice-success" data-fragment-index="4">Create and run a test</li>
+              </ul>
 
-RUN apt-get update && \
-    apt-get --yes --quiet install php7.1-dev && \
-    apt-get clean && apt-get --yes --quiet autoremove --purge && \
-    rm -rf  /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-            /usr/share/doc/* /usr/share/groff/* /usr/share/info/* /usr/share/linda/* \
-            /usr/share/lintian/* /usr/share/locale/* /usr/share/man/*
+              <br />
+              <br />
 
-RUN cd /tmp && \
-    git clone https://github.com/BitOne/php-meminfo.git && \
-    cd php-meminfo/extension/php7 && \
-    phpize && \
-    ./configure --enable-meminfo && \
-    make && \
-    make install
-
-COPY meminfo.ini /etc/php/7.1/mods-available/meminfo.ini
-
-RUN phpenmod meminfo
-        </code></pre>
+              <div class="fragment" data-fragment-index="5">Tips</div>
+              <ul class="fragment" data-fragment-index="5">
+                <li><code class="inline-code">composer req --dev phpunit/phpunit</code></li>
+              </ul>
+            </div>
 
             <aside class="notes">
-              <!-- -->
-            </aside>
-          </section>
-
-          <section>
-            <h2>Building your own Dockerfile</h2>
-
-            <pre><code>extension=meminfo.so</code></pre>
-
-            <pre class="fragment"><code class="yaml">services:
-  fpm:
-    image: akeneo/fpm:php-7.1
-        </code></pre>
-
-            <pre class="fragment"><code class="yaml">services:
-  fpm:
-    build: ./docker/fpm/
-        </code></pre>
-
-            <pre class="fragment"><code class="shell">$ docker-compose up -d --build</code></pre>
-
-            <aside class="notes">
-              <!-- -->
+              <p>Provide the test file</p>
             </aside>
           </section>
         </section>

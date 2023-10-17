@@ -105,10 +105,14 @@ $ command associated to above point
   - Run only nginx (use require on FPM)
   - Clean the volumes at down
 
-## Running and Debugging with PHPStorm
+## Running and Debugging with an IDE
 
-- [ ] A PHP setup with no PHP installation on the host
+- [x] A PHP setup with no PHP installation on the host
+  - Explain and show how it works for both PHPStorm and VS Code
+  - Let the trainees do the same with PHPUnit
 - [ ] XDebug
+  - Add XDebug to the Docker file (let trainees find the right spot)
+  - Configure the IDEs
 
 ## TODO
 
