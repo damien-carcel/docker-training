@@ -1,0 +1,76 @@
+<html style="height: 100%; margin: 0 auto; max-width: 1280px">
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+  </head>
+  <body>
+    <pre
+      style="display: grid; grid-template-rows: auto 1fr auto; margin: 0 auto; min-height: 100%"
+    ><code class="language-yaml">
+services:
+  php-cli:
+    build:
+      context: .
+      target: dev
+    environment:
+      COMPOSER_CACHE_DIR: /tmp/composer/cache
+      COMPOSER_HOME: /tmp/composer/config
+    networks:
+      - dev
+      - prod
+    user: 1000:1000
+    volumes:
+      - .:/app
+      - ~/.cache/composer:/tmp/composer/cache
+      - ~/.config/composer:/tmp/composer/config
+    working_dir: /app
+
+  built-in-server:
+    build:
+      context: .
+      target: base
+    command: ["php", "-S", "0.0.0.0:8000", "-t", "public"]
+    networks:
+      - dev
+    ports:
+      - 8000:8000
+    user: 1000:1000
+    volumes:
+      - .:/app
+    working_dir: /app
+
+  php-fpm:
+    build:
+      context: .
+      target: prod
+    networks:
+      - prod
+    volumes:
+      - public-index:/var/www/html/public
+
+  nginx:
+    depends_on:
+      - php-fpm
+    image: nginx:alpine
+    networks:
+      - prod
+    ports:
+      - 8080:80
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - public-index:/var/www/html/public:ro
+
+networks:
+  dev:
+  prod:
+
+volumes:
+  public-index:
+    </code></pre>
+
+    <script>
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

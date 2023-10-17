@@ -15,4 +15,5 @@ const deck = new Reveal({
 deck.initialize({
   width: 1280,
   height: 720,
+  transition: 'fade',
 });

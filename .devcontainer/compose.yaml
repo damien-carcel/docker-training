@@ -1,6 +1,6 @@
 services:
   devcontainer:
-    build: ./build/docker/
+    build: ./build/docker/devcontainer
     command: sleep infinity
     environment:
       YARN_CACHE_FOLDER: /home/yarn-cache

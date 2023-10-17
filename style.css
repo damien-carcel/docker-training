@@ -1,1 +1,38 @@
-/* no-empty-source */
+.centered-slide-content {
+  margin: auto;
+  position: absolute;
+  top: 58%;
+  left: 0;
+  right: 0;
+  transform: translate(0%, -50%);
+}
+
+.inline-code {
+  font-size: smaller;
+  color: aqua;
+}
+
+.slides > section > section {
+  width: 100%;
+  height: 100%;
+}
+
+legend {
+  font-size: x-large;
+  font-style: italic;
+}
+
+li.practice-goal {
+  list-style-type: '🛠️';
+  padding-inline-start: 1ch;
+}
+
+li.practice-constraint {
+  list-style-type: '🔐';
+  padding-inline-start: 1ch;
+}
+
+li.practice-success {
+  list-style-type: '🎉';
+  padding-inline-start: 1ch;
+}
