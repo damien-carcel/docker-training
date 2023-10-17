@@ -248,15 +248,13 @@ $ docker image history debian:bookworm-slim
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment practice-time" data-fragment-index="1">Use bash in a container</li>
+                <li class="fragment practice-goal" data-fragment-index="1">Use bash in a container</li>
+                <br />
+                <li class="fragment practice-success" data-fragment-index="2">
+                  You need to be able to fully interact<br />
+                  with the console inside your container
+                </li>
               </ul>
-
-              <br />
-              <br />
-
-              <div class="fragment" data-fragment-index="2">
-                You need to be able to fully interact with the console inside your container
-              </div>
 
               <br />
               <br />
@@ -279,7 +277,15 @@ $ docker container run debian:stable-slim
             <div class="centered-slide-content">
               <h3>Solution</h3>
 
-              <pre class="fragment"><code class="shell">
+              <pre class="fragment" data-fragment-index="1"><code class="shell">
+$ docker container run -i -t debian:stable-slim bash
+$ docker container ls -a
+$ docker container rm &lt;container name&gt;
+              </code></pre>
+
+              <div class="fragment" data-fragment-index="2">or</div>
+
+              <pre class="fragment" data-fragment-index="2"><code class="shell">
 $ docker container run -i -t --rm debian:stable-slim bash
               </code></pre>
             </div>
@@ -327,19 +333,22 @@ ENV MY_VAR="A value"
 
             <div class="centered-slide-content">
               <ul>
-                <li class="practice-time">Export an environment variable in your terminal</li>
-                <li class="fragment practice-time" data-fragment-index="1">
+                <li class="practice-goal">Export an environment variable in your terminal</li>
+                <li class="fragment practice-constraint" data-fragment-index="1">
                   Display its value from a container through <code class="shell inline-code">docker container run</code>
+                </li>
+                <li class="fragment practice-success" data-fragment-index="2">
+                  The value is displayed in your terminal
                 </li>
               </ul>
 
               <br />
               <br />
 
-              <pre class="fragment" data-fragment-index="2"><code class="shell">
+              <pre class="fragment" data-fragment-index="3"><code class="shell">
 $ docker container run -e VARIABLE_NAME="value" debian:stable-slim
               </code></pre>
-              <legend class="fragment" data-fragment-index="2">Create the environment variable "VARIABLE_NAME"</legend>
+              <legend class="fragment" data-fragment-index="3">Create the environment variable "VARIABLE_NAME"</legend>
             </div>
 
             <aside class="notes"></aside>
@@ -419,17 +428,18 @@ $ docker container run -v /path-on-host:/path-in-container debian:stable-slim
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment practice-time" data-fragment-index="1">Create a named volume</li>
-                <li class="fragment practice-time" data-fragment-index="2">
-                  Run a container while bind-mounting the volume into <code class="inline-code">/data</code>
+                <li class="fragment practice-goal" data-fragment-index="1">Bind-mount a volume in your container</li>
+                <li class="fragment practice-constraint" data-fragment-index="2">Use a named volume</li>
+                <li class="fragment practice-constraint" data-fragment-index="3">
+                  Bind-mount the volume into <code class="inline-code">/data</code>
                 </li>
-                <li class="fragment practice-time" data-fragment-index="3">
+                <li class="fragment practice-constraint" data-fragment-index="4">
                   Create a file in <code class="inline-code">/data</code>
                 </li>
-                <li class="fragment practice-time" data-fragment-index="4">
+                <li class="fragment practice-constraint" data-fragment-index="5">
                   Stop the container and ensure it is removed
                 </li>
-                <li class="fragment practice-time" data-fragment-index="5">
+                <li class="fragment practice-success" data-fragment-index="6">
                   Find on your host the file you just created in the container
                 </li>
               </ul>
@@ -437,8 +447,8 @@ $ docker container run -v /path-on-host:/path-in-container debian:stable-slim
               <br />
               <br />
 
-              <div class="fragment" data-fragment-index="6">Tips</div>
-              <ul class="fragment" data-fragment-index="6">
+              <div class="fragment" data-fragment-index="7">Tips</div>
+              <ul class="fragment" data-fragment-index="7">
                 <li>Look at what the <code class="inline-code">docker volume</code> management command propose</li>
                 <li>
                   Bind mount through<br />
@@ -483,15 +493,16 @@ $ sudo cat /the/path/to/the/data/shown/by/the/inspection/of/the/volume/test.txt
 
             <div class="centered-slide-content">
               <ul>
-                <li class="practice-time">
-                  Run a container while bind-mounting<br />
+                <li class="fragment practice-goal">Bind-mount a directory from your host into the container</li>
+                <li class="fragment practice-constraint">
+                  Bind-mount<br />
                   <code class="inline-code">/home/&lt;your login&gt;/Downloads/test</code> into
                   <code class="inline-code">/data</code>
                 </li>
-                <li class="fragment practice-time">Create a file in <code class="inline-code">/data</code></li>
-                <li class="fragment practice-time">Stop the container and ensure it is removed</li>
-                <li class="fragment practice-time">
-                  Try to edit on your host the file you just created in the container with your favorite text editor
+                <li class="fragment practice-constraint">Create a file in <code class="inline-code">/data</code></li>
+                <li class="fragment practice-constraint">Stop the container and ensure it is removed</li>
+                <li class="fragment practice-success">
+                  You can edit on your host the file you just created in the container with your favorite text editor
                 </li>
               </ul>
             </div>
@@ -559,19 +570,17 @@ USER michel
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment practice-time" data-fragment-index="2">
-                  Again, run a container while bind-mounting, but this time specify a user
-                  <code class="inline-code">/home/&lt;your login&gt;/Downloads/test</code> into
-                  <code class="inline-code">/data</code>
+                <li class="fragment practice-goal">Fix the previous exercise issue</li>
+                <br />
+                <li class="fragment practice-constraint">
+                  Again, run a container while bind-mounting,<br />
+                  but this time specify a user
                 </li>
-                <li class="fragment practice-time" data-fragment-index="3">
-                  Create a file in <code class="inline-code">/data</code>
-                </li>
-                <li class="fragment practice-time" data-fragment-index="4">
-                  Stop the container and ensure it is removed
-                </li>
-                <li class="fragment practice-time" data-fragment-index="5">
-                  Goal: editing the file you just created in the container should work
+                <li class="fragment practice-constraint">Create a file in <code class="inline-code">/data</code></li>
+                <li class="fragment practice-constraint">Stop the container and ensure it is removed</li>
+                <br />
+                <li class="fragment practice-success">
+                  Editing the file you just created in the container should work
                 </li>
               </ul>
             </div>
@@ -605,7 +614,7 @@ $ docker container run -i -t --rm \
             <h2>Using Docker - One last thing</h2>
 
             <div class="centered-slide-content">
-              <div class="fragment practice-time" data-fragment-index="1">Try to run the following:</div>
+              <div class="fragment practice-goal" data-fragment-index="1">Try to run the following:</div>
               <pre class="fragment" data-fragment-index="1"><code class="shell">
 $ docker container run -i -t --rm \
     -u $(id -u):$(id -g) \
@@ -615,14 +624,14 @@ $ docker container run -i -t --rm \
               <br />
               <br />
 
-              <div class="fragment practice-time" data-fragment-index="2">
+              <div class="fragment practice-goal" data-fragment-index="2">
                 Look on your host. Can you say what is wrong?
               </div>
             </div>
 
             <aside class="notes">
-              You could also extend the image in a Dockerfile, create a user, and use this user as default or through
-              `--user`
+              <p>"test" was created as root by Docker</p>
+              >
             </aside>
           </section>
 
@@ -641,20 +650,23 @@ $ docker container run -i -t --rm \
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment practice-time" data-fragment-index="1">
+                <li class="fragment practice-goal" data-fragment-index="1">
                   Use the <code class="inline-code">composer:latest</code> Docker image to create a Symfony app
                 </li>
-                <li class="fragment practice-time" data-fragment-index="2">
+                <li class="fragment practice-constraint" data-fragment-index="2">
                   <code class="inline-code">/home/&lt;your login&gt;/training/composer/config</code> on your host
                 </li>
-                <li class="fragment practice-time" data-fragment-index="2">
+                <li class="fragment practice-constraint" data-fragment-index="2">
                   <code class="inline-code">/tmp/composer/config</code> inside the container
                 </li>
-                <li class="fragment practice-time" data-fragment-index="3">
+                <li class="fragment practice-constraint" data-fragment-index="3">
                   <code class="inline-code">/home/&lt;your login&gt;/training/composer/cache</code> on your host
                 </li>
-                <li class="fragment practice-time" data-fragment-index="3">
+                <li class="fragment practice-constraint" data-fragment-index="3">
                   <code class="inline-code">/tmp/composer/cache</code> inside the container
+                </li>
+                <li class="fragment practice-success" data-fragment-index="4">
+                  You have an editable Symfony Skeleton on your host
                 </li>
               </ul>
 
@@ -704,16 +716,19 @@ $ docker container run -i -t --rm \
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment practice-time" data-fragment-index="1">
+                <li class="fragment practice-goal" data-fragment-index="1">
                   Serve and expose the app on port <code class="inline-code">8080</code>
+                </li>
+                <li class="fragment practice-success" data-fragment-index="2">
+                  You can access the app on <a href="localhost:8080">localhost:8080</a>
                 </li>
               </ul>
 
               <br />
               <br />
 
-              <div class="fragment" data-fragment-index="2">Tips</div>
-              <ul class="fragment" data-fragment-index="2">
+              <div class="fragment" data-fragment-index="3">Tips</div>
+              <ul class="fragment" data-fragment-index="3">
                 <li><code class="inline-code">php -S 0.0.0.0:8000 -t public</code></li>
                 <li>
                   Look at the "publish" <code class="inline-code">-p</code> option of
@@ -1063,12 +1078,14 @@ $ docker container --rm run my-image:my-tag Coucou
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment practice-time">Build an image that serves the Symfony skeleton</li>
+                <li class="fragment practice-goal">Build an image that serves the Symfony skeleton</li>
+                <br />
                 <li class="fragment practice-constraint">
                   User <code class="inline-code">debian:stable-slim</code> as base
                 </li>
                 <li class="fragment practice-constraint">Copy the Symfony code in the image</li>
                 <li class="fragment practice-constraint">Use PHP internal server to serve the app</li>
+                <br />
                 <li class="fragment practice-success">
                   <code class="inline-code">docker container run -P -d built-image</code> must be enough to serve the
                   app
@@ -1134,11 +1151,13 @@ $ docker image build --target=prod --tag my-image:my-tag .
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment practice-time">Upgrade the previous Dockerfile with multistage building</li>
+                <li class="fragment practice-goal">Upgrade the previous Dockerfile with multistage building</li>
+                <br />
                 <li class="fragment practice-constraint">
                   Separate between <code class="inline-code">base</code>, <code class="inline-code">builder</code>, and
                   <code class="inline-code">prod</code> stages
                 </li>
+                <br />
                 <li class="fragment practice-success">
                   <code class="inline-code">docker container run -P -d built-image</code> must still be enough to serve
                   the app
@@ -1239,7 +1258,7 @@ volumes:
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment practice-time" data-fragment-index="1">
+                <li class="fragment practice-goal" data-fragment-index="1">
                   Write a compose file allowing to run a Symfony app
                 </li>
                 <li class="fragment practice-constraint" data-fragment-index="2">
@@ -1425,7 +1444,7 @@ $ docker compose up --build &lt;service name&gt;
 
             <div class="centered-slide-content">
               <ul>
-                <li class="practice-time">Build the Symfony app image with Docker Compose</li>
+                <li class="practice-goal">Build the Symfony app image with Docker Compose</li>
               </ul>
             </div>
 
@@ -1464,7 +1483,7 @@ services:
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment practice-time">Introduce a new "dev" target for Composer usage</li>
+                <li class="fragment practice-goal">Introduce a new "dev" target for Composer usage</li>
 
                 <br />
 
@@ -1534,7 +1553,7 @@ services:
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment practice-time">Run the app with NGINX and PHP FPM</li>
+                <li class="fragment practice-goal">Run the app with NGINX and PHP FPM</li>
 
                 <br />
 
@@ -1712,10 +1731,10 @@ services:
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment practice-time" data-fragment-index="1">Add PHPUnit to the app</li>
-                <li class="fragment practice-constraint" data-fragment-index="2">No local PHP, only Docker Compose</li>
-                <li class="fragment practice-success" data-fragment-index="3">Configure PHPUnit in your IDE</li>
-                <li class="fragment practice-success" data-fragment-index="4">Create and run a test</li>
+                <li class="fragment practice-goal" data-fragment-index="1">Configure PHPUnit in your IDE</li>
+                <li class="fragment practice-constraint" data-fragment-index="2">Add PHPUnit to the app</li>
+                <li class="fragment practice-constraint" data-fragment-index="3">No local PHP, only Docker Compose</li>
+                <li class="fragment practice-success" data-fragment-index="4">Run a test with Docker</li>
               </ul>
 
               <br />
@@ -1737,7 +1756,7 @@ services:
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment practice-time" data-fragment-index="1">
+                <li class="fragment practice-goal" data-fragment-index="1">
                   Add XDebug to the <code class="inline-code">dev</code> target
                 </li>
                 <li class="fragment practice-success" data-fragment-index="2">Debug the PHPUnit test</li>
