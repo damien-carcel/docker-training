@@ -2,7 +2,7 @@
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.words": ["autoloader", "dpkg", "groff", "keyrings", "lintian", "runc"],
+  "cSpell.words": ["autoloader", "dpkg", "groff", "keyrings", "lintian", "phpunit", "runc"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.rulers": [120],
   "files.insertFinalNewline": true,

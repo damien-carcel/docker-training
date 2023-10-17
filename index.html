@@ -1620,33 +1620,26 @@ services:
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment">
+                <li class="fragment" data-fragment-index="1">
                   Configure DevContainers to use the <code class="inline-code">php-cli</code> service
                 </li>
                 <br />
-                <li class="fragment">That's it!</li>
+                <li class="fragment" data-fragment-index="2">That's it!</li>
               </ul>
-            </div>
-
-            <aside class="notes"></aside>
-          </section>
-
-          <section>
-            <h2>VS Code without any PHP local installation</h2>
-
-            <div class="centered-slide-content">
-              <pre><code class="dockerfile">
+              <pre class="fragment" data-fragment-index="3"><code class="dockerfile">
 RUN useradd php-user --shell /bin/bash --create-home \
   && usermod --append --groups sudo php-user \
   && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers \
   && echo 'php-user:secret' | chpasswd
               </code></pre>
-              <legend>
+              <legend class="fragment" data-fragment-index="3">
                 Add a <code class="inline-code">php-user</code> user in the <code class="inline-code">dev</code> stage
               </legend>
             </div>
 
-            <aside class="notes"></aside>
+            <aside class="notes">
+              <p>Also add git in the dev target for the Git extension to work</p>
+            </aside>
           </section>
 
           <section>
@@ -1676,8 +1669,41 @@ services:
               <legend>Adapt the compose file</legend>
             </div>
 
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>VS Code without any PHP local installation</h2>
+
+            <div class="centered-slide-content">
+              <pre><code class="json" data-trim data-line-numbers="2-6|7-19">
+{
+  "dockerComposeFile": ["../compose.yaml"],
+  "name": "Symfony app",
+  "service": "php-cli",
+  "remoteUser": "php-user",
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "eamodio.gitlens",
+        "ms-azuretools.vscode-docker",
+        "recca0120.vscode-phpunit",
+        "redhat.vscode-yaml",
+        "streetsidesoftware.code-spell-checker",
+        "yzhang.markdown-all-in-one"
+      ]
+    }
+  }
+}
+              </code></pre>
+              <legend>Configure DevContainers</legend>
+            </div>
+
             <aside class="notes">
-              <p>Provide an present the DevContainers file</p>
+              <p>Provide the DevContainers file</p>
+              <p>Another great thing of VS Code: sharing configuration through the workspace</p>
             </aside>
           </section>
 
@@ -1703,6 +1729,83 @@ services:
 
             <aside class="notes">
               <p>Provide the test file</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Debugging without any PHP local installation</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment practice-time" data-fragment-index="1">
+                  Add XDebug to the <code class="inline-code">dev</code> target
+                </li>
+                <li class="fragment practice-success" data-fragment-index="2">Debug the PHPUnit test</li>
+              </ul>
+
+              <br />
+              <br />
+
+              <div class="fragment" data-fragment-index="3">Tips</div>
+              <ul class="fragment" data-fragment-index="3">
+                <li><code class="inline-code">apt install php8.2-xdebug</code></li>
+              </ul>
+            </div>
+
+            <aside class="notes">
+              <p>Provide the xdebug.ini file</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Debugging without any PHP local installation</h2>
+
+            <div class="centered-slide-content">
+              <h3>Solution</h3>
+
+              <pre class="fragment"><code class="dockerfile" data-trim data-line-numbers="2,7-8">
+RUN apt-get update && \
+    apt-get --yes install git php8.2-xdebug unzip && \
+    apt-get clean && \
+    apt-get --yes autoremove --purge && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+COPY docker/php/xdebug.ini /etc/php/8.2/cli/conf.d/99-xdebug.ini
+COPY docker/php/xdebug.ini /etc/php/8.2/fpm/conf.d/99-xdebug.ini
+
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+RUN chmod +x /usr/local/bin/composer
+
+RUN useradd php-user --shell /bin/bash --create-home \
+  && usermod --append --groups sudo php-user \
+  && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers \
+  && echo 'php-user:secret' | chpasswd
+              </code></pre>
+            </div>
+
+            <aside class="notes">
+              <p>Ideally, XDebug should be turned off and activated when needed</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Debugging without any PHP local installation</h2>
+
+            <div class="centered-slide-content">
+              <h3>Solution</h3>
+
+              <ul>
+                <li class="fragment">PHPStorm: nothing more to do for a CLI usage</li>
+                <br />
+                <li class="fragment">
+                  VS Code: need to create a <code class="inline-code">launch.json</code> file,<br />
+                  then listen to XDebug
+                </li>
+              </ul>
+            </div>
+
+            <aside class="notes">
+              <p>Ideally, XDebug should be turned off and activated when needed</p>
             </aside>
           </section>
         </section>
