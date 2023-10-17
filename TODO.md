@@ -113,7 +113,3 @@ $ command associated to above point
 - XDebug
   - Add XDebug to the Docker file (let trainees find the right spot)
   - Configure the IDEs
-
-## TODO
-
-- Ensure external links to HTML solutions are OK from the main website
