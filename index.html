@@ -1177,6 +1177,119 @@ $ docker image build --target=prod --tag my-image:my-tag .
 
             <aside class="notes"></aside>
           </section>
+
+          <section>
+            <h2>Using Docker - Command glossary</h2>
+
+            <div class="centered-slide-content">
+              <table style="width: 100%; font-size: smaller">
+                <tr>
+                  <th style="width: 50%; text-align: center">Command</th>
+                  <th style="width: 50%; text-align: center">Usage</th>
+                </tr>
+                <tr>
+                  <td style="width: 50%; text-align: left">docker image pull &lt;image name&gt;</td>
+                  <td style="width: 50%; text-align: justify">Pull an image from a repository</td>
+                </tr>
+                <tr>
+                  <td style="width: 50%; text-align: left">docker image ls [-a]</td>
+                  <td style="width: 50%; text-align: justify">List all images on your machine</td>
+                </tr>
+                <tr>
+                  <td style="width: 50%; text-align: left">docker image rm &lt;image name&gt;</td>
+                  <td style="width: 50%; text-align: justify">Delete an image</td>
+                </tr>
+                <tr>
+                  <td style="width: 50%; text-align: left">docker system prune --volume</td>
+                  <td style="width: 50%; text-align: justify">Clean everything</td>
+                </tr>
+              </table>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Command glossary</h2>
+
+            <div class="centered-slide-content">
+              <table style="width: 100%; font-size: smaller">
+                <tr>
+                  <th style="width: 65%; text-align: center">Command</th>
+                  <th style="width: 35%; text-align: center">Usage</th>
+                </tr>
+                <tr>
+                  <td style="width: 65%; text-align: left">docker container run -it --rm &lt;image name&gt; command</td>
+                  <td style="width: 35%; text-align: justify">Run a container in interactive mode</td>
+                </tr>
+                <tr>
+                  <td style="width: 65%; text-align: left">docker container run -d &lt;image name&gt; command</td>
+                  <td style="width: 35%; text-align: justify">Run a container in detached mode</td>
+                </tr>
+                <tr>
+                  <td style="width: 65%; text-align: left">docker container exec &lt;container name&gt; command</td>
+                  <td style="width: 35%; text-align: justify">Execute a command inside a running container</td>
+                </tr>
+                <tr>
+                  <td style="width: 65%; text-align: left">docker container ls [-a]</td>
+                  <td style="width: 35%; text-align: justify">List all containers on you machine</td>
+                </tr>
+                <tr>
+                  <td style="width: 65%; text-align: left">docker container rm [-f -v] &lt;container name&gt;</td>
+                  <td style="width: 35%; text-align: justify">Delete a container</td>
+                </tr>
+              </table>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Command glossary</h2>
+
+            <div class="centered-slide-content">
+              <table style="width: 100%; font-size: smaller">
+                <tr>
+                  <th style="width: 50%; text-align: center">Management Commands</th>
+                  <th style="width: 50%; text-align: center">Common commands</th>
+                </tr>
+                <tr>
+                  <td style="width: 50%; text-align: center">docker container run</td>
+                  <td style="width: 50%; text-align: center">docker run</td>
+                </tr>
+                <tr>
+                  <td style="width: 50%; text-align: center">docker container exec</td>
+                  <td style="width: 50%; text-align: center">docker exec</td>
+                </tr>
+                <tr>
+                  <td style="width: 50%; text-align: center">docker container ls</td>
+                  <td style="width: 50%; text-align: center">docker ps</td>
+                </tr>
+                <tr>
+                  <td style="width: 50%; text-align: center">docker buildx build</td>
+                  <td style="width: 50%; text-align: center">docker build</td>
+                </tr>
+                <tr>
+                  <td style="width: 50%; text-align: center">docker image pull</td>
+                  <td style="width: 50%; text-align: center">docker pull</td>
+                </tr>
+                <tr>
+                  <td style="width: 50%; text-align: center">docker image ls</td>
+                  <td style="width: 50%; text-align: center">docker images</td>
+                </tr>
+                <tr>
+                  <td style="width: 50%; text-align: center">docker container rm</td>
+                  <td style="width: 50%; text-align: center">docker rm</td>
+                </tr>
+                <tr>
+                  <td style="width: 50%; text-align: center">docker image rm</td>
+                  <td style="width: 50%; text-align: center">docker rmi</td>
+                </tr>
+              </table>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
         </section>
 
         <section id="docker-compose">
@@ -1479,7 +1592,7 @@ services:
           </section>
 
           <section>
-            <h2>Using Docker - Let's raise the bar</h2>
+            <h2>Docker compose - Let's raise the bar</h2>
 
             <div class="centered-slide-content">
               <ul>
@@ -1511,7 +1624,7 @@ services:
           </section>
 
           <section>
-            <h2>Using Docker - Building an image</h2>
+            <h2>Docker compose - Building an image</h2>
 
             <div class="centered-slide-content">
               <h3><a target="_blank" href="./practice/compose/compose-file.dev.html">Compose file solution</a></h3>
@@ -1525,7 +1638,7 @@ services:
           </section>
 
           <section>
-            <h2>Using Docker - Let's raise the bar</h2>
+            <h2>Docker compose - Let's raise the bar</h2>
 
             <div class="centered-slide-content">
               <ul>
@@ -1549,7 +1662,7 @@ services:
           </section>
 
           <section>
-            <h2>Using Docker - Let's raise the bar</h2>
+            <h2>Docker compose - Let's raise the bar</h2>
 
             <div class="centered-slide-content">
               <ul>
@@ -1578,7 +1691,7 @@ services:
           </section>
 
           <section>
-            <h2>Using Docker - Building an image</h2>
+            <h2>Docker compose - Building an image</h2>
 
             <div class="centered-slide-content">
               <h3><a target="_blank" href="./practice/compose/compose-file.complete.html">Compose file solution</a></h3>
@@ -1592,6 +1705,82 @@ services:
               <p>"docker compose down -v" to remove the volume</p>
               <p>Can be interesting to keep the volume, for instance if it contains the database</p>
             </aside>
+          </section>
+
+          <section>
+            <h2>Docker Compose - Command glossary</h2>
+
+            <div class="centered-slide-content">
+              <table style="width: 100%; font-size: smaller">
+                <tr>
+                  <th style="width: 55%; text-align: center">Command</th>
+                  <th style="width: 45%; text-align: center">Usage</th>
+                </tr>
+                <tr>
+                  <td style="width: 55%; text-align: left">docker compose pull</td>
+                  <td style="width: 45%; text-align: justify">Pull all the images of your compose file</td>
+                </tr>
+                <tr>
+                  <td style="width: 55%; text-align: left">docker compose build</td>
+                  <td style="width: 45%; text-align: justify">
+                    Build all or a selection of the images of your compose file
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 55%; text-align: left">docker compose up -d</td>
+                  <td style="width: 45%; text-align: justify">Create the containers of your compose file</td>
+                </tr>
+                <tr>
+                  <td style="width: 55%; text-align: left">docker compose exec &lt;service name&gt;</td>
+                  <td style="width: 45%; text-align: justify">Go inside a running container</td>
+                </tr>
+                <tr>
+                  <td style="width: 55%; text-align: left">docker compose run [--rm] &lt;service name&gt;</td>
+                  <td style="width: 45%; text-align: justify">Run a command using one of the services available</td>
+                </tr>
+              </table>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Docker Compose - Command glossary</h2>
+
+            <div class="centered-slide-content">
+              <table style="width: 100%; font-size: smaller">
+                <tr>
+                  <th style="width: 40%; text-align: center">Command</th>
+                  <th style="width: 60%; text-align: center">Usage</th>
+                </tr>
+                <tr>
+                  <td style="width: 40%; text-align: left">docker compose ps [-a]</td>
+                  <td style="width: 60%; text-align: justify">
+                    List all running (or not) containers of your compose file
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 40%; text-align: left">docker compose stop</td>
+                  <td style="width: 60%; text-align: justify">Stop all containers of your compose file</td>
+                </tr>
+                <tr>
+                  <td style="width: 40%; text-align: left">docker compose kill</td>
+                  <td style="width: 60%; text-align: justify">Kill containers that don't want to stop</td>
+                </tr>
+                <tr>
+                  <td style="width: 40%; text-align: left">docker compose start</td>
+                  <td style="width: 60%; text-align: justify">Restart all stopped containers of your compose file</td>
+                </tr>
+                <tr>
+                  <td style="width: 40%; text-align: left">docker compose down [-v]</td>
+                  <td style="width: 60%; text-align: justify">
+                    Destroy all containers (and volumes) of your compose file
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+            <aside class="notes"></aside>
           </section>
         </section>
 
@@ -1826,138 +2015,6 @@ RUN useradd php-user --shell /bin/bash --create-home \
             <aside class="notes">
               <p>Ideally, XDebug should be turned off and activated when needed</p>
             </aside>
-          </section>
-        </section>
-
-        <section id="glossary">
-          <section>
-            <h2>Using Docker - Command glossary</h2>
-
-            <table class="centered-slide-content" style="width: 100%">
-              <tr>
-                <th style="width: 50%; text-align: center">Command</th>
-                <th style="width: 50%; text-align: center">Usage</th>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: left">docker image pull</td>
-                <td style="width: 50%; text-align: justify">Pull an image from a repository</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: left">docker image ls [-a]</td>
-                <td style="width: 50%; text-align: justify">List all images on your machine</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: left">docker container ls [-a]</td>
-                <td style="width: 50%; text-align: justify">List all containers on you machine</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: left">docker container run -i -t --rm image command</td>
-                <td style="width: 50%; text-align: justify">Run a container in interactive mode</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: left">docker container run -d image</td>
-                <td style="width: 50%; text-align: justify">Run a container in detached mode</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: left">docker container exec container_name command</td>
-                <td style="width: 50%; text-align: justify">Execute a command inside a running container</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: left">docker container rm [-f -v] container_name|id</td>
-                <td style="width: 50%; text-align: justify">Delete a container</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: left">docker image rm [-f] image_name|id</td>
-                <td style="width: 50%; text-align: justify">Delete an image</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: left">docker system prune --volume</td>
-                <td style="width: 50%; text-align: justify">Clean everything</td>
-              </tr>
-            </table>
-
-            <aside class="notes"></aside>
-          </section>
-
-          <section>
-            <h2>Using Docker - Command glossary</h2>
-
-            <table style="width: 100%">
-              <tr>
-                <th style="width: 50%; text-align: center">New commands</th>
-                <th style="width: 50%; text-align: center">Old commands</th>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: center">docker image pull</td>
-                <td style="width: 50%; text-align: center">docker pull</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: center">docker image ls [-a]</td>
-                <td style="width: 50%; text-align: center">docker images [-a]</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: center">docker container ls [-a]</td>
-                <td style="width: 50%; text-align: center">docker ps [-a]</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: center">docker container run</td>
-                <td style="width: 50%; text-align: center">docker run</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: center">docker container exec</td>
-                <td style="width: 50%; text-align: center">docker exec</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: center">docker container rm</td>
-                <td style="width: 50%; text-align: center">docker rm</td>
-              </tr>
-              <tr>
-                <td style="width: 50%; text-align: center">docker image rm</td>
-                <td style="width: 50%; text-align: center">docker rmi</td>
-              </tr>
-            </table>
-            <aside class="notes"></aside>
-          </section>
-
-          <section>
-            <h2>Using Docker - Command glossary</h2>
-
-            <table style="width: 100%">
-              <tr>
-                <th style="width: 30%; text-align: center">Command</th>
-                <th style="width: 70%; text-align: center">Usage</th>
-              </tr>
-              <tr>
-                <td style="width: 40%; text-align: left">docker-compose pull</td>
-                <td style="width: 60%; text-align: justify">Pull all the images of your compose file</td>
-              </tr>
-              <tr>
-                <td style="width: 40%; text-align: left">docker-compose up -d</td>
-                <td style="width: 60%; text-align: justify">Create the containers of your compose file</td>
-              </tr>
-              <tr>
-                <td style="width: 40%; text-align: left">docker-compose ps</td>
-                <td style="width: 60%; text-align: justify">
-                  List all containers of your compose file (running or not)
-                </td>
-              </tr>
-              <tr>
-                <td style="width: 40%; text-align: left">docker-compose stop</td>
-                <td style="width: 60%; text-align: justify">Stop all containers of your compose file</td>
-              </tr>
-              <tr>
-                <td style="width: 40%; text-align: left">docker-compose start</td>
-                <td style="width: 60%; text-align: justify">Restart all stopped containers of your compose file</td>
-              </tr>
-              <tr>
-                <td style="width: 40%; text-align: left">docker-compose down [-v]</td>
-                <td style="width: 60%; text-align: justify">
-                  Destroy all containers (and volumes) of your compose file
-                </td>
-              </tr>
-            </table>
-
-            <aside class="notes"></aside>
           </section>
         </section>
       </div>

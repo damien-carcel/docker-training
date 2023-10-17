@@ -116,5 +116,4 @@ $ command associated to above point
 
 ## TODO
 
-- Put a glossary at the end of the Docker and Docker Compose sections
 - Ensure external links to HTML solutions are OK from the main website
