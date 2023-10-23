@@ -1252,13 +1252,12 @@ $ docker image build --target=prod --tag my-image:my-tag .
             <h2>Docker compose - The Compose file</h2>
 
             <div class="centered-slide-content">
-              <pre><code class="yaml" data-trim data-line-numbers="1|2-3|4|7-9|12-14|16-18,23-24|15|10-11,20-21|5-6">
+              <pre><code class="yaml" data-trim data-line-numbers="1|2-3|4|6-8|11-13|15-19|15,20,25-26|14|9-10,22-23|5">
 # compose.yaml|compose.yml|docker-compose.y[a]ml
 services:
   my-app:
     image: my-app-image:latest
     command: ["executable", "arg"]
-    entrypoint: ["executable", "arg"]
     environment:
       MY_VAR: "my value"
       ANOTHER_VAR: "${A_HOST_VAR:-default value}"
@@ -1270,6 +1269,9 @@ services:
     user: root
     volumes:
       - ./:/app
+      - type: bind
+        source: ./
+        target: /app
       - data-volume:/data
 
 networks:
@@ -1291,12 +1293,11 @@ volumes:
                 <li class="fragment practice-goal" data-fragment-index="1">
                   Write a compose file allowing to run a Symfony app
                 </li>
+                <br />
                 <li class="fragment practice-constraint" data-fragment-index="2">
-                  Use the custom image we built previously
+                  Use the custom image <code class="inline-code">local/symfony-skeleton</code> we built previously
                 </li>
-                <li class="fragment practice-constraint" data-fragment-index="3">
-                  Share composer config and cache between host and container
-                </li>
+                <br />
                 <li class="fragment practice-success" data-fragment-index="4">
                   You can access the app through localhost:8080
                 </li>
@@ -1308,16 +1309,11 @@ volumes:
               <div class="fragment" data-fragment-index="5">Commands to use</div>
               <ul class="fragment" data-fragment-index="5">
                 <li><code class="inline-code">docker compose up -d</code> to start the app</li>
-                <li>
-                  <code class="inline-code">docker compose exec &lt;service name&gt;</code> to go in the container
-                </li>
                 <li><code class="inline-code">docker compose logs &lt;service name&gt;</code> to check the logs</li>
               </ul>
             </div>
 
-            <aside class="notes">
-              <p>exec will lend you in the first container.</p>
-            </aside>
+            <aside class="notes"></aside>
           </section>
 
           <section>
@@ -1337,9 +1333,6 @@ services:
     ports:
       - 8080:8000
     user: 1000:1000
-    volumes:
-      - ~/.cache/composer:/tmp/composer/cache
-      - ~/.config/composer:/tmp/composer/config
               </code></pre>
             </div>
 
@@ -1368,7 +1361,7 @@ services:
 $ docker compose down
               </code></pre>
               <pre class="fragment" data-fragment-index="3"><code class="shell">
-$ docker compose down --remove-orphans
+$ docker compose down -v --remove-orphans
               </code></pre>
             </div>
 
@@ -1499,9 +1492,6 @@ services:
     ports:
       - 8080:8000
     user: 1000:1000
-    volumes:
-      - ~/.cache/composer:/tmp/composer/cache
-      - ~/.config/composer:/tmp/composer/config
               </code></pre>
             </div>
 
@@ -1518,10 +1508,11 @@ services:
                 <br />
 
                 <li class="fragment practice-constraint">
-                  Composer cache and config only in <code class="inline-code">php-cli</code> service
+                  Share composer cache and config in <code class="inline-code">php-cli</code> service
                 </li>
                 <li class="fragment practice-constraint">
-                  Have a dedicated service <code class="inline-code">built-in-server</code> to serve the app
+                  Have a dedicated service <code class="inline-code">built-in-server</code>
+                  to serve the app which specify the command
                 </li>
                 <li class="fragment practice-constraint">This service bind-mounts the code</li>
                 <li class="fragment practice-constraint">Do not touch "builder" and "prod" targets for now</li>
@@ -1532,7 +1523,8 @@ services:
                   The app run with <code class="inline-code">docker compose up -d built-in-server</code>
                 </li>
                 <li class="fragment practice-success">
-                  Run <code class="inline-code">docker compose run --rm php-cli composer update</code> without errors
+                  You can run <code class="inline-code">docker compose run --rm php-cli composer update</code> without
+                  errors
                 </li>
               </ul>
             </div>
@@ -1618,10 +1610,7 @@ services:
               <h3><a target="_blank" href="./practice/compose/dockerfile.complete.html">Dockerfile solution</a></h3>
             </div>
 
-            <aside class="notes">
-              <p>"docker compose down -v" to remove the volume</p>
-              <p>Can be interesting to keep the volume, for instance if it contains the database</p>
-            </aside>
+            <aside class="notes"></aside>
           </section>
 
           <section>
@@ -1838,8 +1827,10 @@ services:
             <div class="centered-slide-content">
               <ul>
                 <li class="fragment practice-goal" data-fragment-index="1">Configure PHPUnit in your IDE</li>
+                <br />
                 <li class="fragment practice-constraint" data-fragment-index="2">Add PHPUnit to the app</li>
                 <li class="fragment practice-constraint" data-fragment-index="3">No local PHP, only Docker Compose</li>
+                <br />
                 <li class="fragment practice-success" data-fragment-index="4">Run a test with Docker</li>
               </ul>
 
