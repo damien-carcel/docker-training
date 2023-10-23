@@ -32,7 +32,17 @@ li.practice-constraint {
   padding-inline-start: 1ch;
 }
 
+li.practice-question {
+  list-style-type: '🤔';
+  padding-inline-start: 1ch;
+}
+
 li.practice-success {
   list-style-type: '🎉';
+  padding-inline-start: 1ch;
+}
+
+li.definition {
+  list-style-type: '📘';
   padding-inline-start: 1ch;
 }
