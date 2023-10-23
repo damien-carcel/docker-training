@@ -52,6 +52,23 @@
               simple.
             </aside>
           </section>
+
+          <section>
+            <h2>Practice</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="practice-goal">Goal</li>
+                <li class="practice-constraint">Constraints</li>
+                <li class="practice-success">Success criteria</li>
+              </ul>
+            </div>
+
+            <aside class="notes">
+              We will not use the Symfony CLI tool and its built-in server, only pure PHP, as I want to keep things
+              simple.
+            </aside>
+          </section>
         </section>
 
         <section id="presentation">
@@ -90,22 +107,26 @@
             <h2>How does it works</h2>
 
             <div class="centered-slide-content">
-              <img alt="docker_components.png" src="images/docker_components.png" />
-              <p>Docker components</p>
+              <div class="fragment">
+                A container is a standard unit of software that packages up code and all its dependencies so the
+                application runs quickly and reliably from one computing environment to another
+              </div>
+
+              <br />
+              <br />
+
+              <div class="fragment">
+                A Docker container image is a lightweight, standalone, executable package of software that includes
+                everything needed to run an application: code, runtime, system tools, system libraries and settings.
+              </div>
             </div>
 
             <aside class="notes">
-              <p>The docker command is only a client talking to the engine.</p>
-              <p>The Docker engine is a high level abstraction talking with containerd.</p>
               <p>
-                containerd contains all the services to manage images, volumes, snapshots, etc…, including a client for
-                shim
+                Images built from the Dockerfile follow the
+                <a href="https://opencontainers.org/">Open Container Initiative</a> specifications.
               </p>
-              <p>shim can be seen as an API to talk the runtime.</p>
-              <p>
-                runc is the container runtime, and can in fact be called directly, but it is very cumbersome to do so.
-              </p>
-              <p>Other engines and/or other runtime can be used.</p>
+              <p>They are other container systems, like LXD/LXD, not based on the OCI</p>
             </aside>
           </section>
 
@@ -113,7 +134,7 @@
             <h2>How does it works</h2>
 
             <div class="centered-slide-content">
-              <h3>Docker specificity</h3>
+              <h3 class="fragment">Docker specificity</h3>
               <ul>
                 <li class="fragment">Dockerfile → Image → Containers</li>
                 <li class="fragment">Only one process in the container</li>
@@ -125,6 +146,7 @@
                 Images built from the Dockerfile follow the
                 <a href="https://opencontainers.org/">Open Container Initiative</a> specifications.
               </p>
+              <p>They are other container systems, like LXD/LXD, not based on the OCI</p>
             </aside>
           </section>
 
@@ -150,6 +172,29 @@ RUN apt-get update && \
 
             <aside class="notes">
               Explain the concept of layers. Details will be explained in the "Advanced" section.
+            </aside>
+          </section>
+
+          <section>
+            <h2>How does it works</h2>
+
+            <div class="centered-slide-content">
+              <img alt="docker_components.png" src="images/docker_components.png" />
+              <p>Docker components</p>
+            </div>
+
+            <aside class="notes">
+              <p>The docker command is only a client talking to the engine.</p>
+              <p>The Docker engine is a high level abstraction talking with containerd.</p>
+              <p>
+                containerd contains all the services to manage images, volumes, snapshots, etc…, including a client for
+                shim
+              </p>
+              <p>shim can be seen as an API to talk the runtime.</p>
+              <p>
+                runc is the container runtime, and can in fact be called directly, but it is very cumbersome to do so.
+              </p>
+              <p>Other engines and/or other runtime can be used.</p>
             </aside>
           </section>
         </section>
@@ -214,32 +259,9 @@ $ docker image ls
 
             <aside class="notes">
               <p>Explain "pull" and the tag system</p>
-              <p>Explain the layers</p>
+              <p>Same ID for same layer => explain the layers</p>
               <p>"docker image ls" same thing that "docker images"</p>
-            </aside>
-          </section>
-
-          <section>
-            <h2>Using Docker - Going a bit further with Images</h2>
-
-            <div class="centered-slide-content">
-              <ul>
-                <li class="fragment" data-fragment-index="1">Inspect an image</li>
-                <li class="fragment" data-fragment-index="3">Display the history</li>
-              </ul>
-
-              <pre class="fragment" data-fragment-index="2"><code class="shell">
-$ docker image inspect debian:bookworm-slim
-$ docker image inspect debian:12-slim
-              </code></pre>
-
-              <pre class="fragment" data-fragment-index="4"><code class="shell">
-$ docker image history debian:bookworm-slim
-             </code></pre>
-            </div>
-
-            <aside class="notes">
-              <p>Two tags but same layers, so stored only once → no disk space wasted</p>
+              <p>Docker image also proposes history and inspect, just show it very briefly</p>
             </aside>
           </section>
 
@@ -259,6 +281,7 @@ $ docker image history debian:bookworm-slim
               <br />
               <br />
 
+              <div class="fragment" data-fragment-index="3">Tips</div>
               <pre class="fragment" data-fragment-index="3"><code class="shell">
 $ docker container run debian:stable-slim
               </code></pre>
@@ -266,7 +289,6 @@ $ docker container run debian:stable-slim
             </div>
 
             <aside class="notes">
-              <p>Not mandatory to run, but funny</p>
               <p>Before image name: options; after image name: command that will run in the container</p>
             </aside>
           </section>
@@ -312,17 +334,12 @@ $ docker container run -i -t --rm debian:stable-slim bash
             <div class="centered-slide-content">
               <ul>
                 <li class="fragment">
-                  <code class="shell inline-code">docker container run --env</code> can create variables inside the
-                  container
+                  <code class="shell inline-code">docker container run --env VAR=value</code> can create variables
+                  inside the container
                 </li>
+                <br />
                 <li class="fragment">It will override the value if the variable already exist</li>
               </ul>
-
-              <pre class="fragment"><code class="dockerfile">
-FROM scratch
-
-ENV MY_VAR="A value"
-              </code></pre>
             </div>
 
             <aside class="notes"></aside>
@@ -333,11 +350,19 @@ ENV MY_VAR="A value"
 
             <div class="centered-slide-content">
               <ul>
-                <li class="practice-goal">Export an environment variable in your terminal</li>
-                <li class="fragment practice-constraint" data-fragment-index="1">
+                <li class="fragment practice-goal" data-fragment-index="1">
+                  Display a host environment variable in a container
+                </li>
+                <li class="fragment practice-constraint" data-fragment-index="2">
+                  Export an environment variable in your terminal
+                </li>
+                <li class="fragment practice-constraint" data-fragment-index="3">
+                  The only time you write the value must be for the "export"
+                </li>
+                <li class="fragment practice-constraint" data-fragment-index="4">
                   Display its value from a container through <code class="shell inline-code">docker container run</code>
                 </li>
-                <li class="fragment practice-success" data-fragment-index="2">
+                <li class="fragment practice-success" data-fragment-index="5">
                   The value is displayed in your terminal
                 </li>
               </ul>
@@ -345,10 +370,11 @@ ENV MY_VAR="A value"
               <br />
               <br />
 
-              <pre class="fragment" data-fragment-index="3"><code class="shell">
-$ docker container run -e VARIABLE_NAME="value" debian:stable-slim
+              <div class="fragment" data-fragment-index="6">Tips</div>
+              <pre class="fragment" data-fragment-index="6"><code class="shell">
+$ echo ${VARIABLE_NAME}
               </code></pre>
-              <legend class="fragment" data-fragment-index="3">Create the environment variable "VARIABLE_NAME"</legend>
+              <legend class="fragment" data-fragment-index="6">Display an environment variable</legend>
             </div>
 
             <aside class="notes"></aside>
@@ -381,129 +407,84 @@ $ docker container run -e MY_VAR debian:stable-slim sh -c 'echo $MY_VAR'
             <h2>Using Docker - Volumes</h2>
 
             <div class="centered-slide-content">
-              <div class="fragment">Two usages</div>
-
-              <br />
-              <br />
-
               <ul>
-                <li class="fragment">Volumes allow to persist data outside the container</li>
-                <li class="fragment">Bind-mount allow sharing data between the host and the container</li>
+                <li class="fragment definition" data-fragment-index="1">
+                  Volumes allow to persist data outside the container
+                </li>
               </ul>
-            </div>
-
-            <aside class="notes"></aside>
-          </section>
-
-          <section>
-            <h2>Using Docker - Volumes</h2>
-
-            <div class="centered-slide-content">
-              <pre><code class="dockerfile">
-FROM scratch
-
-VOLUME /data
-              </code></pre>
-              <legend>Expose <span class="inline-code">/data</span> as a volume</legend>
 
               <br />
               <br />
 
-              <pre class="fragment" data-fragment-index="1"><code class="shell">
-$ docker container run -v /path-on-host:/path-in-container debian:stable-slim
+              <pre class="fragment" data-fragment-index="2"><code class="shell">
+$ docker volume create my-data
+$ docker container run -v my-data:/path-in-container debian:stable-slim
               </code></pre>
-              <legend class="fragment" data-fragment-index="1">
-                Bind mount a volume or a folder/file from your host inside the container
-              </legend>
+              <legend class="fragment" data-fragment-index="2">Create link a Docker volume to your container</legend>
             </div>
 
             <aside class="notes">
               <p>Show an example by running a MySQL container and inspect the volume to find its path</p>
-              <p>Bind mount: always host path first, then container path</p>
+              <p>Most of the major management commands propose `inspect`, use it to show the content of MySQL</p>
+              <p>Always host path first, then container path</p>
+              <p>Having the volume allows to bind it to another, new container if the original one was destroyed</p>
             </aside>
           </section>
 
           <section>
-            <h2>Using Docker - Volumes</h2>
+            <h2>Using Docker - Bind mount</h2>
 
             <div class="centered-slide-content">
               <ul>
-                <li class="fragment practice-goal" data-fragment-index="1">Bind-mount a volume in your container</li>
-                <li class="fragment practice-constraint" data-fragment-index="2">Use a named volume</li>
-                <li class="fragment practice-constraint" data-fragment-index="3">
-                  Bind-mount the volume into <code class="inline-code">/data</code>
-                </li>
-                <li class="fragment practice-constraint" data-fragment-index="4">
-                  Create a file in <code class="inline-code">/data</code>
-                </li>
-                <li class="fragment practice-constraint" data-fragment-index="5">
-                  Stop the container and ensure it is removed
-                </li>
-                <li class="fragment practice-success" data-fragment-index="6">
-                  Find on your host the file you just created in the container
+                <li class="fragment definition" data-fragment-index="1">
+                  Mount a file or directory from the host into the container.
                 </li>
               </ul>
 
               <br />
               <br />
 
-              <div class="fragment" data-fragment-index="7">Tips</div>
-              <ul class="fragment" data-fragment-index="7">
-                <li>Look at what the <code class="inline-code">docker volume</code> management command propose</li>
-                <li>
-                  Bind mount through<br />
-                  <code class="inline-code">docker container run -v host-data:container-data</code>
-                </li>
-              </ul>
-            </div>
-
-            <aside class="notes">
-              <p>Most of the major management commands propose `inspect`</p>
-            </aside>
-          </section>
-
-          <section>
-            <h2>Using Docker - Volumes</h2>
-
-            <div class="centered-slide-content">
-              <h3>Solution</h3>
-
-              <pre><code class="shell">
-$ docker volume create keep-my-data
-$ docker container run -i -t --rm -v keep-my-data:/data debian:stable-slim bash
-
-### Now I am in the container ###
-
-$ echo "This is a test" > /data/test.txt
-
-### CTRL+D to exit ###
-
-$ docker volume inspect keep-my-data
-$ sudo cat /the/path/to/the/data/shown/by/the/inspection/of/the/volume/test.txt
-
-### Should display "This is a test" ###
+              <pre class="fragment" data-fragment-index="2"><code class="shell">
+$ docker container run \
+    -v /path-on-host:/path-in-container \
+    debian:stable-slim
               </code></pre>
+              <legend class="fragment" data-fragment-index="2">
+                Bind mount a folder/file from your host inside the container - old way
+              </legend>
+
+              <br />
+
+              <pre class="fragment" data-fragment-index="3"><code class="shell">
+$ docker container run \
+    --mount type=bind,source=/path-on-host,target=/path-in-container \
+    debian:stable-slim
+              </code></pre>
+              <legend class="fragment" data-fragment-index="3">
+                Bind mount a folder/file from your host inside the container - new way
+              </legend>
             </div>
 
             <aside class="notes"></aside>
           </section>
 
           <section>
-            <h2>Using Docker - Volumes</h2>
+            <h2>Using Docker - Bind mount</h2>
 
             <div class="centered-slide-content">
               <ul>
                 <li class="fragment practice-goal">Bind-mount a directory from your host into the container</li>
+                <br />
                 <li class="fragment practice-constraint">
                   Bind-mount<br />
                   <code class="inline-code">/home/&lt;your login&gt;/Downloads/test</code> into
                   <code class="inline-code">/data</code>
                 </li>
                 <li class="fragment practice-constraint">Create a file in <code class="inline-code">/data</code></li>
-                <li class="fragment practice-constraint">Stop the container and ensure it is removed</li>
-                <li class="fragment practice-success">
-                  You can edit on your host the file you just created in the container with your favorite text editor
-                </li>
+                <br />
+                <li class="fragment practice-success">You can open the file and it contains the expected content</li>
+                <br />
+                <li class="fragment practice-question">Can you spot what's wrong in the result?</li>
               </ul>
             </div>
 
@@ -516,21 +497,24 @@ $ sudo cat /the/path/to/the/data/shown/by/the/inspection/of/the/volume/test.txt
             <div class="centered-slide-content">
               <h3>Solution</h3>
 
-              <pre><code class="shell">
-$ docker container run -i -t --rm \
-    -v /home/&lt;your login&gt;/Downloads:/data debian:stable-slim bash
+              <pre><code class="shell" data-trim data-line-numbers="1-2|1-8|1-12|1-14">
+### Create your directory first on the host or it will be owned by root
+$ mkdir /home/&lt;your login&gt;/Downloads/test
 
-### Now I am in the container ###
+$ docker container run -i -t --rm \
+    --mount type=bind,source=/home/&lt;your login&gt;/Downloads/test,target=/data \
+    debian:stable-slim bash
+
+### Now you are in the container ###
 
 $ echo "This is a test" > /data/test.txt
 
 ### CTRL+D to exit ###
 
-$ vim /home/&lt;your login&gt;/Downloads/test.txt
-
-### Will fail because of a permission problem, ###
-### because we were "root" in the container ###
+$ cat /home/&lt;your login&gt;/Downloads/test/test.txt
               </code></pre>
+
+              <div class="fragment">But the file is also own by root 🤔</div>
             </div>
 
             <aside class="notes"></aside>
@@ -542,27 +526,21 @@ $ vim /home/&lt;your login&gt;/Downloads/test.txt
             <div class="centered-slide-content">
               <ul>
                 <li class="fragment" data-fragment-index="1">
-                  <code class="shell inline-code">docker container run --user</code> allows to specify a user inside the
-                  container
+                  <code class="shell inline-code">docker container run --user &lt;user name or IDs&gt;</code> allows to
+                  specify a user inside the container
                 </li>
+
+                <br />
+
                 <li class="fragment" data-fragment-index="2">
                   It will override any user already specified as default in the Dockerfile
                 </li>
               </ul>
-
-              <pre class="fragment" data-fragment-index="3"><code class="dockerfile">
-FROM an-image-with-user:michel
-
-USER root
-
-RUN apt install something
-
-USER michel
-              </code></pre>
-              <legend class="fragment" data-fragment-index="3">Define a current user directly in the container</legend>
             </div>
 
-            <aside class="notes"></aside>
+            <aside class="notes">
+              <p>IMPORTANT: `-u user` → "user" is the user in the container, not on your host</p>
+            </aside>
           </section>
 
           <section>
@@ -577,10 +555,9 @@ USER michel
                   but this time specify a user
                 </li>
                 <li class="fragment practice-constraint">Create a file in <code class="inline-code">/data</code></li>
-                <li class="fragment practice-constraint">Stop the container and ensure it is removed</li>
                 <br />
                 <li class="fragment practice-success">
-                  Editing the file you just created in the container should work
+                  You can edit from your host the file you created in the container
                 </li>
               </ul>
             </div>
@@ -595,44 +572,37 @@ USER michel
               <h3>Solution</h3>
 
               <pre class="fragment"><code class="shell">
+$ sudo chown -R $(id -u):$(id -g) /home/&lt;your login&gt;/Downloads/test
+
 $ docker container run -i -t --rm \
     -u $(id -u):$(id -g) \
-    -v /home/&lt;your login&gt;/Downloads:/data debian:stable-slim bash
+    --mount type=bind,source=/home/&lt;your login&gt;/Downloads/test,target=/data \
+    debian:stable-slim bash
               </code></pre>
             </div>
 
-            <aside class="notes">
-              <p>
-                You could also extend the image in a Dockerfile, create a user, and use this user as default or through
-                `--user`
-              </p>
-              <p>IMPORTANT: `-u user` → "user" is the user in the container, not on your host</p>
-            </aside>
+            <aside class="notes"></aside>
           </section>
 
           <section>
-            <h2>Using Docker - One last thing</h2>
+            <h2>Using Docker - workdir</h2>
 
             <div class="centered-slide-content">
-              <div class="fragment practice-goal" data-fragment-index="1">Try to run the following:</div>
-              <pre class="fragment" data-fragment-index="1"><code class="shell">
-$ docker container run -i -t --rm \
-    -u $(id -u):$(id -g) \
-    -v /home/&lt;your login&gt;/Downloads/test:/data debian:stable-slim bash
+              <ul>
+                <li class="fragment definition">Specifies the working directory of a container</li>
+              </ul>
+
+              <br />
+              <br />
+
+              <pre class="fragment"><code class="shell">
+$ docker container run -i -t --rm --workdir /data debian:stable-slim bash
+
+$ docker container run -i -t --rm -w /data debian:stable-slim bash
               </code></pre>
-
-              <br />
-              <br />
-
-              <div class="fragment practice-goal" data-fragment-index="2">
-                Look on your host. Can you say what is wrong?
-              </div>
             </div>
 
-            <aside class="notes">
-              <p>"test" was created as root by Docker</p>
-              >
-            </aside>
+            <aside class="notes"></aside>
           </section>
 
           <section>
@@ -653,6 +623,7 @@ $ docker container run -i -t --rm \
                 <li class="fragment practice-goal" data-fragment-index="1">
                   Use the <code class="inline-code">composer:latest</code> Docker image to create a Symfony app
                 </li>
+                <br />
                 <li class="fragment practice-constraint" data-fragment-index="2">
                   <code class="inline-code">/home/&lt;your login&gt;/training/composer/config</code> on your host
                 </li>
@@ -665,25 +636,21 @@ $ docker container run -i -t --rm \
                 <li class="fragment practice-constraint" data-fragment-index="3">
                   <code class="inline-code">/tmp/composer/cache</code> inside the container
                 </li>
-                <li class="fragment practice-success" data-fragment-index="4">
-                  You have an editable Symfony Skeleton on your host
+                <li class="fragment practice-constraint" data-fragment-index="4">
+                  Must be done in one line in your terminal
                 </li>
-              </ul>
-
-              <br />
-              <br />
-
-              <div class="fragment" data-fragment-index="6">Tips</div>
-              <ul class="fragment" data-fragment-index="6">
-                <li><code class="inline-code">composer create-project symfony/skeleton my-app</code></li>
-                <li><code class="inline-code">COMPOSER_HOME="/path/to/config"</code></li>
-                <li><code class="inline-code">COMPOSER_CACHE_DIR="/path/to/cache"</code></li>
-                <li>You need to specify the "working directory" where to create the app</li>
+                <br />
+                <li class="fragment practice-success" data-fragment-index="5">
+                  You have an editable Symfony Skeleton in<br />
+                  <code class="inline-code">/home/&lt;your login&gt;/training/app</code> on your host
+                </li>
               </ul>
             </div>
 
             <aside class="notes">
-              <p>We didn't see the working directory notion yet</p>
+              <p>composer create-project symfony/skeleton my-app</p>
+              <p>COMPOSER_HOME="/path/to/config"</p>
+              <p>COMPOSER_CACHE_DIR="/path/to/cache"</p>
             </aside>
           </section>
 
@@ -699,11 +666,10 @@ $ mkdir -p training/composer/config training/composer/cache training/workspace
 $ docker container run -i -t --rm \
     -u $(id -u):$(id -g) \
     -e COMPOSER_HOME="/tmp/composer/config" \
-    -v /home/&lt;your login&gt;/training/composer/config:/tmp/composer/config \
     -e COMPOSER_CACHE_DIR="/tmp/composer/cache" \
-    -v /home/&lt;your login&gt;/training/composer/cache:/tmp/composer/cache \
+    --mount type=bind,source=/home/&lt;your login&gt;/training/composer,target=/tmp/composer \
     -w /data \
-    -v /home/&lt;your login&gt;/training/workspace:/data \
+    --mount type=bind,source=/home/&lt;your login&gt;/training,target=/data \
     composer:latest composer create-project symfony/skeleton my-app
               </code></pre>
             </div>
@@ -712,57 +678,51 @@ $ docker container run -i -t --rm \
           </section>
 
           <section>
-            <h2>Using Docker - Serve a Symfony app</h2>
+            <h2>Using Docker - Publishing ports</h2>
 
             <div class="centered-slide-content">
-              <ul>
-                <li class="fragment practice-goal" data-fragment-index="1">
-                  Serve and expose the app on port <code class="inline-code">8080</code>
-                </li>
-                <li class="fragment practice-success" data-fragment-index="2">
-                  You can access the app on <a href="localhost:8080">localhost:8080</a>
-                </li>
+              <ul class="fragment" data-fragment-index="1">
+                <li class="definition">Maps a host port number with a container port number</li>
               </ul>
 
               <br />
               <br />
 
-              <div class="fragment" data-fragment-index="3">Tips</div>
-              <ul class="fragment" data-fragment-index="3">
-                <li><code class="inline-code">php -S 0.0.0.0:8000 -t public</code></li>
-                <li>
-                  Look at the "publish" <code class="inline-code">-p</code> option of
-                  <code class="inline-code">docker container run</code>
-                </li>
-              </ul>
+              <pre class="fragment" data-fragment-index="2"><code class="shell">
+$ docker container run --rm -u 1000:1000 \
+    -p 8080:8000 \
+    -w /data -v /home/damien/training/app:/data \
+    composer:latest php -S 0.0.0.0:8000 -t public
+              </code></pre>
+              <legend class="fragment" data-fragment-index="2">Expose the app on port 8080</legend>
             </div>
 
-            <aside class="notes"></aside>
+            <aside class="notes">
+              <p>Like for the volumes, the first port is on the host, the second in the container</p>
+            </aside>
           </section>
 
           <section>
-            <h2>Using Docker - Serve a Symfony app</h2>
+            <h2>Using Docker - Detached mode</h2>
 
             <div class="centered-slide-content">
-              <h3>Solutions</h3>
+              <ul>
+                <li class="fragment definition">Runs a container as a background process</li>
+              </ul>
+
+              <br />
+              <br />
 
               <pre class="fragment"><code class="shell">
 $ docker container run --rm -u 1000:1000 \
+    -d \
     -p 8080:8000 \
-    -w /data -v /home/damien/training/workspace/my-app:/data \
-    composer:latest php -S 0.0.0.0:8000 -t public
-              </code></pre>
-
-              <pre class="fragment"><code class="shell">
-$ docker container run --rm -u 1000:1000 -d \
-    -p 8080:8000 \
-    -w /data -v /home/damien/training/workspace/my-app:/data \
+    -w /data -v /home/damien/training/app:/data \
     composer:latest php -S 0.0.0.0:8000 -t public
               </code></pre>
             </div>
 
             <aside class="notes">
-              <p>Like for the volumes, the first port is on the host, the second in the container</p>
               <p>"Detached" mode gives you the terminal back right away</p>
             </aside>
           </section>
@@ -771,24 +731,18 @@ $ docker container run --rm -u 1000:1000 -d \
             <h2>Using Docker - Display logs</h2>
 
             <div class="centered-slide-content">
-              <ul>
-                <li class="fragment">Run the app in "detached" mode</li>
-              </ul>
-
-              <pre class="fragment"><code class="shell">
-$ docker container run --rm -u 1000:1000 -d --name my-app-container \
-    -p 8080:8000 \
-    -w /data -v /home/damien/training/workspace/my-app:/data \
-    composer:latest php -S 0.0.0.0:8000 -t public
-              </code></pre>
-
-              <pre class="fragment"><code class="shell">
+              <pre class="fragment" data-fragment-index="1"><code class="shell">
 $ docker container logs my-app-container
               </code></pre>
 
-              <pre class="fragment"><code class="shell">
+              <pre class="fragment" data-fragment-index="2"><code class="shell">
 $ docker container logs -f --tail 1 my-app-container
               </code></pre>
+
+              <pre class="fragment" data-fragment-index="3"><code class="shell">
+$ docker container run -t &lt;container name&gt;
+              </code></pre>
+              <legend class="fragment" data-fragment-index="3">Easier if we choose the container name ourselves</legend>
             </div>
 
             <aside class="notes"></aside>
@@ -816,13 +770,17 @@ $ docker container stop my-app-container
             <div class="centered-slide-content">
               <pre class="fragment"><code class="shell">
 $ docker container run --rm -u 1000:1000 -d --name my-app-container \
-    -w /data -v /home/damien/training/workspace/my-app:/data \
-    composer:latest php -S 0.0.0.0:8000 -t public
+    -w /data -v /home/damien/training/app:/data \
+    -p 8080:8000 composer:latest php -S 0.0.0.0:8000 -t public
               </code></pre>
 
               <ul>
-                <li class="fragment">Could we access this app from another container?</li>
+                <li class="fragment practice-question">Could we access this app from another container?</li>
               </ul>
+
+              <br />
+
+              <div class="fragment">Yes, you can</div>
             </div>
 
             <aside class="notes"></aside>
@@ -832,9 +790,7 @@ $ docker container run --rm -u 1000:1000 -d --name my-app-container \
             <h2>Using Docker - Container isolation</h2>
 
             <div class="centered-slide-content">
-              <h3>Yes, you can</h3>
-
-              <pre class="fragment"><code class="shell">
+              <pre><code class="shell">
 $ docker container inspect
 ### Retrieve the IP address ###
               </code></pre>
@@ -843,12 +799,30 @@ $ docker container inspect
 $ docker container run -i -t --rm curlimages/curl curl &lt;IP address&gt;:8000
 ### Will display Symfony dev page ###
               </code></pre>
+            </div>
+
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Using Docker - Networks</h2>
+
+            <div class="centered-slide-content">
+              <ul>
+                <li class="fragment definition">A network allows containers to communicate with each other</li>
+                <li class="fragment practice-constraint">
+                  Two containers each on a different network cannot communicate
+                </li>
+              </ul>
+
+              <br />
+              <br />
 
               <pre class="fragment"><code class="shell">
 $ docker network create my-network
 $ docker container run -i -t --rm --network my-network \
     curlimages/curl curl 172.17.0.2:8000
-### There, you cannot ###
+### You cannot access the other container anymore ###
               </code></pre>
             </div>
 
@@ -874,6 +848,8 @@ $ docker container run -i -t --rm --network my-network \
 FROM some-image:image-tag
               </code></pre>
               <legend class="fragment" data-fragment-index="1">The most basic Dockerfile you can write</legend>
+
+              <br />
 
               <pre class="fragment" data-fragment-index="2"><code class="shell">
 $ docker image build --tag my-image:my-tag .
@@ -996,6 +972,8 @@ CMD ["/bin/sh", "-c", "echo ${MY_VAR}"]
               </code></pre>
               <legend>Running a default command - exec form (preferred one)</legend>
 
+              <br />
+
               <pre class="fragment" data-fragment-index="1"><code class="dockerfile" data-trim>
 FROM some-image:tag
 
@@ -1004,71 +982,12 @@ ENV MY_VAR = "Hello!"
 CMD echo "${MY_VAR}"
               </code></pre>
               <legend class="fragment" data-fragment-index="1">Running a default command - shell form</legend>
-
-              <pre class="fragment" data-fragment-index="2"><code class="shell">
-$ docker container --rm run my-image:my-tag ps aux
-              </code></pre>
-              <legend class="fragment" data-fragment-index="2">Running a default command - override the command</legend>
             </div>
 
             <aside class="notes">
               <p>exec form prevents shell execution, it is more secure.</p>
               <p>shell form is like wrapping the cmd in `/bin/sh -c "cmd content"`</p>
-            </aside>
-          </section>
-
-          <section>
-            <h2>Using Docker - Building an image</h2>
-
-            <div class="centered-slide-content">
-              <pre><code class="dockerfile" data-trim>
-FROM some-image:tag
-
-ENTRYPOINT ["top", "-b"]
-              </code></pre>
-              <legend>Using the entrypoint - exec form (preferred)</legend>
-
-              <pre class="fragment" data-fragment-index="1"><code class="dockerfile" data-trim>
-FROM some-image:tag
-
-ENTRYPOINT exec top -b
-              </code></pre>
-              <legend class="fragment" data-fragment-index="1">Using the entrypoint - shell form</legend>
-
-              <pre class="fragment" data-fragment-index="2"><code class="shell">
-$ docker container --rm run --entrypoint="exec ps aux" my-image:my-tag
-              </code></pre>
-              <legend class="fragment" data-fragment-index="2">
-                Running a default command - override the entrypoint
-              </legend>
-            </div>
-
-            <aside class="notes">
-              <p>Basically, entrypoint and cmd are concatenated</p>
-              <p>exec in shell form to prevent docker stop to be blocked on long processes</p>
-            </aside>
-          </section>
-
-          <section>
-            <h2>Using Docker - Building an image</h2>
-
-            <div class="centered-slide-content">
-              <pre><code class="dockerfile" data-trim>
-FROM some-image:tag
-
-ENTRYPOINT ["echo", "-e"]
-
-CMD ["Hello!"]
-              </code></pre>
-
-              <pre class="fragment"><code class="shell">
-$ docker container --rm run my-image:my-tag Coucou
-              </code></pre>
-
-              <legend>Combining command and entrypoint</legend>
-            </div>
-
-            <aside class="notes">
+              <p>There is also the entrypoint/p></p>
               <p>https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact</p>
             </aside>
           </section>
@@ -1080,21 +999,19 @@ $ docker container --rm run my-image:my-tag Coucou
               <ul>
                 <li class="fragment practice-goal">Build an image that serves the Symfony skeleton</li>
                 <br />
-                <li class="fragment practice-constraint">
-                  User <code class="inline-code">debian:stable-slim</code> as base
-                </li>
-                <li class="fragment practice-constraint">Copy the Symfony code in the image</li>
+                <li class="fragment practice-constraint">Use the provided Dockerfile (it misses 1 instruction!)</li>
                 <li class="fragment practice-constraint">Use PHP internal server to serve the app</li>
-                <br />
-                <li class="fragment practice-success">
-                  <code class="inline-code">docker container run -P -d built-image</code> must be enough to serve the
-                  app
+                <li class="fragment practice-constraint">
+                  <code class="inline-code">docker container run -P -d local/symfony-skeleton</code>
+                  must be enough to serve the app
                 </li>
+                <br />
+                <li class="fragment practice-success">You can access the Symfony app in your browser</li>
               </ul>
             </div>
 
             <aside class="notes">
-              <p>Try to minimize the size of the image</p>
+              <p>Provide the image and the "ini" file</p>
             </aside>
           </section>
 
@@ -1159,8 +1076,8 @@ $ docker image build --target=prod --tag my-image:my-tag .
                 </li>
                 <br />
                 <li class="fragment practice-success">
-                  <code class="inline-code">docker container run -P -d built-image</code> must still be enough to serve
-                  the app
+                  <code class="inline-code">docker container run -P -d local/symfony-skeleton</code>
+                  must still be enough to serve the app
                 </li>
               </ul>
             </div>
