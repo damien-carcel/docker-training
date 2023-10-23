@@ -353,6 +353,7 @@ $ docker container run -i -t --rm debian:stable-slim bash
                 <li class="fragment practice-goal" data-fragment-index="1">
                   Display a host environment variable in a container
                 </li>
+                <br />
                 <li class="fragment practice-constraint" data-fragment-index="2">
                   Export an environment variable in your terminal
                 </li>
@@ -362,6 +363,7 @@ $ docker container run -i -t --rm debian:stable-slim bash
                 <li class="fragment practice-constraint" data-fragment-index="4">
                   Display its value from a container through <code class="shell inline-code">docker container run</code>
                 </li>
+                <br />
                 <li class="fragment practice-success" data-fragment-index="5">
                   The value is displayed in your terminal
                 </li>
@@ -371,7 +373,7 @@ $ docker container run -i -t --rm debian:stable-slim bash
               <br />
 
               <div class="fragment" data-fragment-index="6">Tips</div>
-              <pre class="fragment" data-fragment-index="6"><code class="shell">
+              <pre class="fragment" data-fragment-index="6"><code class="shell" data-trim>
 $ echo ${VARIABLE_NAME}
               </code></pre>
               <legend class="fragment" data-fragment-index="6">Display an environment variable</legend>
@@ -779,8 +781,9 @@ $ docker container run --rm -u 1000:1000 -d --name my-app-container \
               </ul>
 
               <br />
+              <br />
 
-              <div class="fragment">Yes, you can</div>
+              <div class="fragment">Yes, you can 👍</div>
             </div>
 
             <aside class="notes"></aside>
@@ -1327,9 +1330,6 @@ services:
   app:
     image: local/symfony:latest
     # command: ["php", "-S", "0.0.0.0:8000", "-t", "public"]
-    environment:
-      COMPOSER_CACHE_DIR: /tmp/composer/cache
-      COMPOSER_HOME: /tmp/composer/config
     ports:
       - 8080:8000
     user: 1000:1000
@@ -1351,6 +1351,7 @@ services:
       replicas: 10
     ports:
       - 8080-8089:8000
+    user: 1000:1000
               </code></pre>
               <legend class="fragment" data-fragment-index="1">Create 10 replicas of the same service</legend>
 
@@ -1468,6 +1469,12 @@ $ docker compose up --build &lt;service name&gt;
             <div class="centered-slide-content">
               <ul>
                 <li class="practice-goal">Build the Symfony app image with Docker Compose</li>
+                <br />
+                <li class="practice-constraint"><code class="inline-code">docker compose up -d --build app</code></li>
+                <br />
+                <li class="fragment practice-success" data-fragment-index="4">
+                  You can still access the app through localhost:8080
+                </li>
               </ul>
             </div>
 
@@ -1486,9 +1493,6 @@ services:
     build:
       context: .
       target: prod
-    environment:
-      COMPOSER_CACHE_DIR: /tmp/composer/cache
-      COMPOSER_HOME: /tmp/composer/config
     ports:
       - 8080:8000
     user: 1000:1000
