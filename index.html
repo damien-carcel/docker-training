@@ -39,11 +39,11 @@
             <h2>What will we see?</h2>
 
             <div class="centered-slide-content">
-              <ul>
+              <ul class="plan">
                 <li>Presentation of Docker</li>
-                <li>How to use Docker</li>
-                <li>How to use Docker Compose</li>
-                <li>Running and Debugging in an IDE</li>
+                <li>How to use Docker to create and run a Symfony app</li>
+                <li>How to use Docker Compose to ease our workflow</li>
+                <li>Running and Debugging our app in an IDE</li>
               </ul>
             </div>
 
@@ -57,17 +57,14 @@
             <h2>Practice</h2>
 
             <div class="centered-slide-content">
-              <ul>
+              <ul class="plan">
                 <li class="practice-goal">Goal</li>
                 <li class="practice-constraint">Constraints</li>
                 <li class="practice-success">Success criteria</li>
               </ul>
             </div>
 
-            <aside class="notes">
-              We will not use the Symfony CLI tool and its built-in server, only pure PHP, as I want to keep things
-              simple.
-            </aside>
+            <aside class="notes"></aside>
           </section>
         </section>
 
@@ -177,16 +174,14 @@ RUN apt-get update && \
               <img src="images/docker.png" />
             </div>
 
-            <aside class="notes">
-              <!-- -->
-            </aside>
+            <aside class="notes"></aside>
           </section>
 
           <section>
-            <h2>Using Docker</h2>
+            <h2>How to use Docker</h2>
 
             <div class="centered-slide-content">
-              <h3>The Very Basics</h3>
+              <h3>The very basics</h3>
             </div>
 
             <aside class="notes"></aside>
@@ -289,10 +284,10 @@ $ docker container run -i -t --rm debian:stable-slim bash
           </section>
 
           <section>
-            <h2>Using Docker</h2>
+            <h2>How to use Docker</h2>
 
             <div class="centered-slide-content">
-              <h3>Going Further</h3>
+              <h3>Let's go further</h3>
             </div>
 
             <aside class="notes"></aside>
@@ -578,10 +573,10 @@ $ docker container run -i -t --rm -w /data debian:stable-slim bash
           </section>
 
           <section>
-            <h2>Using Docker</h2>
+            <h2>How to use Docker</h2>
 
             <div class="centered-slide-content">
-              <h3>Let's create and serve a Symfony app</h3>
+              <h3>Create and serve a Symfony app with Docker only</h3>
             </div>
 
             <aside class="notes"></aside>
@@ -803,10 +798,10 @@ $ docker container run -i -t --rm --network my-network \
           </section>
 
           <section>
-            <h2>Using Docker</h2>
+            <h2>How to use Docker</h2>
 
             <div class="centered-slide-content">
-              <h3>Building custom images</h3>
+              <h3>What if we built our own custom image</h3>
               <div class="fragment">Now you can use your IDE 💻</div>
             </div>
 

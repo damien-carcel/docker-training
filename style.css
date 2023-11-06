@@ -12,6 +12,10 @@
   color: aqua;
 }
 
+.plan {
+  line-height: 175%;
+}
+
 .slides > section > section {
   width: 100%;
   height: 100%;
