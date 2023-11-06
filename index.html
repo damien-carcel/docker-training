@@ -40,10 +40,10 @@
 
             <div class="centered-slide-content">
               <ul class="plan">
-                <li>Presentation of Docker</li>
-                <li>How to use Docker to create and run a Symfony app</li>
-                <li>How to use Docker Compose to ease our workflow</li>
-                <li>Running and Debugging our app in an IDE</li>
+                <li class="fragment">Presentation of Docker</li>
+                <li class="fragment">How to use only Docker to create and run a Symfony app</li>
+                <li class="fragment">How to use Docker Compose to ease our workflow</li>
+                <li class="fragment">Running and Debugging our app in an IDE</li>
               </ul>
             </div>
 
@@ -248,7 +248,7 @@ $ docker image ls
 
               <div class="fragment" data-fragment-index="3">Tips</div>
               <pre class="fragment" data-fragment-index="3"><code class="shell">
-$ docker container run debian:stable-slim
+$ docker container run debian:12-slim
               </code></pre>
               <legend class="fragment" data-fragment-index="3">Basic run example</legend>
             </div>
@@ -265,7 +265,7 @@ $ docker container run debian:stable-slim
               <h3>Solution</h3>
 
               <pre class="fragment" data-fragment-index="1"><code class="shell">
-$ docker container run -i -t debian:stable-slim bash
+$ docker container run -i -t debian:12-slim bash
 $ docker container ls -a
 $ docker container rm &lt;container name&gt;
               </code></pre>
@@ -273,7 +273,7 @@ $ docker container rm &lt;container name&gt;
               <div class="fragment" data-fragment-index="2">or</div>
 
               <pre class="fragment" data-fragment-index="2"><code class="shell">
-$ docker container run -i -t --rm debian:stable-slim bash
+$ docker container run -i -t --rm debian:12-slim bash
               </code></pre>
             </div>
 
@@ -355,7 +355,7 @@ $ echo ${VARIABLE_NAME}
 
               <pre><code class="shell">
 $ export HOST_VAR="Hello\!"
-$ docker container run -e CONTAINER_VAR=$HOST_VAR debian:stable-slim \
+$ docker container run -e CONTAINER_VAR=$HOST_VAR debian:12-slim \
     sh -c 'echo $CONTAINER_VAR'
               </code></pre>
 
@@ -363,7 +363,7 @@ $ docker container run -e CONTAINER_VAR=$HOST_VAR debian:stable-slim \
 
               <pre class="fragment" data-fragment-index="1"><code class="shell">
 $ export MY_VAR="Hello\!"
-$ docker container run -e MY_VAR debian:stable-slim sh -c 'echo $MY_VAR'
+$ docker container run -e MY_VAR debian:12-slim sh -c 'echo $MY_VAR'
               </code></pre>
             </div>
 
@@ -385,7 +385,7 @@ $ docker container run -e MY_VAR debian:stable-slim sh -c 'echo $MY_VAR'
 
               <pre class="fragment" data-fragment-index="2"><code class="shell">
 $ docker volume create my-data
-$ docker container run -v my-data:/path-in-container debian:stable-slim
+$ docker container run -v my-data:/path-in-container debian:12-slim
               </code></pre>
               <legend class="fragment" data-fragment-index="2">Create link a Docker volume to your container</legend>
             </div>
@@ -414,7 +414,7 @@ $ docker container run -v my-data:/path-in-container debian:stable-slim
               <pre class="fragment" data-fragment-index="2"><code class="shell">
 $ docker container run \
     -v /path-on-host:/path-in-container \
-    debian:stable-slim
+    debian:12-slim
               </code></pre>
               <legend class="fragment" data-fragment-index="2">
                 Bind mount a folder/file from your host inside the container - old way
@@ -425,7 +425,7 @@ $ docker container run \
               <pre class="fragment" data-fragment-index="3"><code class="shell">
 $ docker container run \
     --mount type=bind,source=/path-on-host,target=/path-in-container \
-    debian:stable-slim
+    debian:12-slim
               </code></pre>
               <legend class="fragment" data-fragment-index="3">
                 Bind mount a folder/file from your host inside the container - new way
@@ -470,7 +470,7 @@ $ mkdir /home/&lt;your login&gt;/Downloads/test
 
 $ docker container run -i -t --rm \
     --mount type=bind,source=/home/&lt;your login&gt;/Downloads/test,target=/data \
-    debian:stable-slim bash
+    debian:12-slim bash
 
 ### Now you are in the container ###
 
@@ -544,7 +544,7 @@ $ sudo chown -R $(id -u):$(id -g) /home/&lt;your login&gt;/Downloads/test
 $ docker container run -i -t --rm \
     -u $(id -u):$(id -g) \
     --mount type=bind,source=/home/&lt;your login&gt;/Downloads/test,target=/data \
-    debian:stable-slim bash
+    debian:12-slim bash
               </code></pre>
             </div>
 
@@ -563,9 +563,9 @@ $ docker container run -i -t --rm \
               <br />
 
               <pre class="fragment"><code class="shell">
-$ docker container run -i -t --rm --workdir /data debian:stable-slim bash
+$ docker container run -i -t --rm --workdir /data debian:12-slim bash
 
-$ docker container run -i -t --rm -w /data debian:stable-slim bash
+$ docker container run -i -t --rm -w /data debian:12-slim bash
               </code></pre>
             </div>
 
