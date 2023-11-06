@@ -89,7 +89,7 @@
           </section>
 
           <section>
-            <h2>A Container Orchestrator</h2>
+            <h2>Docker is a container orchestrator</h2>
 
             <div class="centered-slide-content">
               <img alt="vms_vs_containers.jpg" src="images/vms_vs_containers.jpg" />
@@ -104,7 +104,7 @@
           </section>
 
           <section>
-            <h2>How does it works</h2>
+            <h2>A few definitions</h2>
 
             <div class="centered-slide-content">
               <div class="fragment">
@@ -131,30 +131,18 @@
           </section>
 
           <section>
-            <h2>How does it works</h2>
+            <h2>Docker specificity</h2>
 
             <div class="centered-slide-content">
-              <h3 class="fragment">Docker specificity</h3>
               <ul>
-                <li class="fragment">Dockerfile → Image → Containers</li>
-                <li class="fragment">Only one process in the container</li>
+                <li class="fragment" data-fragment-index="1">Only one process in the container</li>
+                <li class="fragment" data-fragment-index="2">Dockerfile → Image → Containers</li>
               </ul>
-            </div>
 
-            <aside class="notes">
-              <p>
-                Images built from the Dockerfile follow the
-                <a href="https://opencontainers.org/">Open Container Initiative</a> specifications.
-              </p>
-              <p>They are other container systems, like LXD/LXD, not based on the OCI</p>
-            </aside>
-          </section>
+              <br />
+              <br />
 
-          <section>
-            <h2>A Dockerfile example</h2>
-
-            <div class="centered-slide-content">
-              <pre><code class="dockerfile">
+              <pre class="fragment" data-fragment-index="3"><code class="dockerfile" data-trim>
 FROM debian:bookworm-slim
 
 RUN apt-get update && \
@@ -168,33 +156,15 @@ RUN apt-get update && \
             /usr/share/man/*
 
               </code></pre>
+              <legend class="fragment" data-fragment-index="3">A Dockerfile example</legend>
             </div>
 
             <aside class="notes">
-              Explain the concept of layers. Details will be explained in the "Advanced" section.
-            </aside>
-          </section>
-
-          <section>
-            <h2>How does it works</h2>
-
-            <div class="centered-slide-content">
-              <img alt="docker_components.png" src="images/docker_components.png" />
-              <p>Docker components</p>
-            </div>
-
-            <aside class="notes">
-              <p>The docker command is only a client talking to the engine.</p>
-              <p>The Docker engine is a high level abstraction talking with containerd.</p>
               <p>
-                containerd contains all the services to manage images, volumes, snapshots, etc…, including a client for
-                shim
+                Images built from the Dockerfile follow the
+                <a href="https://opencontainers.org/">Open Container Initiative</a> specifications.
               </p>
-              <p>shim can be seen as an API to talk the runtime.</p>
-              <p>
-                runc is the container runtime, and can in fact be called directly, but it is very cumbersome to do so.
-              </p>
-              <p>Other engines and/or other runtime can be used.</p>
+              <p>They are other container systems, like LXD/LXD, not based on the OCI</p>
             </aside>
           </section>
         </section>
