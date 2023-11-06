@@ -39,11 +39,11 @@
             <h2>What will we see?</h2>
 
             <div class="centered-slide-content">
-              <ul>
-                <li>Presentation of Docker</li>
-                <li>How to use Docker</li>
-                <li>How to use Docker Compose</li>
-                <li>Running and Debugging in an IDE</li>
+              <ul class="plan">
+                <li class="fragment">Presentation of Docker</li>
+                <li class="fragment">How to use only Docker to create and run a Symfony app</li>
+                <li class="fragment">How to use Docker Compose to ease our workflow</li>
+                <li class="fragment">Running and Debugging our app in an IDE</li>
               </ul>
             </div>
 
@@ -57,17 +57,14 @@
             <h2>Practice</h2>
 
             <div class="centered-slide-content">
-              <ul>
+              <ul class="plan">
                 <li class="practice-goal">Goal</li>
                 <li class="practice-constraint">Constraints</li>
                 <li class="practice-success">Success criteria</li>
               </ul>
             </div>
 
-            <aside class="notes">
-              We will not use the Symfony CLI tool and its built-in server, only pure PHP, as I want to keep things
-              simple.
-            </aside>
+            <aside class="notes"></aside>
           </section>
         </section>
 
@@ -89,7 +86,7 @@
           </section>
 
           <section>
-            <h2>A Container Orchestrator</h2>
+            <h2>Docker is a container orchestrator</h2>
 
             <div class="centered-slide-content">
               <img alt="vms_vs_containers.jpg" src="images/vms_vs_containers.jpg" />
@@ -104,7 +101,7 @@
           </section>
 
           <section>
-            <h2>How does it works</h2>
+            <h2>A few definitions</h2>
 
             <div class="centered-slide-content">
               <div class="fragment">
@@ -131,30 +128,18 @@
           </section>
 
           <section>
-            <h2>How does it works</h2>
+            <h2>Docker specificity</h2>
 
             <div class="centered-slide-content">
-              <h3 class="fragment">Docker specificity</h3>
               <ul>
-                <li class="fragment">Dockerfile → Image → Containers</li>
-                <li class="fragment">Only one process in the container</li>
+                <li class="fragment" data-fragment-index="1">Only one process in the container</li>
+                <li class="fragment" data-fragment-index="2">Dockerfile → Image → Containers</li>
               </ul>
-            </div>
 
-            <aside class="notes">
-              <p>
-                Images built from the Dockerfile follow the
-                <a href="https://opencontainers.org/">Open Container Initiative</a> specifications.
-              </p>
-              <p>They are other container systems, like LXD/LXD, not based on the OCI</p>
-            </aside>
-          </section>
+              <br />
+              <br />
 
-          <section>
-            <h2>A Dockerfile example</h2>
-
-            <div class="centered-slide-content">
-              <pre><code class="dockerfile">
+              <pre class="fragment" data-fragment-index="3"><code class="dockerfile" data-trim>
 FROM debian:bookworm-slim
 
 RUN apt-get update && \
@@ -168,33 +153,15 @@ RUN apt-get update && \
             /usr/share/man/*
 
               </code></pre>
+              <legend class="fragment" data-fragment-index="3">A Dockerfile example</legend>
             </div>
 
             <aside class="notes">
-              Explain the concept of layers. Details will be explained in the "Advanced" section.
-            </aside>
-          </section>
-
-          <section>
-            <h2>How does it works</h2>
-
-            <div class="centered-slide-content">
-              <img alt="docker_components.png" src="images/docker_components.png" />
-              <p>Docker components</p>
-            </div>
-
-            <aside class="notes">
-              <p>The docker command is only a client talking to the engine.</p>
-              <p>The Docker engine is a high level abstraction talking with containerd.</p>
               <p>
-                containerd contains all the services to manage images, volumes, snapshots, etc…, including a client for
-                shim
+                Images built from the Dockerfile follow the
+                <a href="https://opencontainers.org/">Open Container Initiative</a> specifications.
               </p>
-              <p>shim can be seen as an API to talk the runtime.</p>
-              <p>
-                runc is the container runtime, and can in fact be called directly, but it is very cumbersome to do so.
-              </p>
-              <p>Other engines and/or other runtime can be used.</p>
+              <p>They are other container systems, like LXD/LXD, not based on the OCI</p>
             </aside>
           </section>
         </section>
@@ -207,16 +174,14 @@ RUN apt-get update && \
               <img src="images/docker.png" />
             </div>
 
-            <aside class="notes">
-              <!-- -->
-            </aside>
+            <aside class="notes"></aside>
           </section>
 
           <section>
-            <h2>Using Docker</h2>
+            <h2>How to use Docker</h2>
 
             <div class="centered-slide-content">
-              <h3>The Very Basics</h3>
+              <h3>The very basics</h3>
             </div>
 
             <aside class="notes"></aside>
@@ -283,7 +248,7 @@ $ docker image ls
 
               <div class="fragment" data-fragment-index="3">Tips</div>
               <pre class="fragment" data-fragment-index="3"><code class="shell">
-$ docker container run debian:stable-slim
+$ docker container run debian:12-slim
               </code></pre>
               <legend class="fragment" data-fragment-index="3">Basic run example</legend>
             </div>
@@ -300,7 +265,7 @@ $ docker container run debian:stable-slim
               <h3>Solution</h3>
 
               <pre class="fragment" data-fragment-index="1"><code class="shell">
-$ docker container run -i -t debian:stable-slim bash
+$ docker container run -i -t debian:12-slim bash
 $ docker container ls -a
 $ docker container rm &lt;container name&gt;
               </code></pre>
@@ -308,7 +273,7 @@ $ docker container rm &lt;container name&gt;
               <div class="fragment" data-fragment-index="2">or</div>
 
               <pre class="fragment" data-fragment-index="2"><code class="shell">
-$ docker container run -i -t --rm debian:stable-slim bash
+$ docker container run -i -t --rm debian:12-slim bash
               </code></pre>
             </div>
 
@@ -319,10 +284,10 @@ $ docker container run -i -t --rm debian:stable-slim bash
           </section>
 
           <section>
-            <h2>Using Docker</h2>
+            <h2>How to use Docker</h2>
 
             <div class="centered-slide-content">
-              <h3>Going Further</h3>
+              <h3>Let's go further</h3>
             </div>
 
             <aside class="notes"></aside>
@@ -390,7 +355,7 @@ $ echo ${VARIABLE_NAME}
 
               <pre><code class="shell">
 $ export HOST_VAR="Hello\!"
-$ docker container run -e CONTAINER_VAR=$HOST_VAR debian:stable-slim \
+$ docker container run -e CONTAINER_VAR=$HOST_VAR debian:12-slim \
     sh -c 'echo $CONTAINER_VAR'
               </code></pre>
 
@@ -398,7 +363,7 @@ $ docker container run -e CONTAINER_VAR=$HOST_VAR debian:stable-slim \
 
               <pre class="fragment" data-fragment-index="1"><code class="shell">
 $ export MY_VAR="Hello\!"
-$ docker container run -e MY_VAR debian:stable-slim sh -c 'echo $MY_VAR'
+$ docker container run -e MY_VAR debian:12-slim sh -c 'echo $MY_VAR'
               </code></pre>
             </div>
 
@@ -420,7 +385,7 @@ $ docker container run -e MY_VAR debian:stable-slim sh -c 'echo $MY_VAR'
 
               <pre class="fragment" data-fragment-index="2"><code class="shell">
 $ docker volume create my-data
-$ docker container run -v my-data:/path-in-container debian:stable-slim
+$ docker container run -v my-data:/path-in-container debian:12-slim
               </code></pre>
               <legend class="fragment" data-fragment-index="2">Create link a Docker volume to your container</legend>
             </div>
@@ -449,7 +414,7 @@ $ docker container run -v my-data:/path-in-container debian:stable-slim
               <pre class="fragment" data-fragment-index="2"><code class="shell">
 $ docker container run \
     -v /path-on-host:/path-in-container \
-    debian:stable-slim
+    debian:12-slim
               </code></pre>
               <legend class="fragment" data-fragment-index="2">
                 Bind mount a folder/file from your host inside the container - old way
@@ -460,7 +425,7 @@ $ docker container run \
               <pre class="fragment" data-fragment-index="3"><code class="shell">
 $ docker container run \
     --mount type=bind,source=/path-on-host,target=/path-in-container \
-    debian:stable-slim
+    debian:12-slim
               </code></pre>
               <legend class="fragment" data-fragment-index="3">
                 Bind mount a folder/file from your host inside the container - new way
@@ -505,7 +470,7 @@ $ mkdir /home/&lt;your login&gt;/Downloads/test
 
 $ docker container run -i -t --rm \
     --mount type=bind,source=/home/&lt;your login&gt;/Downloads/test,target=/data \
-    debian:stable-slim bash
+    debian:12-slim bash
 
 ### Now you are in the container ###
 
@@ -579,7 +544,7 @@ $ sudo chown -R $(id -u):$(id -g) /home/&lt;your login&gt;/Downloads/test
 $ docker container run -i -t --rm \
     -u $(id -u):$(id -g) \
     --mount type=bind,source=/home/&lt;your login&gt;/Downloads/test,target=/data \
-    debian:stable-slim bash
+    debian:12-slim bash
               </code></pre>
             </div>
 
@@ -598,9 +563,9 @@ $ docker container run -i -t --rm \
               <br />
 
               <pre class="fragment"><code class="shell">
-$ docker container run -i -t --rm --workdir /data debian:stable-slim bash
+$ docker container run -i -t --rm --workdir /data debian:12-slim bash
 
-$ docker container run -i -t --rm -w /data debian:stable-slim bash
+$ docker container run -i -t --rm -w /data debian:12-slim bash
               </code></pre>
             </div>
 
@@ -608,10 +573,10 @@ $ docker container run -i -t --rm -w /data debian:stable-slim bash
           </section>
 
           <section>
-            <h2>Using Docker</h2>
+            <h2>How to use Docker</h2>
 
             <div class="centered-slide-content">
-              <h3>Let's create and serve a Symfony app</h3>
+              <h3>Create and serve a Symfony app with Docker only</h3>
             </div>
 
             <aside class="notes"></aside>
@@ -833,10 +798,10 @@ $ docker container run -i -t --rm --network my-network \
           </section>
 
           <section>
-            <h2>Using Docker</h2>
+            <h2>How to use Docker</h2>
 
             <div class="centered-slide-content">
-              <h3>Building custom images</h3>
+              <h3>What if we built our own custom image</h3>
               <div class="fragment">Now you can use your IDE 💻</div>
             </div>
 
