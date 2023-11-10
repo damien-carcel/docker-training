@@ -123,7 +123,7 @@
                 Images built from the Dockerfile follow the
                 <a href="https://opencontainers.org/">Open Container Initiative</a> specifications.
               </p>
-              <p>They are other container systems, like LXD/LXD, not based on the OCI</p>
+              <p>They are other container systems, like LXC/LXD, not based on the OCI</p>
             </aside>
           </section>
 
@@ -139,19 +139,13 @@
               <br />
               <br />
 
-              <pre class="fragment" data-fragment-index="3"><code class="dockerfile" data-trim>
+              <pre class="fragment" data-fragment-index="3"><code class="dockerfile">
 FROM debian:bookworm-slim
 
 RUN apt-get update && \
     apt-get --no-install-recommends --no-install-suggests install php && \
     apt-get clean && \
-    apt-get autoremove --purge && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-            /usr/share/doc/* /usr/share/groff/* \
-            /usr/share/info/* /usr/share/linda/* \
-            /usr/share/lintian/* /usr/share/locale/* \
-            /usr/share/man/*
-
+    apt-get autoremove --purge
               </code></pre>
               <legend class="fragment" data-fragment-index="3">A Dockerfile example</legend>
             </div>
@@ -217,7 +211,7 @@ $ docker image pull debian:bookworm-slim
 $ docker image pull debian:12-slim
               </code></pre>
 
-              <pre class="fragment" data-fragment-index="5"><code class="shell">
+              <pre class="fragment" data-fragment-index="4"><code class="shell">
 $ docker image ls
             </code></pre>
             </div>
@@ -247,6 +241,10 @@ $ docker image ls
               <br />
 
               <div class="fragment" data-fragment-index="3">Tips</div>
+              <ul>
+                <li>You need to allocate a pseudo TTY</li>
+                <li>You need to keep STIN open</li>
+              </ul>
               <pre class="fragment" data-fragment-index="3"><code class="shell">
 $ docker container run debian:12-slim
               </code></pre>
@@ -707,7 +705,7 @@ $ docker container logs -f --tail 1 my-app-container
               </code></pre>
 
               <pre class="fragment" data-fragment-index="3"><code class="shell">
-$ docker container run -t &lt;container name&gt;
+$ docker container run --name &lt;container name&gt;
               </code></pre>
               <legend class="fragment" data-fragment-index="3">Easier if we choose the container name ourselves</legend>
             </div>
@@ -1085,7 +1083,7 @@ $ docker image build --target=prod --tag my-image:my-tag .
                   <td style="width: 50%; text-align: justify">Delete an image</td>
                 </tr>
                 <tr>
-                  <td style="width: 50%; text-align: left">docker system prune --volume</td>
+                  <td style="width: 50%; text-align: left">docker system prune --volumes</td>
                   <td style="width: 50%; text-align: justify">Clean everything</td>
                 </tr>
               </table>
