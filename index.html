@@ -313,7 +313,7 @@ $ docker container run -i -t --rm debian:12-slim bash
                   inside the container
                 </li>
                 <br />
-                <li class="fragment">It will override the value if the variable already exist</li>
+                <li class="fragment">It will override the value if the variable already exists</li>
               </ul>
             </div>
 
@@ -851,8 +851,8 @@ $ docker image build --tag my-image:my-tag .
 
 FROM some-image:image-tag
 
-ARG MY_ARG = "A environment variable only available at build time"
-ENV MY_VAR = "A environment variable that will stay at runtime"
+ARG MY_ARG = "An environment variable only available at build time"
+ENV MY_VAR = "An environment variable that will stay at runtime"
               </code></pre>
               <legend>Environment variables and arguments</legend>
 
@@ -873,8 +873,8 @@ ARG IMAGE_TAG
 
 FROM some-image:${IMAGE_TAG}
 
-ARG MY_ARG="A environment variable only available at build time"
-ENV MY_VAR="A environment variable that will stay at runtime"
+ARG MY_ARG="An environment variable only available at build time"
+ENV MY_VAR="An environment variable that will stay at runtime"
               </code></pre>
               <legend>Environment variables and arguments</legend>
 
