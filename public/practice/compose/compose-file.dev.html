@@ -20,9 +20,15 @@ services:
       - dev
     user: 1000:1000
     volumes:
-      - .:/app
-      - ~/.cache/composer:/tmp/composer/cache
-      - ~/.config/composer:/tmp/composer/config
+      - type: bind
+        source: ./
+        target: /app
+      - type: bind
+        source: ~/.cache/composer
+        target: /tmp/composer/cache
+      - type: bind
+        source: ~/.config/composer
+        target: /tmp/composer/config
     working_dir: /app
 
   built-in-server:
@@ -36,7 +42,9 @@ services:
       - 8000:8000
     user: 1000:1000
     volumes:
-      - .:/app
+      - type: bind
+        source: ./
+        target: /app
     working_dir: /app
 
 networks:
