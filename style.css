@@ -7,7 +7,12 @@
   transform: translate(0%, -50%);
 }
 
-.inline-code {
+.col {
+  flex: 1;
+  vertical-align: middle;
+}
+
+*.inline-code {
   font-size: smaller;
   color: aqua;
 }
@@ -19,6 +24,16 @@
 .slides > section > section {
   width: 100%;
   height: 100%;
+}
+
+.two-columns-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vertical-align {
+  vertical-align: middle;
 }
 
 legend {
