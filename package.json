@@ -15,7 +15,7 @@
     "stylelint": "stylelint '**/*.{css,html}'"
   },
   "dependencies": {
-    "reveal.js": "^5.0.1"
+    "reveal.js": "^5.0.2"
   },
   "devDependencies": {
     "eslint": "^8.49.0",
