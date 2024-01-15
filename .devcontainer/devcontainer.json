@@ -16,7 +16,7 @@
       ]
     }
   },
-  "dockerComposeFile": ["../compose.yaml", "./compose.yaml"],
+  "dockerComposeFile": ["../compose.yaml"],
   "initializeCommand": "./.devcontainer/setup.sh",
   "name": "Docker Training",
   "postCreateCommand": "task dependencies:install",
