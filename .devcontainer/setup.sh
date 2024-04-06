@@ -2,11 +2,6 @@
 
 set -e
 
-yarn_cache_dir=~/.cache/yarn
-mkdir -p $yarn_cache_dir
+mkdir -p ~/.cache/yarn ~/.config/yarn ~/.yarn
 
-yarn_config_dir=~/.config/yarn
-mkdir -p $yarn_config_dir
-
-yarn_rc=~/.yarnrc
-test -f $yarn_rc || touch $yarn_rc
+test -f ~/.yarnrc || touch ~/.yarnrc

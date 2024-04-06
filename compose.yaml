@@ -16,21 +16,15 @@ services:
       - sleep
       - infinity
     environment:
-      YARN_CACHE_FOLDER: /home/yarn-cache
+      NPM_CONFIG_CACHE: /home/npm
     user: ${HOST_USER_IDS:-1000:1000}
     volumes:
       - type: bind
         source: .
         target: /srv/app
       - type: bind
-        source: ${HOST_YARN_CACHE_FOLDER:-~/.cache/yarn}
-        target: /home/yarn-cache
-      - type: bind
-        source: ${HOST_YARN_CONFIG_FOLDER:-~/.config/yarn}
-        target: /.yarn
-      - type: bind
-        source: ${HOST_YARN_CONFIG_FILE:-~/.yarnrc}
-        target: /.yarnrc
+        source: ~/.npm
+        target: /home/npm
     working_dir: /srv/app
 
   dev:
