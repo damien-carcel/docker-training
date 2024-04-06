@@ -2,21 +2,21 @@ version: 3
 
 tasks:
   install:
-    desc: Install project dependencies.
+    desc: Install project dependencies
     cmds:
       - yarn install --frozen-lockfile --check-files
     preconditions:
       - sh: test -f yarn.lock
-        msg: Cannot install the dependencies if there is no "yarn.lock" file.
+        msg: Cannot install the dependencies if there is no "yarn.lock" file
     aliases: [i]
 
   upgrade:
-    desc: Updates project dependencies to their latest version (works only if project dependencies were already installed).
+    desc: Updates project dependencies to their latest version (works only if project dependencies were already installed)
     cmds:
       - yarn upgrade
       - yarn upgrade-interactive --latest
       - yarn upgrade
     preconditions:
       - sh: test -d node_modules
-        msg: Cannot upgrade the dependencies if they are not already installed.
+        msg: Cannot upgrade the dependencies if they are not already installed
     aliases: [u]
