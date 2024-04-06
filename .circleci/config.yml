@@ -1,0 +1,46 @@
+version: 2.1
+
+workflows:
+  pull_request:
+    jobs:
+      - tests:
+          context:
+            - docker-hub-credentials
+          filters:
+            branches:
+              ignore:
+                - main
+
+jobs:
+  tests:
+    docker:
+      - image: node:20
+    steps:
+      - checkout
+      - run:
+          name: Install the latest Task binary
+          command: npm install -g @go-task/cli
+      - restore_cache:
+          keys:
+            - npm-{{ .Environment.CACHE_VERSION }}-{{ checksum "package-lock.json" }}
+            - npm-{{ .Environment.CACHE_VERSION }}-
+      - run:
+          name: Install dependencies
+          command: |
+            task dependencies:install
+      - save_cache:
+          key: npm-{{ .Environment.CACHE_VERSION }}-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+            - ./.next/cache
+      - run:
+          name: Check the code style
+          command: task tests:prettier:check
+      - run:
+          name: Lint the stylesheets
+          command: task tests:stylelint:check
+      - run:
+          name: Lint the application code
+          command: task tests:eslint:check
+      - store_test_results:
+          path: test_results
