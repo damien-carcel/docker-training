@@ -1,0 +1,23 @@
+version: 3
+
+tasks:
+  bash:
+    aliases:
+      - b
+    cmds:
+      - docker compose run --rm --build --remove-orphans dev bash
+    desc: Launch a shell in the development container
+
+  dev:
+    aliases:
+      - d
+    cmds:
+      - docker compose up --build --detach --remove-orphans dev
+    desc: Run the development server
+
+  stop:
+    aliases:
+      - s
+    cmds:
+      - docker compose down -v
+    desc: Stop the containers

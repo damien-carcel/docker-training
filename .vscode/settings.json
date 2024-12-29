@@ -2,14 +2,26 @@
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.words": ["autoloader", "dpkg", "groff", "keyrings", "lintian", "phpunit", "runc"],
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.rulers": [120],
+  "cSpell.words": [
+    "autoloader",
+    "dpkg",
+    "groff",
+    "keyrings",
+    "lintian",
+    "phpunit",
+    "runc"
+  ],
+  "editor.rulers": [
+    120
+  ],
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
-  "prettier.configPath": ".prettierrc.json",
   "yaml.schemas": {
-    "https://taskfile.dev/schema.json": ["taskfiles/dependencies.yaml", "taskfiles/tests.yaml"]
+    "https://taskfile.dev/schema.json": [
+      "taskfiles/dependencies.yaml",
+      "taskfiles/run.yaml",
+      "taskfiles/tests.yaml"
+    ]
   }
 }

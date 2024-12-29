@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 silent: true
 
@@ -6,6 +6,9 @@ includes:
   dependencies:
     taskfile: ./taskfiles/dependencies.yaml
     aliases: [d]
+  run:
+    taskfile: ./taskfiles/run.yaml
+    aliases: [r]
   tests:
     taskfile: ./taskfiles/tests.yaml
     aliases: [t]
