@@ -1,66 +1,62 @@
-version: '3'
+version: "3"
 
 tasks:
-  prettier:check:
+  static:format:check:
+    aliases: [f:c]
+    cmds:
+      - docker compose run --rm dev npm run prettier -- --check
     desc: Check the code style
-    cmds:
-      - yarn prettier --check
-    aliases: [p:c]
 
-  prettier:fix:
+  static:format:fix:
+    aliases: [f:f]
+    cmds:
+      - docker compose run --rm dev npm run prettier -- --write
     desc: Fix the code style
-    cmds:
-      - yarn prettier --write
-    aliases: [p:f]
 
-  stylelint:check:
-    desc: Lint the CSS code
+  static:style-sheet:lint:
+    aliases: [s:l]
     cmds:
-      - yarn stylelint
-    aliases: [s:c]
+      - docker compose run --rm dev npm run stylelint
+    desc: Lint the style sheets
 
-  stylelint:fix:
-    desc: Fix the CSS code style
-    cmds:
-      - yarn stylelint --fix
+  static:style-sheet:fix:
     aliases: [s:f]
-
-  eslint:check:
-    desc: Lint the JavaScript code
     cmds:
-      - yarn eslint
-    aliases: [l:c]
+      - docker compose run --rm dev npm run stylelint -- --fix
+    desc: Fix the style sheets
 
-  eslint:fix:
-    desc: Fix the JavaScript code issues
+  static:code:lint:
+    aliases: [c:l]
     cmds:
-      - yarn eslint --fix
-    aliases: [l:f]
+      - docker compose run --rm dev npm run lint -- {{.CLI_ARGS}}
+    desc: Lint the application code
+
+  static:code:fix:
+    aliases: [c:f]
+    cmds:
+      - docker compose run --rm dev npm run lint -- --fix
+    desc: Fix the application code
 
   all:
     desc: Execute all the tests
     cmds:
       - echo ""
-      - echo "|----------------------|"
-      - echo "| Check the code style |"
-      - echo "|----------------------|"
+      - echo "|---------------------------|"
+      - echo "| Check the code formatting |"
+      - echo "|---------------------------|"
       - echo ""
-      - task: prettier:check
+      - task: static:format:check
       - echo ""
-      - echo "|----------------------|"
-      - echo "| Lint the stylesheets |"
-      - echo "|----------------------|"
+      - echo "|---------------------------|"
+      - echo "|   Lint the style sheets   |"
+      - echo "|---------------------------|"
       - echo ""
-      - task: stylelint:check
+      - task: static:style-sheet:lint
       - echo ""
-      - echo "|----------------------|"
-      - echo "|   Lint the JS code   |"
-      - echo "|----------------------|"
+      - echo "|---------------------------|"
+      - echo "| Lint the application code |"
+      - echo "|---------------------------|"
       - echo ""
-      - task: eslint:check
-      - echo ""
-      - echo "|----------------------|"
-      - echo "| All tests successful |"
-      - echo "|----------------------|"
+      - task: static:code:lint
       - echo ""
     aliases: [a]

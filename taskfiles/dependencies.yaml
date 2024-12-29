@@ -2,27 +2,25 @@ version: 3
 
 tasks:
   install:
-    desc: Install project dependencies
+    aliases:
+      - i
     cmds:
-      - npm ci
-    preconditions:
-      - sh: test -f package-lock.json
-        msg: Cannot install the dependencies if there is no "package-lock.json" file
-    aliases: [i]
+      - docker compose run --rm dev npm install
+    desc: Install dependencies
 
-  upgrade:
+  update:
     desc: Updates project dependencies to their latest version
     cmds:
-      - npm update
+      - docker compose run --rm dev npm update
     preconditions:
       - sh: test -d node_modules
-        msg: Cannot upgrade the dependencies if they are not already installed
+        msg: Cannot update the dependencies if they are not already installed
     aliases: [u]
 
   outdated:
     desc: Check for outdated project dependencies
     cmds:
-      - npm update
+      - docker compose run --rm dev npm outdated
     preconditions:
       - sh: test -d node_modules
         msg: Cannot check for outdated dependencies if they are not already installed

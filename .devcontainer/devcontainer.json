@@ -6,9 +6,7 @@
         "dbaeumer.vscode-eslint",
         "eamodio.gitlens",
         "esbenp.prettier-vscode",
-        "github.vscode-github-actions",
         "ms-azuretools.vscode-docker",
-        "pranaygp.vscode-css-peek",
         "redhat.vscode-yaml",
         "streetsidesoftware.code-spell-checker",
         "task.vscode-task",
@@ -16,12 +14,24 @@
       ]
     }
   },
-  "dockerComposeFile": ["../compose.yaml"],
+  "dockerComposeFile": [
+    "./compose.yaml"
+  ],
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+  "forwardPorts": [
+    8000
+  ],
   "initializeCommand": "./.devcontainer/setup.sh",
+  "portsAttributes": {
+    "8000": {
+      "label": "Vite Dev server"
+    }
+  },
+  "postCreateCommand": "task dependencies:install run:dev",
   "name": "Docker Training",
-  "postCreateCommand": "task dependencies:install",
-  "remoteUser": "node",
-  "runServices": ["dev", "prod"],
   "service": "devcontainer",
-  "workspaceFolder": "/srv/app"
+  "workspaceFolder": "/app"
 }

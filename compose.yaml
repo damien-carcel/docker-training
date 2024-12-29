@@ -1,44 +1,23 @@
-x-common: &common
-  image: node:${NODE_VERSION}
-  restart: always
-  user: ${HOST_USER_IDS:-1000:1000}
-  volumes:
-    - .:/srv/app
-  working_dir: /srv/app
-
 services:
-  devcontainer:
-    build:
-      args:
-        NODE_VERSION: ${NODE_VERSION}
-      context: ./docker/devcontainer
+  dev:
     command:
-      - sleep
-      - infinity
+      - npm
+      - run
+      - dev
     environment:
-      NPM_CONFIG_CACHE: /home/npm
+      NPM_CONFIG_CACHE: ${NPM_CONFIG_CACHE:-/home/node/.npm}
+    expose:
+      - 8000
+    image: node:lts-slim
+    ports:
+      - 8000:8000
+    tty: true
     user: ${HOST_USER_IDS:-1000:1000}
     volumes:
       - type: bind
         source: .
-        target: /srv/app
+        target: /app
       - type: bind
         source: ~/.npm
-        target: /home/npm
-    working_dir: /srv/app
-
-  dev:
-    <<: *common
-    command: yarn dev --host
-    expose:
-      - 5173
-    ports:
-      - 5173:5173
-
-  prod:
-    <<: *common
-    command: sh -c "yarn build && yarn preview --host"
-    expose:
-      - 4173
-    ports:
-      - 4173:4173
+        target: /home/node/.npm
+    working_dir: /app
