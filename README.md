@@ -2,20 +2,22 @@
 
 ## Pre-requisites
 
-- Docker 24.0 or more recent
-- Docker Compose 2.21 or more recent
-- Up-to-date VS Code with [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension installed
+- Docker
+- Docker Compose v2
+- Task
 
 ## How to use the presentation
 
-Open the project in VS Code, and accept to reopen the project in Dev Containers when VS Code proposed it.
+First, install the dependencies with `task dependencies:install`.
 
-This will up the right Docker Compose services after installing the dependencies.
+Run `task run:dev` for development mode with hot-reload and access the application through
+[http://localhost:8000](http://localhost:3000).
 
-The application can be accessed at:
+The full list of actions can be accessed by running the following command in your usual terminal:
 
-- http://localhost:5173 for the development server with hot reload
-- http://localhost:4173 for a "production-like" server
+```bash
+$ task
+```
 
 ## License
 

@@ -20,7 +20,7 @@ jobs:
       - set_host_user_ids_environment_variable
       - run:
           name: Setup cache directory
-          command: ./.devcontainer/setup.sh
+          command: mkdir -p ~/.npm
       - run:
           name: Install the latest Task binary
           command: npm install -g @go-task/cli
