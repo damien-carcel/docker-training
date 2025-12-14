@@ -19,5 +19,5 @@ tasks:
     aliases:
       - s
     cmds:
-      - docker compose down -v
-    desc: Stop the containers
+      - docker compose down -v --remove-orphans
+    desc: Stop and remove the presentation containers

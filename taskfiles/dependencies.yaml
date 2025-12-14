@@ -9,19 +9,21 @@ tasks:
     desc: Install dependencies
 
   update:
-    desc: Updates project dependencies to their latest version
+    aliases:
+      - u
     cmds:
       - docker compose run --rm dev npm update
+    desc: Updates project dependencies to their latest version
     preconditions:
       - sh: test -d node_modules
         msg: Cannot update the dependencies if they are not already installed
-    aliases: [u]
 
   outdated:
-    desc: Check for outdated project dependencies
+    aliases:
+      - o
     cmds:
       - docker compose run --rm dev npm outdated
+    desc: Check for outdated project dependencies
     preconditions:
       - sh: test -d node_modules
         msg: Cannot check for outdated dependencies if they are not already installed
-    aliases: [o]
