@@ -14,7 +14,7 @@ workflows:
 jobs:
   tests:
     machine:
-      image: ubuntu-2204:2024.11.1
+      image: ubuntu-2404:2025.09.1
     steps:
       - checkout
       - set_host_user_ids_environment_variable
