@@ -2,43 +2,50 @@ version: "3"
 
 tasks:
   static:format:check:
-    aliases: [f:c]
+    aliases:
+      - f:c
     cmds:
       - docker compose run --rm dev npm run prettier -- --check
     desc: Check the code style
 
   static:format:fix:
-    aliases: [f:f]
+    aliases:
+      - f:f
     cmds:
       - docker compose run --rm dev npm run prettier -- --write
     desc: Fix the code style
 
   static:style-sheet:lint:
-    aliases: [s:l]
+    aliases:
+      - s:l
     cmds:
       - docker compose run --rm dev npm run stylelint
     desc: Lint the style sheets
 
   static:style-sheet:fix:
-    aliases: [s:f]
+    aliases:
+      - s:f
     cmds:
       - docker compose run --rm dev npm run stylelint -- --fix
     desc: Fix the style sheets
 
   static:code:lint:
-    aliases: [c:l]
+    aliases:
+      - c:l
     cmds:
       - docker compose run --rm dev npm run lint -- {{.CLI_ARGS}}
     desc: Lint the application code
 
   static:code:fix:
-    aliases: [c:f]
+    aliases:
+      - c:f
     cmds:
       - docker compose run --rm dev npm run lint -- --fix
     desc: Fix the application code
 
   all:
-    desc: Execute all the tests
+    aliases:
+      - a
     cmds:
       - echo ""
       - echo "|---------------------------|"
@@ -59,4 +66,9 @@ tasks:
       - echo ""
       - task: static:code:lint
       - echo ""
-    aliases: [a]
+      - echo "|---------------------------|"
+      - echo "|         All Tests         |"
+      - echo "|   Successfully Executed   |"
+      - echo "|---------------------------|"
+      - echo ""
+    desc: Execute all the tests

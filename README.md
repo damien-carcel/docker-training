@@ -11,7 +11,7 @@
 First, install the dependencies with `task dependencies:install`.
 
 Run `task run:dev` for development mode with hot-reload and access the application through
-[http://localhost:8000](http://localhost:3000).
+[http://localhost:8000](http://localhost:8000).
 
 The full list of actions can be accessed by running the following command in your usual terminal:
 
